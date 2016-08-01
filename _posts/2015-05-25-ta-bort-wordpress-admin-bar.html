@@ -1,0 +1,35 @@
+---
+layout: post
+title: Ta bort wordpress admin-bar
+date: 2015-05-25 20:43:37.000000000 -03:00
+type: post
+published: true
+status: publish
+categories:
+- web-utveckling
+- wordpress
+tags: []
+meta:
+  _publicize_pending: '1'
+  sharing_disabled: '1'
+  _rest_api_published: '1'
+  _rest_api_client_id: "-1"
+  _publicize_job_id: '11004566997'
+  original_post_id: '340'
+  _wp_old_slug: '340'
+author:
+  login: tidlost
+  email: tl.dr.mfw@gmail.com
+  display_name: tidlost
+  first_name: ''
+  last_name: ''
+---
+<p>Om man är inloggad på wordpress samtidigt som man besöker antingen sin egen sida eller någon annan wordpress-sida så finns det en admin-bar längst upp på sidan. Den är ful å onödig. För att ta bort den lägg in följande kod i functions.php.</p>
+<p>[code language="php"]</p>
+<p>&lt;?php<br />
+add_action('get_header', 'remove_admin_login_header');<br />
+function remove_admin_login_header() {<br />
+	remove_action('wp_head', '_admin_bar_bump_cb');<br />
+}<br />
+?&gt;</p>
+<p>[/code]</p>

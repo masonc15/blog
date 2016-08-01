@@ -1,0 +1,32 @@
+---
+layout: post
+title: Cronjob in Linux
+date: 2016-07-25 20:26:57.000000000 -04:00
+type: post
+published: true
+status: publish
+categories: []
+tags: []
+meta:
+  _rest_api_published: '1'
+  _rest_api_client_id: "-1"
+  _publicize_job_id: '25147658374'
+author:
+  login: tidlost
+  email: tl.dr.mfw@gmail.com
+  display_name: tidlost
+  first_name: ''
+  last_name: ''
+---
+<p>
+To create a cronjob on a linux-machine you just run </p>
+<p>[code]<br />
+#The -e flag stands for edit<br />
+crontab -e</p>
+<p>#The -l flag lists the cronjobs<br />
+crontab -l<br />
+[/code]</p>
+<p>So I added my cronjob like this and program it to run every minute:</p>
+<p>[code]<br />
+* * * * * /home/user/cron/script.sh<br />
+[/code]</p>

@@ -1,0 +1,37 @@
+---
+layout: post
+title: Långsam uppdatering av CSS
+date: 2015-04-14 21:10:29.000000000 -03:00
+type: post
+published: true
+status: publish
+categories:
+- css
+- how-to
+- web-utveckling
+- webbdesign
+- wordpress
+tags: []
+meta:
+  _publicize_pending: '1'
+  sharing_disabled: '1'
+  _rest_api_published: '1'
+  _rest_api_client_id: "-1"
+  original_post_id: '88'
+  _wp_old_slug: '88'
+author:
+  login: tidlost
+  email: tl.dr.mfw@gmail.com
+  display_name: tidlost
+  first_name: ''
+  last_name: ''
+---
+<p>Ibland sker det att uppdateringen av style.css går väldigt långsamt. Det kan ta flera minuter innan ändringar visas på sidan. Det är irriterande eftersom man vill se effekterna av en ändring omedelbart. Jag tror att det beror på att servern har cachat sidan. Felet verkar inte ligga i browsern.</p>
+<p>Jag har löst problemet genom att lägga till</p>
+<pre>?t=[timestamp]</pre>
+<p>i header.php här:</p>
+<pre>&lt;link rel="stylesheet" href="&lt;?php bloginfo("stylesheet_url"); ?&gt;<strong>?t=[timestamp]</strong>" type="text/css"&gt;</pre>
+<p>Ett annat sätt att lösa problemet är att lägga in</p>
+<pre> ?&lt;?php echo time(); ?&gt;</pre>
+<p>på samma ställa.</p>
+<p>Det ska sägas att detta inte är en långsiktig lösning. Så ta bort den delen när sidan ska gå live.</p>

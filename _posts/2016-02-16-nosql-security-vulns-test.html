@@ -1,0 +1,50 @@
+---
+layout: post
+title: NoSQL - Security Vulns test
+date: 2016-02-16 14:25:32.000000000 -03:00
+type: post
+published: true
+status: publish
+categories: []
+tags: []
+meta:
+  _oembed_fba0b8d4cb0d920dad498e6b0a8dc218: "{{unknown}}"
+  _publicize_pending: '1'
+  _rest_api_published: '1'
+  _rest_api_client_id: "-1"
+  _publicize_job_id: '19861147705'
+  original_post_id: '772'
+  _wp_old_slug: '772'
+  _oembed_69641995140d0f2be711963e20be4cc7: "{{unknown}}"
+author:
+  login: tidlost
+  email: tl.dr.mfw@gmail.com
+  display_name: tidlost
+  first_name: ''
+  last_name: ''
+---
+<p>1. Encryption/authetication<br />
+2. NoSQL-injecctions<br />
+https://github.com/tcstool/NoSQLMap<br />
+A. eval, setTimeout</p>
+<h1>A1 - Injection</h1>
+<h2>Server Side JavaScript Injection - SSJI</h2>
+<p>- Server Injection<br />
+eval, setTimeout, setInterval<br />
+setTimeout och setInterval använder båda eval, därför är de dåliga att använda.</p>
+<p>Om man sätter några av dom att tolka user input så ger man i princip total kontroll över ALLT som kan ske på servern. Du kan injecta kod, som du sen kör.<br />
+Lösning:<br />
+Använd JSON.parse() istället. Mycket säkrare. Eval är snabbare, men galet mycket farligare.</p>
+<p>Använd 'use strict'</p>
+<p>Att göra:<br />
+a. Kontrollera så att vi aldrig använder ovan nämna funktioner under dessa omständigheter.<br />
+b. Använd alltid 'use strict'.</p>
+<p>Vidare läsning:<br />
+http://arxiv.org/pdf/1506.04082.pdf</p>
+<p>2. NoSQL-injection<br />
+- MongoDB injection</p>
+<p>Lösning: validera/sanitizea all input.</p>
+<p>Att göra:<br />
+a. Validera/sanitizea all input. </p>
+<h2>A2-Broken Authentication and Session Management</h2>
+<p>http://arxiv.org/pdf/1506.04082.pdf</p>

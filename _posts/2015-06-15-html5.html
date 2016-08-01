@@ -1,0 +1,66 @@
+---
+layout: post
+title: HTML5
+date: 2015-06-15 10:05:02.000000000 -03:00
+type: post
+published: true
+status: publish
+categories:
+- html5
+- web-utveckling
+tags: []
+meta:
+  _publicize_pending: '1'
+  _rest_api_client_id: "-1"
+  _rest_api_published: '1'
+  sharing_disabled: '1'
+  _publicize_job_id: '11687056928'
+  original_post_id: '362'
+  _wp_old_slug: '362'
+author:
+  login: tidlost
+  email: tl.dr.mfw@gmail.com
+  display_name: tidlost
+  first_name: ''
+  last_name: ''
+---
+<p>I html5 har ett flertal saker förenklats.</p>
+<p>Exempel:<br />
+attributet type behövs inte längre. Här är ett exempel på skillnader.</p>
+<p>Här är med html5.<br />
+[code lang="html"]<br />
+&lt;!DOCTYPE html&gt;<br />
+&lt;html lang=&quot;en&quot;&gt;<br />
+&lt;head&gt;<br />
+   &lt;meta charset=&quot;utf-8&quot;&gt;<br />
+   &lt;title&gt;Page Title&lt;/title&gt;<br />
+   &lt;link rel=&quot;stylesheet&quot; href=&quot;style.css&quot;&gt;<br />
+   &lt;script src=&quot;script.js&quot;&gt;&lt;/script&gt;<br />
+&lt;/head&gt;<br />
+&lt;body&gt;<br />
+... &lt;!-- The rest is content --&gt;<br />
+&lt;/body&gt;<br />
+&lt;/html&gt;<br />
+[/code]</p>
+<p>Här är tidigare html.<br />
+[code lang="html"]<br />
+&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01//EN&quot; &quot;http://www.w3.org/TR/html4/strict.dtd&quot;&gt;<br />
+&lt;html lang=&quot;en&quot;&gt;<br />
+ &lt;head&gt;<br />
+    &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html&quot; charset=&quot;utf-8&quot;&gt;<br />
+    &lt;title&gt;title&lt;/title&gt;<br />
+    &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;style.css&quot;&gt;<br />
+    &lt;script type=&quot;text/javascript&quot; src=&quot;script.js&quot;&gt;&lt;/script&gt;<br />
+ &lt;/head&gt;<br />
+&lt;body&gt;<br />
+...<br />
+&lt;/body&gt;<br />
+&lt;/html&gt;<br />
+[/code]</p>
+<p>TYPE behövs inte längre, varken när man länkar script eller css.</p>
+<p>DOCTYPE<br />
+Doctype är bra att skriva ut eftersom en modern webbläsare har flera olika rendering-engines beroende på html-versionen, så att tydligt deklarera vilken version som används kan underlätta arbetet för webb-läsaren.</p>
+<p>meta charset="utf-8<br />
+Innebär en säkerhetsrisk om den inte skrivs ut. Om det inte skrivs ut kan Explorer tolka det som att sidan är skriven i utf-7, vilket gör att harmlös användar-input blir html-injektioner. charset ska deklareras inom de första 500-byten. <a href="https://code.google.com/p/doctype-mirror/wiki/ArticleUtf7">Här kan du läsa mer om riskerna.</a></p>
+<p>Här är en bra bild som beskriver de nya html5-taggarna.<br />
+<img src="{{ site.baseurl }}/assets/pictureOfStructuringElements.jpg" alt="position av html5-taggar" /></p>

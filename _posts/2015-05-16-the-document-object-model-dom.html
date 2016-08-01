@@ -1,0 +1,44 @@
+---
+layout: post
+title: The Document Object Model (DOM)
+date: 2015-05-16 18:05:40.000000000 -03:00
+type: post
+published: true
+status: publish
+categories:
+- web-utveckling
+tags: []
+meta:
+  _publicize_pending: '1'
+  sharing_disabled: '1'
+  _rest_api_published: '1'
+  _rest_api_client_id: "-1"
+  original_post_id: '244'
+  _wp_old_slug: '244'
+author:
+  login: tidlost
+  email: tl.dr.mfw@gmail.com
+  display_name: tidlost
+  first_name: ''
+  last_name: ''
+---
+<p>DOM är en model över hur olika objekt i ett dokument förhåller sig till varandra.</p>
+<p>Varje objekt är en node. Här är ett exempel<br />
+[code language="html"]<br />
+&lt;p&gt;Här är text&lt;/p&gt;<br />
+[/code]</p>
+<p>Den här koden består av två noder. Ett element (p) och en text-node (Här är text). Text-noden anses vara child-node i förhållande till (p) eftersom den är nested inom p.</p>
+<p>[code language="html"]<br />
+&lt;p&gt;Här är &lt;strong&gt;text&lt;/strong&gt;&lt;/p&gt;<br />
+[/code]</p>
+<p>I denna kod har p fått ett till child, nämligen (strong). Strong har i sin tur fått ett barn "text".</p>
+<p>Sen finns det attribute-node. Som till exempel:</p>
+<p>[code language="html"]<br />
+&lt;p ALIGN=&quot;right&quot;&gt;Här är &lt;strong&gt;text&lt;/strong&gt;&lt;/p&gt;<br />
+[/code]</p>
+<p>ALIGN är här ett tredje exempel på en node.<br />
+De tre vanligaste noderna är alltså <strong>element-node</strong>, <strong>text-note</strong> och <strong>attribute-node</strong>, även whitespace mellan taggar är text-noder. Kan vara bra att känna till.</p>
+<p>Så hela html-dokumentet kan förstås som ett träd.</p>
+<p>Att förstå hur dessa noder hänger ihop är viktigt för att kunna manipulera dem, något som oftast görs med hjälp av JavaScript.</p>
+<p>För mer om detta. <a href="http://www.quirksmode.org/dom/intro.html">Länk.</a><br />
+En <a href="https://www.youtube.com/watch?v=TmQ_v5LsakQ">bra video</a> som förklarar DOM.</p>

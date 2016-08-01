@@ -1,0 +1,37 @@
+---
+layout: post
+title: Deploya en app - Olika sätt
+date: 2016-02-12 13:24:05.000000000 -03:00
+type: post
+published: true
+status: publish
+categories: []
+tags: []
+meta:
+  _publicize_pending: '1'
+  _rest_api_published: '1'
+  _rest_api_client_id: "-1"
+  _publicize_job_id: '19732090350'
+  original_post_id: '756'
+  _wp_old_slug: '756'
+  _oembed_6859b230289a960a38d31ade1f52943d: "{{unknown}}"
+  _oembed_bca3a7f40470e032fd3fd4bef209c93f: "{{unknown}}"
+author:
+  login: tidlost
+  email: tl.dr.mfw@gmail.com
+  display_name: tidlost
+  first_name: ''
+  last_name: ''
+---
+<p>https://www.digitalocean.com/community/tutorials/how-to-set-up-automatic-deployment-with-git-with-a-vps<br />
+1. Logga in på VPS.<br />
+2. Skapa <strong>git init --bare</strong> i vps.<br />
+3. Gå till hooks, skapa filen post-receive<br />
+4. Lägg till följande<br />
+[code lang="bash"]<br />
+#!/bin/sh<br />
+git --work-tree=/var/www/domain.com --git-dir=/var/repo/site.git checkout -f<br />
+[/code]<br />
+5. chmod +x post-receive<br />
+6. git remote add live ssh://user@mydomain.com/var/repo/site.git<br />
+7. git push live master</p>

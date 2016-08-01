@@ -1,0 +1,84 @@
+---
+layout: post
+title: Bra bashkommandon
+date: 2015-04-24 15:44:53.000000000 -03:00
+type: post
+published: true
+status: publish
+categories:
+- how-to
+tags: []
+meta:
+  _publicize_pending: '1'
+  sharing_disabled: '1'
+  _rest_api_published: '1'
+  _rest_api_client_id: "-1"
+  _publicize_job_id: '16328665013'
+  original_post_id: '136'
+  _wp_old_slug: '136'
+author:
+  login: tidlost
+  email: tl.dr.mfw@gmail.com
+  display_name: tidlost
+  first_name: ''
+  last_name: ''
+---
+<p><strong>Allmänt</strong><br />
+win; stoppar tidigare commando<br />
+# - betyder kommentar</p>
+<p><strong>Söka</strong></p>
+<p>Söka igenom filer efter specifikt ord. -R betyder att den söker rekursivt, alltså går igenom undermappar.</p>
+<p>grep -R [ord] /Users/davocomp/mapp</p>
+<p><strong>Exempel:</strong> grep -R hejsan /Users/davocomp/mapp</p>
+<p>Ett annat sätt att söka är att använda find.<br />
+find ~/dinMapp -iname "*ord*"<br />
+Detta gör att du söker i mappen dinMapp, -iname gör att du söker stora och små bokstäver. * är en wildcard innan och efter sökningsordet.</p>
+<p><strong>Öppna application</strong><br />
+på mac är det:<br />
+open -a namnpåapplication</p>
+<p><strong>Stänga applicationer</strong><br />
+<strong>osascript -e 'quit app "APPLICATIONNAME"'</strong><br />
+Exempel: osascript -e 'quit app "Calendar"'</p>
+<p>Ett annat är att hitta applicationens PID å sen stänga genom det.<br />
+det kan göras genom kommandot<br />
+pgrep Safari<br />
+eller ps -ax | grep Safari<br />
+sedan kill 467<br />
+eller tillsammans:<br />
+kill `pgrep 456`<br />
+ett annat sätt är att köra följande kombination<br />
+<strong>pgrep Skype | xargs kill</strong></p>
+<p><strong>TOP</strong><br />
+För att visa vilka processorer som är aktiva så kan man använda top.<br />
+För att se vilka processer som kostar mest så använd:<br />
+top -o cpu </p>
+<p><strong>Kopiera</strong><br />
+cp namnpafil namnpakopieradfil<br />
+cp /plats/fran/var/filen/Finns.tx /till/plats/du/vill/kopiera</p>
+<p>Ta bort<br />
+rm namnpåfil<br />
+rmdir namnpåmapp</p>
+<p><strong>Lista filer</strong><br />
+<strong>ls</strong><br />
+<strong>la</strong><br />
+<strong>ls -S</strong> För att sortera efter size. </p>
+<p><strong>Ladda ner</strong><br />
+curl är ett bra sätt att ladda ner sidor<br />
+curl http://www.dn.se<br />
+om du sedan vill spara hela html-dokumentet i en fil så gör du<br />
+curl http://www.dn.se &gt;&gt; namnpåfil<br />
+om du vill söka igenom filen och bara spara de rader som berör något specifik så kan du använda:<br />
+curl http://www.dn.se | egrep sökning &gt;&gt; output<br />
+För att ta bort alla filer och mappar som finns i en mapp använd följande kommando med stor försiktighet. Det krävs sudo för att köra det. Och om du använder det fel, å tar bort hela filsystemet så är datorn körd.<br />
+rm -rf namnpåmapp</p>
+<p><strong>Skapa ett helt directory tree med ett kommando</strong><br />
+Extremt användbart.<br />
+mkdir -p public/{js,css} data views/{controller,views}<br />
+Detta kommando kommer alltså skapa ett träd som ser ut som följande </p>
+<p>public|<br />
+---------js|<br />
+---------css|<br />
+data|<br />
+view|<br />
+-------controller<br />
+-------views</p>

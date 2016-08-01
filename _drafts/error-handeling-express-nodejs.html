@@ -1,0 +1,35 @@
+---
+layout: post
+title: Error handeling Express/NodeJS
+date: 
+type: post
+published: false
+status: draft
+categories: []
+tags: []
+meta:
+  _oembed_224de8b1bfe6682444259ad5344810c4: "{{unknown}}"
+  _oembed_c703dbc2ece688581859f8270b2aa582: "{{unknown}}"
+author:
+  login: tidlost
+  email: tl.dr.mfw@gmail.com
+  display_name: tidlost
+  first_name: ''
+  last_name: ''
+---
+<p>The bad part of NodeJS is that is really easy to make it crash. You don't have to be very creative to to find a way to kill a Node-server. Sure, you are probably using forever or pm2 or some other tool to automatically restart the server. But if you want to create a annoying Denial Of Service-attack you can just run a script that crashes the server every few minutes. It just takes one request to do it.</p>
+<p>Let's say to are sending a JSON from the client with some input-data from the user. You are probably validating it in the client, and you might even be validating it on the server-side. But that doesn't really help if you have a malicious user the intercepts the request and manipulate the JSON-syntax, so that it becomes incorrect. Just add a comma after the last element in the JSON-object. When the bodyParser-middleware recieves the syntactiaclly incorrect JSON the server will crash. This is just one example of the many ways that the app can crash.</p>
+<p>Unless, you handle the error of course. </p>
+<p>[code]<br />
+app.use(cookieParser());<br />
+app.use(bodyParser.urlencoded({extended: true }));</p>
+<p>app.use(function(err,req,res,next){<br />
+if(err){<br />
+    // console.log(err);<br />
+    logger.error(err);<br />
+    return res.status(err.status).send(&quot;Something fucked up&quot;);<br />
+}<br />
+  next();<br />
+});</p>
+<p>[/code]</p>
+<p>https://github.com/expressjs/body-parser/issues/26</p>

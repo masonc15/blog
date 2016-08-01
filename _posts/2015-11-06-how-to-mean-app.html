@@ -1,0 +1,42 @@
+---
+layout: post
+title: How to - MEAN-app
+date: 2015-11-06 20:59:49.000000000 -03:00
+type: post
+published: true
+status: publish
+categories: []
+tags: []
+meta:
+  _publicize_pending: '1'
+  sharing_disabled: '1'
+  _rest_api_published: '1'
+  _rest_api_client_id: "-1"
+  _publicize_job_id: '16607466502'
+  original_post_id: '555'
+  _wp_old_slug: '555'
+author:
+  login: tidlost
+  email: tl.dr.mfw@gmail.com
+  display_name: tidlost
+  first_name: ''
+  last_name: ''
+---
+<p><strong>Starta express-servern</strong><br />
+1. Skapa en mapp med app-namnet.</p>
+<p>2. I mappen skriv <strong>npm init</strong>, eller något sådant för att automatiskt generera en package-file.</p>
+<p>3. Skapa en server.js-fil, eller app.js.<br />
+ - Importera de moduler som du behöver: http, express, path, fs.<br />
+ - routra de filer du vill servera.<br />
+ - importera databasen</p>
+<p>4. Öppna upp mongod, och dess shell mongo.<br />
+Skapa en databas med kommandot:<br />
+<strong>use namnPåDatabas</strong><br />
+lägg till innehåll med kommandot:<br />
+<strong>db.usercollection.insert({"username" : "pelle88", "name" : "pelle"})</strong><br />
+läs i databasen genom kommandot.<br />
+<strong> db.usercollection.find().pretty();</strong></p>
+<p>5. Skapa index.jade<br />
+- Lägg till text.<br />
+- För att koppla filen till databasen behöver man typ något slags each-statement eller något liknande.</p>
+<p>6. Starta servern å beskåda verket.</p>

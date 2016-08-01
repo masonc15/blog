@@ -1,0 +1,60 @@
+---
+layout: post
+title: Mongo-db shell kommands
+date: 2015-11-16 17:49:21.000000000 -03:00
+type: post
+published: true
+status: publish
+categories: []
+tags: []
+meta:
+  _publicize_pending: '1'
+  sharing_disabled: '1'
+  _rest_api_published: '1'
+  _rest_api_client_id: "-1"
+  _publicize_job_id: '16912812754'
+  original_post_id: '573'
+  _wp_old_slug: '573'
+author:
+  login: tidlost
+  email: tl.dr.mfw@gmail.com
+  display_name: tidlost
+  first_name: ''
+  last_name: ''
+---
+<p>Fler kommandon finns <a href="https://docs.mongodb.org/manual/reference/mongo-shell/">här</a>.</p>
+<p><strong>Visa alla databaser</strong><br />
+show dbs<br />
+eller<br />
+show databases</p>
+<p><strong>Visa vilken databas du är i nu</strong><br />
+db</p>
+<p><strong>skapa en databas</strong><br />
+use namn-på-databas</p>
+<p><strong>Infoga info i databas</strong><br />
+Först gå in i databasen genom use namn-på-databas sedan:<br />
+db.namn-på-collection.insert({"namn" : "Lars", "age" : 10});</p>
+<p><strong>Byt till annan databas</strong><br />
+use namn-på-databas</p>
+<p><strong>Via en databas olika collections</strong><br />
+show collections</p>
+<p><strong>Visa de fem senaste kommandona</strong><br />
+show profile</p>
+<p><strong>Visa innehållet i en viss collection.</strong><br />
+Först gå till rätt databas genom use sedan:<br />
+db.namn-på-collection.find()<br />
+För att göra det lite mer läsvändligt så lägg till pretty:<br />
+db.namn-på-collection.find().pretty();</p>
+<p><strong>Ta bort en viss collection</strong><br />
+db.namn-på-collection.drop();</p>
+<p><strong>Visa nuverande databas som jag är i</strong><br />
+db.getName();</p>
+<p><strong>Ta bort en databas helt å hållet</strong><br />
+use namn-på-databas<br />
+db.dropDatabase();</p>
+<p><strong>Ta bort en collection</strong><br />
+db.namnpåcollection.remove({});</p>
+<p><strong>Uppdatera dokument</strong><br />
+db.namnpåcollection.update({firstName : "Lars"}, {$set : {"firstName" : "Jerry"}});</p>
+<p><strong>Ta bort alla document i en collection</strong><br />
+db.namnpåcolletion.remove({});</p>

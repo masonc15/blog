@@ -1,0 +1,33 @@
+---
+layout: post
+title: JQuery på lokal dator
+date: 2015-04-25 22:05:24.000000000 -03:00
+type: post
+published: true
+status: publish
+categories:
+- how-to
+- jQuery
+- web-utveckling
+tags: []
+meta:
+  _publicize_pending: '1'
+  _rest_api_client_id: "-1"
+  _rest_api_published: '1'
+  sharing_disabled: '1'
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: tidlost
+  email: tl.dr.mfw@gmail.com
+  display_name: tidlost
+  first_name: ''
+  last_name: ''
+---
+<p>JQuery är, som jag förstått det, ett javascripsbibliotek. För att en hemsida ska kunna använda sig av biblioteket måste det laddas ner. Ett sätt är att ladda ner det till datorn eller till servern. Det andra sättet är att låta biblioteket laddas ner från google.</p>
+<p>Att låta biblioteket laddas ner från google medför flera fördelar, här är de två främsta:</p>
+<p>1. Eftersom google har ett nätverk av servrar runt om i hela världen så kommer nedladdningen av biblioteket sannolikt gå fortare om det sker via dom, istället för min server. Om en chilenare vill gå in på min hemsida måste de ladda ner biblioteket från min server i Sverige, men om jag använt mig av googles hosting så skulle de ladda ner informationen från en server som antagligen står närmare Chile.</p>
+<p>2. Den andra fördelen har å göra med caching. Sidbesökaren har kanske redan cachat biblioteket vid besök av en annan sida. I så fall behöver hen inte ens ladda ner biblioteket, vilket gör att sidan laddas ännu snabbare.</p>
+<p>I html-koden skall ordningen vara följande: först länk till CSS, sedan http-länk till jQuery-biblioteket, och därefter länk till det lokala scriptet. Biblioteket måste först hämtas innan det lokala scriptet kan förstås. Om det är motsatta så kommer inte skriptet känna till funktionerna.<br />
+[code language="html"]&lt;script src=&quot;https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js&quot;&gt;&lt;/script&gt;</p>
+<p>&lt;script src=&quot;script.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;[/code]</p>

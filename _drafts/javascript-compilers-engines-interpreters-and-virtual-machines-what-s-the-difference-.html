@@ -1,0 +1,33 @@
+---
+layout: post
+title: JavaScript Compilers, Engines, Interpreters and Virtual Machines - What's the
+  difference?
+date: 
+type: post
+published: false
+status: draft
+categories: []
+tags: []
+meta:
+  _edit_last: '1959580'
+author:
+  login: tidlost
+  email: tl.dr.mfw@gmail.com
+  display_name: tidlost
+  first_name: ''
+  last_name: ''
+---
+<p>Virtual Machine == Compiler?<br />
+A Compiler do the following:<br />
+Syntax parsing<br />
+Creates Syntax tree<br />
+Translates it to bytecode<br />
+Then, sometimes to Machine Code</p>
+<p>Lexical Environment</p>
+<p>Execution Context<br />
+As I understand it the Execution Context in like the scope where a code is positioned, that means not inside a function. If you run an empty javascript file in your browser the Engine (V8 in Chrome) automatically creates the Global Object. The global object can be reached with the keyword "this". In a browser the Global Object is the same as the Window Object. In NodeJS you don't have a Window Object, but instead you have another object that is filled with stuff.</p>
+<p>So when the Engine executes your code it does so in two phases. In the first face it goes through all your code and takes note of all variables and functions and creates space for it in the memory. But in the memory all variables are set to undefined.<br />
+In the second phase of the execution your code is executed. And it is in this phase that the value is correctly assigned to the variables and in the memory. This explains the hoisting phenomenon.</p>
+<p>One example of the many things that engines do is coercion. So, as you probably know JavaScript is dynamically typed. That means that we don't have to define what data-type a variable is. We just call "var" and we are done. This is pretty good, because it allows us to easily change between data-types. For string to number without much problem.</p>
+<p>Frågor:<br />
+Hur mycket minne upptar en variable som är undefined? hur stor är ett objekt?</p>

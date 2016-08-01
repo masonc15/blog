@@ -1,0 +1,49 @@
+---
+layout: post
+title: Hur man lägger till javascript-fil in en wordpress child
+date: 2015-08-06 15:17:04.000000000 -03:00
+type: post
+published: true
+status: publish
+categories:
+- jQuery
+- wordpress
+tags: []
+meta:
+  _publicize_pending: '1'
+  sharing_disabled: '1'
+  _rest_api_published: '1'
+  _rest_api_client_id: "-1"
+  _publicize_job_id: '13465193745'
+  original_post_id: '417'
+  _wp_old_slug: '417'
+author:
+  login: tidlost
+  email: tl.dr.mfw@gmail.com
+  display_name: tidlost
+  first_name: ''
+  last_name: ''
+---
+<p>Wordpress har redan jQuery inbyggt, så du behöver bara lägga till ditt script.  </p>
+<p>1. Gå till child-temat och gå in i filen functions.php.<br />
+Lägg där till följande kod.<br />
+<code><br />
+function add_my_script() {<br />
+    wp_enqueue_script(<br />
+        'myscript', // namnge ditt script.<br />
+        get_stylesheet_directory_uri() . '/js/myscript.js', // lagg till korrekt adress och namn pa skriptet<br />
+        array('jquery') // this array lists the scripts upon which your script depends<br />
+    );<br />
+}<br />
+add_action( 'wp_enqueue_scripts', 'add_my_script' );</p>
+<p></code></p>
+<p>Anledningen till att det är get_stylesheet_directory_uri() och inte get_template_directory_uri() är för att detta är ett child-tema. Om det inte hade varit då, då skulle du använt get_template_directory_uri().</p>
+<p>2. Lägg nu till namnet och korrekt adress till. I det här fallet heter skriptet myscript.js och ligger i mappen js, därför är det korrekt att skriva "/js/myscript.js".</p>
+<p>3. Notera att i ditt script så kan du inte använda $, istället bör du använda ordet "jQuery". Här är ett exempel på ett skript och hur det bör se ut om det används i wordpress.</p>
+<p><code><br />
+jQuery(document).ready(function(){<br />
+    jQuery("img").click(function(){<br />
+    jQuery("img").fadeOut("fast");<br />
+    });</p>
+<p>});<br />
+</code></p>

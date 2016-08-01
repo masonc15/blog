@@ -1,0 +1,56 @@
+---
+layout: post
+title: Atom plugins and configs
+date: 2016-07-08 16:58:51.000000000 -04:00
+type: post
+published: true
+status: publish
+categories: []
+tags: []
+meta:
+  _rest_api_published: '1'
+  _rest_api_client_id: "-1"
+  _publicize_job_id: '24596769897'
+author:
+  login: tidlost
+  email: tl.dr.mfw@gmail.com
+  display_name: tidlost
+  first_name: ''
+  last_name: ''
+---
+<p>
+Plugins<br />
+- Minimap<br />
+Show a minimap.<br />
+- file-icons<br />
+Show nice file-icons in the file-tree.<br />
+- <a href="https://atom.io/packages/merge-conflicts">merge-conflicts</a><br />
+Show git merge-conflicts in a more intuitive way.<br />
+- keyboard-localization<br />
+If you have a non-english keyboard.<br />
+- react<br />
+Show react-syntax.<br />
+- pigments<br />
+- <a href="https://atom.io/packages/multi-cursor-plus">multi-cursor-plus</a><br />
+This is a great plugin. For the times you want to use multiple cursors but now exactly below each other. It requires a copy-paste configuration.<br />
+- <a href="https://atom.io/packages/color-picker">color-picker</a><br />
+Makes it a bit easier to select colors for your css<br />
+- linter<br />
+To automatically check the code.<br />
+- linter-jshint<br />
+For linter to work on JS<br />
+Here is a list of other languages <a href="https://atomlinter.github.io/">languages</a><br />
+- linter-markdown<br />
+- atom-terminal<br />
+this plugin let's you run ctr-alt-t in any file, and a terminal will open up in that directory</p>
+<p>Themes<br />
+atom-material-ui<br />
+Syntax<br />
+atom-material-syntax</p>
+<p>This can be done fast with the atom package manager</p>
+<p>[code]apm install minimap file-icons merge-conflicts keyboard-localization react pigments multi-cursor-plus color-picker linter linter-jshint atom-material-syntax atom-material-ui atom-terminal[/code]</p>
+<p>Paste in this in your keymap.json file to get the comment function to work correctly.<br />
+[code]<br />
+'atom-workspace atom-text-editor:not([mini])':<br />
+  'ctrl-7': 'editor:toggle-line-comments'<br />
+[/code]</p>

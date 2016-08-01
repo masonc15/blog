@@ -1,0 +1,52 @@
+---
+layout: post
+title: Bra css/jQuery/js trix
+date: 2015-10-19 03:11:52.000000000 -03:00
+type: post
+published: true
+status: publish
+categories:
+- css
+- javascript
+- jQuery
+tags: []
+meta:
+  _publicize_pending: '1'
+  sharing_disabled: '1'
+  _rest_api_published: '1'
+  _rest_api_client_id: "-1"
+  _publicize_job_id: '15966805468'
+  original_post_id: '527'
+  _wp_old_slug: '527'
+author:
+  login: tidlost
+  email: tl.dr.mfw@gmail.com
+  display_name: tidlost
+  first_name: ''
+  last_name: ''
+---
+<h1>Smooth-scroll till en sektion</h1>
+<p>Gör smooth-scroll till en sektion.<br />
+Lägg till den här koden i din .js-fil. Och ankra sedan länkarna till deras ID. Ex. Koden är copypastad <a href="https://css-tricks.com/snippets/jquery/smooth-scrolling/">här</a>.</p>
+<p>[code lang="html"]<br />
+&lt;section id=&quot;portfolio-section&quot;&gt;<br />
+&lt;/section&gt;<br />
+[/code]<br />
+[code lang="js"]<br />
+$(function() {<br />
+  $('a[href*=#]:not([href=#])').click(function() {<br />
+    if (location.pathname.replace(/^//,'') == this.pathname.replace(/^//,'') &amp;&amp; location.hostname == this.hostname) {<br />
+      var target = $(this.hash);<br />
+      target = target.length ? target : $('[name=' + this.hash.slice(1) +']');<br />
+      if (target.length) {<br />
+        $('html,body').animate({<br />
+          scrollTop: target.offset().top<br />
+        }, 1000);<br />
+        return false;<br />
+      }<br />
+    }<br />
+  });<br />
+});<br />
+[/code]</p>
+<h1>Fade in från vänster eller höger när man skrollar ner</h1>
+<p><a href="http://jackonthe.net/css3animateit/">Här</a> finns filerna och dokumentationen. </p>

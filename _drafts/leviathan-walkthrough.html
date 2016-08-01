@@ -1,0 +1,135 @@
+---
+layout: post
+title: Leviathan Walkthrough
+date: 
+type: post
+published: false
+status: draft
+categories: []
+tags: []
+meta: {}
+author:
+  login: tidlost
+  email: tl.dr.mfw@gmail.com
+  display_name: tidlost
+  first_name: ''
+  last_name: ''
+---
+<p>Okay, so I am a bit all over the place now. </p>
+<h2>Leviathan 00</h2>
+<p>There is a file called bookmarks.html</p>
+<p>So yeah I bascially just grepped for a password in it and it gave me the password.</p>
+<p>[code]<br />
+leviathan0@melinda:~/.backup$ grep  password bookmarks.html<br />
+&amp;amp;amp;lt;DT&amp;amp;amp;gt;&amp;amp;amp;lt;A HREF=&amp;amp;amp;quot;http://leviathan.labs.overthewire.org/passwordus.html | This will be fixed later, the password for leviathan1 is rioGegei8m&amp;amp;amp;quot; ADD_DATE=&amp;amp;amp;quot;1155384634&amp;amp;amp;quot; LAST_CHARSET=&amp;amp;amp;quot;ISO-8859-1&amp;amp;amp;quot; ID=&amp;amp;amp;quot;rdf:#$2wIU71&amp;amp;amp;quot;&amp;amp;amp;gt;password to leviathan1&amp;amp;amp;lt;/A&amp;amp;amp;gt;</p>
+<p>[/code]</p>
+<h2>Level 01</h2>
+<p>Here we have a binary called check. In order to solve this challenge we are going to have to do some basic reverse engineering.</p>
+<p>First lets check what type of file it is.</p>
+<p>[code]<br />
+leviathan1@melinda:~$ file check<br />
+check: setuid ELF 32-bit LSB  executable, Intel 80386, version 1 (SYSV), dynamically linked (uses shared libs), for GNU/Linux 2.6.24, BuildID[sha1]=0d17ae20f672ebc7d440bb4562277561cc60f2d0, not stripped<br />
+[/code]</p>
+<p>So we know it is a setuid ELF 32-bit executable. And it is not stripped. </p>
+<p>So let's see if we can see anything in the strings.</p>
+<p>[code]<br />
+leviathan1@melinda:~$ strings check<br />
+/lib/ld-linux.so.2<br />
+Eb'ua<br />
+libc.so.6<br />
+_IO_stdin_used<br />
+puts<br />
+__stack_chk_fail<br />
+printf<br />
+getchar<br />
+system<br />
+strcmp<br />
+__libc_start_main<br />
+__gmon_start__<br />
+GLIBC_2.4<br />
+GLIBC_2.0<br />
+PTRh`<br />
+QVh-<br />
+D$,1<br />
+D$%secrf<br />
+D$)et<br />
+D$ love<br />
+T$,e3<br />
+[^_]<br />
+password:<br />
+/bin/sh<br />
+Wrong password, Good Bye ...<br />
+;*2$&amp;amp;amp;quot;<br />
+[/code]<br />
+This part looks suspicious: D$,1<br />
+D$%secrf<br />
+D$)et<br />
+D$ love<br />
+T$,e3</p>
+<p>Let's see what we can get by using ltrace.<br />
+Ltrace basically traces the calls that are done in the program. </p>
+<p>[code]<br />
+leviathan1@melinda:~$ ltrace ./check<br />
+__libc_start_main(0x804852d, 1, 0xffffd694, 0x80485f0 &amp;amp;amp;lt;unfinished ...&amp;amp;amp;gt;<br />
+printf(&amp;amp;amp;quot;password: &amp;amp;amp;quot;)                                                                     = 10<br />
+getchar(0x8048680, 47, 0x804a000, 0x8048642password: pelle<br />
+)                                             = 112<br />
+getchar(0x8048680, 47, 0x804a000, 0x8048642)                                             = 101<br />
+getchar(0x8048680, 47, 0x804a000, 0x8048642)                                             = 108<br />
+strcmp(&amp;amp;amp;quot;pel&amp;amp;amp;quot;, &amp;amp;amp;quot;sex&amp;amp;amp;quot;)                                                                     = -1<br />
+puts(&amp;amp;amp;quot;Wrong password, Good Bye ...&amp;amp;amp;quot;Wrong password, Good Bye ...<br />
+)                                                     = 29<br />
++++ exited (status 0) +++<br />
+leviathan1@melinda:~$<br />
+[/code]</p>
+<p>Okay, so three functions are invoked here. printf, strcmp and puts. prinf just prints out the text. strcmp compares out input-string with the string sex. And puts outputs some more text.<br />
+So here we can see that the password is sex.</p>
+<p>So we enter the password and we are now leviathan2. Now we can look for files belonging to leviathan2.</p>
+<p>[code]<br />
+find / -user leviathan2 2&amp;amp;amp;gt;/dev/null<br />
+/etc/leviathan_pass/leviathan2<br />
+[/code]</p>
+<p>So there we have our password.<br />
+ougahZi8Ta</p>
+<h2>Level 02</h2>
+<p>[code]<br />
+leviathan2@melinda:~$ ls -la<br />
+total 28<br />
+drwxr-xr-x   2 root       root       4096 Nov 14  2014 .<br />
+drwxr-xr-x 167 root       root       4096 Jul  9  2015 ..<br />
+-rw-r--r--   1 root       root        220 Apr  9  2014 .bash_logout<br />
+-rw-r--r--   1 root       root       3637 Apr  9  2014 .bashrc<br />
+-rw-r--r--   1 root       root        675 Apr  9  2014 .profile<br />
+-r-sr-x---   1 leviathan3 leviathan2 7498 Nov 14  2014 printfile<br />
+[/code]</p>
+<p>So we have a file that is owned by leviathan3, but leviathan2 is in the same group. And thus have the ability to execute it.</p>
+<p>ss</p>
+<h2>Level 03 </h2>
+<p>strings level3<br />
+tells us the following functons are used. I think.</p>
+<p>puts<br />
+__stack_chk_fail<br />
+stdin<br />
+printf<br />
+fgets<br />
+system<br />
+strcmp</p>
+<p>[You've got shell]!<br />
+/bin/sh<br />
+bzzzzzzzzap. WRONG<br />
+Enter the password&gt;<br />
+;*2$"<br />
+secret</p>
+<p>[code]<br />
+strcmp(&quot;h0no33&quot;, &quot;kakaka&quot;)                                                                                                     = -1<br />
+printf(&quot;Enter the password&gt; &quot;)                                                                                                 = 20<br />
+fgets(Enter the password&gt; pelle<br />
+&quot;pelle\n&quot;, 256, 0xf7fcbc20)                                                                                              = 0xffffd47c<br />
+strcmp(&quot;pelle\n&quot;, &quot;snlprintf\n&quot;)                                                                                               = -1<br />
+puts(&quot;bzzzzzzzzap. WRONG&quot;bzzzzzzzzap. WRONG<br />
+)<br />
+[/code]<br />
+Okay so it looks like it is comparding the sinput string to the string snlprintf<br />
+So, we have two strings that are compared.<br />
+/root/OverTheWire-games/games/leviathan/leviathan3</p>
+<p>vuH0coox6m</p>
