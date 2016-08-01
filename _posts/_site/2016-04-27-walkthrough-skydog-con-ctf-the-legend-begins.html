@@ -1,0 +1,144 @@
+<p>Okay, I wish I could say that I really solved this but I didn't get all the flags. But I am going to do a write up anyways, to not forget what I learned.</p>
+<p>The CTF is called SkyDog Con CTF – The Legend Begins, and can be found <a href="https://www.vulnhub.com/entry/skydog-1,142/">here</a>. Thanks <a href="http://www.jamesbower.com/">James Bower</a> for a fun CTF!</p>
+<h3>Instructions</h3>
+<p>The CTF is a virtual machine and works best in Virtual Box. This OVA was created using Virtual Box 4.3.32. Download the OVA file open up Virtual Box and then select File –&gt; Import Appliance. Choose the OVA file from where you downloaded it. After importing the OVA file above it is best to disable the USB 2.0 setting before booting up the VM. The networking is setup for a NAT Network but you can change this before booting up depending on your networking setup. If you have any questions please send me a message on Twitter @jamesbower and I’ll be happy to help.</p>
+<p><strong>Goal of Sky Dog Con CTF</strong></p>
+<p>The purpose of this CTF is to find all six flags hidden throughout the server by hacking network and system services. This can be achieved without hacking the VM file itself.</p>
+<p><strong>Flags</strong></p>
+<p>The six flags are in the form of flag{MD5 Hash} such as flag{1a79a4d60de6718e8e5b326e338ae533</p>
+<p>Flag #1 Home Sweet Home or (A Picture is Worth a Thousand Words)<br />
+Flag #2 When do Androids Learn to Walk?<br />
+Flag #3 Who Can You Trust?<br />
+Flag #4 Who Doesn’t Love a Good Cocktail Party?<br />
+Flag #5 Another Day at the Office<br />
+Flag #6 Little Black Box</p>
+<h3>First flag<br />
+Let's search the network and scan the machine.<br />
+[code]<br />
+$ nmap -v 192.168.1.1/24                                                                                                [19:03:49]</p>
+<p>Nmap scan report for 192.168.1.108<br />
+Host is up (0.0053s latency).<br />
+Not shown: 998 closed ports<br />
+PORT   STATE SERVICE<br />
+22/tcp open  ssh<br />
+80/tcp open  http</p>
+<p>$ nmap -A -T4 -v -p- 192.168.1.108                                                                                      [19:06:08]</p>
+<p>PORT   STATE SERVICE VERSION<br />
+22/tcp open  ssh     OpenSSH 6.6.1p1 Ubuntu 2ubuntu2 (Ubuntu Linux; protocol 2.0)<br />
+| ssh-hostkey:<br />
+|   1024 c8:f7:5b:33:8a:5a:0c:03:bb:6b:af:2d:a9:70:d3:01 (DSA)<br />
+|   2048 01:9f:dd:98:ba:be:de:22:4a:48:4b:be:8d:1a:47:f4 (RSA)<br />
+|_  256 f8:a9:65:a5:7c:50:1d:fd:71:57:92:38:8b:ee:8c:0a (ECDSA)<br />
+80/tcp open  http    Apache httpd 2.4.7 ((Ubuntu))<br />
+| http-methods:<br />
+|_  Supported Methods: GET HEAD POST OPTIONS<br />
+| http-robots.txt: 252 disallowed entries (15 shown)<br />
+| /search /sdch /groups /catalogs /catalogues /news /nwshp<br />
+| /setnewsprefs? /index.html? /? /?hl=*&amp; /?hl=*&amp;*&amp;gws_rd=ssl<br />
+|_/addurl/image? /mail/ /pagead/<br />
+|_http-server-header: Apache/2.4.7 (Ubuntu)<br />
+|_http-title: Site doesn't have a title (text/html).<br />
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel<br />
+[/code]</p>
+<p>Okay, so we got ssh and port 80. Nmap also reveled that there's a lot of action in robots.</p>
+<p>But first I want to check out port 80.<br />
+On the first page there is a image. I remember the name of the first flag: "Flag #1 Home Sweet Home or (A Picture is Worth a Thousand Words)". Okay, so I download the image and check it out in exiftool.</p>
+<p>[code]<br />
+wget http://skydog.dev/SkyDogCon_CTF.jpg</p>
+<p>exiftool SkyDogCon_CTF.jpg<br />
+[/code]</p>
+<p>And BAM first flag. Found in the comment.<br />
+[code]<br />
+XP Comment                      : flag{abc40a2d4e023b42bd1ff04891549ae2}<br />
+[/code]</p>
+<p>This is when I started getting cocky. If it is this easy, it's gonna be a breeze. Shame on me.</p>
+<p>Now I check out the robots.txt file. And BOOM another flag.</p>
+<p>[code]<br />
+# Congrats Mr. Bishop, your getting good - flag{cd4f10fcba234f0e8b2f60a490c306e6}<br />
+[/code]</p>
+<p>So in the robots file there was a lot of entries.</p>
+<p>Many of them looked like this:</p>
+<p>[code]<br />
+For example stuff like this<br />
+Allow: /?hl=*&amp;gws_rd=ssl$<br />
+Disallow: /?hl=*&amp;*&amp;gws_rd=ssl<br />
+Allow: /?gws_rd=ssl$<br />
+Allow: /?pt1=true$<br />
+[/code]</p>
+<p>I was sure that this was meant for some sql-injections. So I fired up sqlmapping, but nothing.</p>
+<p>So I figured that I would see which of all the pages worked, because most of them 404ed. So in order to do that in a efficient way (and inefficient, since nikto already told me which pages responded with 200) I figured that it would be fun to do it with bash.</p>
+<p>There are probably a million ways to write this code in a better way. But it worked for me.</p>
+<p>First I used cut to cut out all the urls and store them in a file I called robbo.<br />
+[code lang="bash"]<br />
+cut -d/ -f2-5 robots.txt &gt; robbo<br />
+[/code]</p>
+<p>Then I wrote and ran this little script, which outputs the headers of the requests into the file output.<br />
+[code lang="bash"]<br />
+#!/bin/bash</p>
+<p>while read p; do<br />
+  #echo $p<br />
+  echo http://skydog.dev/&quot;$p&quot; &gt;&gt; output<br />
+  curl --head http://skydog.dev/&quot;$p&quot; &gt;&gt; output<br />
+done &lt;robbo<br />
+[/code]</p>
+<p>Then I ran grep on that file to show me all the 200s.<br />
+[code lang="bash"]<br />
+grep 200 -A 3 -B 3 output<br />
+[/code]</p>
+<p>So yeah, not very efficient. But it led me to this url: http://skydog.dev/Setec/<br />
+But that was not really thanks to my crappy script. I had found it when I used the spider in ZAP as well. Anyways, that page led me to this: http://skydog.dev/Setec/Astronomy/ where I found the zipfile Whistler.zip.</p>
+<p>I downloaded it and tried to open it. But it required a password. So I started googeling and found fcrackzip. And I started playing around with it. But in the end I ran the wrong command</p>
+<p>[code]<br />
+$ fcrackzip -D -p rockyou.txt Whistler.zip</p>
+<p>possible pw found: yourmother ()<br />
+possible pw found: jinglebells ()<br />
+possible pw found: 200595 ()<br />
+possible pw found: spellman ()<br />
+possible pw found: jenny86 ()<br />
+possible pw found: julie10 ()<br />
+possible pw found: nascar7 ()<br />
+possible pw found: millie25 ()<br />
+possible pw found: hackett1 ()<br />
+possible pw found: chrebet ()<br />
+[/code]</p>
+<p>It just returned tens of possible passwords. </p>
+<p>I should have run it like this:<br />
+[code]<br />
+fcrackzip -D -v -u -p rockyou.txt Whistler.zip</p>
+<p>found file 'flag.txt', (size cp/uc     50/    38, flags 9, chk 874a)<br />
+found file 'QuesttoFindCosmo.txt', (size cp/uc     72/    61, flags 9, chk 83b5)</p>
+<p>PASSWORD FOUND!!!!: pw == yourmother<br />
+[/code]</p>
+<p>Yeah I was stuck here and though that there was something wrong with the program or something. So I cheated a bit and learned the correct way to use fcrackzip.</p>
+<p>I got the flag: flag{1871a3c1da602bf471d3d76cc60cdb9b}% and a clue for the next flag:<br />
+"Time to break out those binoculars and start doing some OSINT% "</p>
+<p>So I started googeling about OSINT.<br />
+Osint stand for Open Source Intelligence. Something I didn't know of before reading about it. After reading about it on wikipedia I gather that it doesn't concern what programmers know of open source. It means more like public. Like public information gathering. It comes from the intelligence community.</p>
+<p>Here I got really stuck again. And so I cheated. Again. Sorry.<br />
+I read in another walkthrough that he had taken out words from the movie sneakers imdb and ran it through dirbuster.</p>
+<p>So I did that as well.</p>
+<p>I took the movie script and downloaded it. Then I wrote the following bash-script:<br />
+[code lang="bash"]<br />
+#!/bin/bash</p>
+<p>for word in $(&lt;sound.txt)<br />
+do<br />
+    echo &quot;$word&quot; &gt;&gt; sneakersWord2.txt<br />
+done<br />
+[/code]<br />
+It takes sound.txt as input and lines up each word in the file sneakers.txt. Which I then used in ZAP.</p>
+<p>So I found the path:</p>
+<pre>/PlayTronics/</pre>
+<p>In /PlayTronics I got the flag:<br />
+http://skydog.dev/PlayTronics/flag.txt<br />
+And the next clue. http://skydog.dev/PlayTronics/companytraffic.pcap<br />
+A package capture of network traffic. So I ran:<br />
+[code]<br />
+tcpick -C -yP -r companytraffic.pcap &gt; companytraffic.txt                                                             [/code]<br />
+And started poking around in it with grep. But yeah. I didn't really get anywhere with it. This is where I just gave up.</p>
+<p>If you want to find the rest of the flags check out <a href="https://research.g0blin.co.uk/skydog-con-ctf-writeup">g0blins great write-up</a> if you haven't already.</p>
+<h2>Conclusion</h2>
+<p>I really made a lot of mistakes on this one, and some stuff was just over my head. Like somehow remaking the sound-clip from the pcap-file. That would have been cool to do.<br />
+I would have easily gotten the zip-file if I just had learned the tool a bit better.<br />
+I should also have read the instructions better! If I had done that I would have figured out that I of course should have tried to crack the MD5 hashes.</p>
+<p>I got to play around with some more unix commands like cut, and writing a bit in bash which is always useful. I also got to try out fcrackzip, although I doubt it will ever be useful. It seems like a really old technology.</p>
+<p>So all in all a fun CTF and I learned some more. Which in the end is the most important thing.</h3>

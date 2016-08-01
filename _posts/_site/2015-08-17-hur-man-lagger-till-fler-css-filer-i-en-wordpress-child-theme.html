@@ -1,0 +1,8 @@
+<p>Du vill alltså lägga till flera css-filer i din wordpress child theme.</p>
+<p>[code lang="php"]</p>
+<p>add_action( 'wp_enqueue_scripts', 'theme_enqueue_styles' );<br />
+function theme_enqueue_styles() {<br />
+        wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' ); //Detta är css-filen i ditt parent-theme.<br />
+        wp_enqueue_style( 'hittaPaEttNamn', get_stylesheet_directory_uri() . '/css/animations.css' );/*Där det står hittaPaEttNamn kan du själv skriva in ett namn på css-filen. Glöm inte att det ska vara get_stylesheet och inte template. Detta är för att filen finns i child-temat.*/<br />
+}</p>
+<p>[/code]</p>

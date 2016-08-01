@@ -1,0 +1,10 @@
+<p>Hur gör man för att ta bort den övre menyraden i temat Fashionistas?</p>
+<p>Ett sätt är att gå in i header.php och kommentera ut följande del:</p>
+<pre>&lt;nav id="top-navigation" class="main-navigation"&gt;
+<div class="clearfix container"></div></pre>
+<p>Kommentering görs genom att skriva</p>
+<pre>&lt;!--- htmlhtmlhtml ---&gt;&lt;!--- htmlhtmlhtml --&gt;</pre>
+<p>Sätt nr två, och som antagligen är mycket smidigare är att lägga in css-koden:</p>
+<pre>#top-navigation ul {
+display: none;
+}</pre>

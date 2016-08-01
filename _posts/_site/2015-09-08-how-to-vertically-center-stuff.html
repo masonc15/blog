@@ -1,0 +1,77 @@
+<p>Varje</p>
+<p>https://scotch.io/tutorials/a-visual-guide-to-css3-flexbox-properties<br />
+https://css-tricks.com/almanac/properties/a/align-content/<br />
+https://philipwalton.github.io/solved-by-flexbox/demos/vertical-centering/</p>
+<p>Centrera saker i flexbox. Du sätter display å justify å sådant. Som jag skrivit nedan i en flexboxcontainer. Då kommer Sakerna som finns i den diven att centreras.</p>
+<p>[code lang="css"]<br />
+.flexboxcontainer{<br />
+width: 400px;<br />
+height: 400px;<br />
+display: flex;<br />
+flex-direction: row; /*Du kan välja mellan row och column */<br />
+justify-content: center;<br />
+align-items: center;<br />
+}</p>
+<p>.box-inside-flexboxcontainer {<br />
+}<br />
+[/code]</p>
+<h1>Horizontell centrering</h1>
+<h2>Text-align</h2>
+<p>Text-align-tekniken är klassisk. Först skapar du en div-container. Denna container behöver ha en specificerad width för att det ska funka. Annars kommer den bara vara så står som innehållet i diven, å då går det ju inte att centrera.</p>
+<p>Sedan behöver vi en div som ska centreras. Vi ger den en längd å bredd. Det viktigaste här är att komma ihåg att en div inte är en text, å en div är ett block-element, inte ett inline-element. Därför måste vi förvandla diven till ett inline-blocks-element. Det gör vi med display: inline-block. Då får diven inline-liknande egenskaper samtidigt som den är typ som ett block.<br />
+[code lang="css"]<br />
+.container {<br />
+width: 500px;<br />
+text-align: center;<br />
+}</p>
+<p>.box {<br />
+width: 100px;<br />
+height: 100px;<br />
+display: inline-block;<br />
+}<br />
+[/code]</p>
+<h2>Margin-auto-tekniken</h2>
+<p>Det går helt enkelt ut på att du sätter marginalen på auto i innerdiven. Då justerar den sig automatiskt och blir därmed centrerad.<br />
+[code lang="css"]<br />
+.container {<br />
+width: 500px;<br />
+}</p>
+<p>.box {<br />
+width: 100px;<br />
+height: 100px;<br />
+margin-left: auto;<br />
+margin-right: auto;<br />
+}<br />
+[/code]</p>
+<h2>Position-absolute-tekniken </h2>
+<p>Den här tekniken fungerar genom att sätta position absolute, å sedan sätta den på 50%. Detta innebär alltså att positionen är i mitten. Men eftersom diven i det här exemplet är 100px stor så innebär det att det är den vänstra sidan som är precis 50% in i container-diven. För att den ska bli helt centrerad måste vi därför justera marginalen med -50px (alltså hälften av diven storlek). Då blir den helt centrerad.</p>
+<p>[code lang="css"]<br />
+.container {<br />
+width: 500px;<br />
+}</p>
+<p>.box {<br />
+width: 100px;<br />
+height: 100px;<br />
+position: absolute;<br />
+left: 50%;<br />
+margin-left: -50px;<br />
+}<br />
+[/code]</p>
+<h1>Vertical centering</h1>
+<h2>Position-absolute-tekniken</h2>
+<p>Denna teknik är besläktad med tekniken ovan med samma namn. Men det finns några viktiga skillnader. För att innerdiven inte ska flyga iväg åt tjotahejti så måste vi göra .container till position: relative. Annars så flyger innerdiven upp å lägger sig med en margin på -50px från body. Å det vill vi inte.</p>
+<p>[code lang="css"]<br />
+.container {<br />
+width: 500px;<br />
+position: relative;<br />
+}</p>
+<p>.box {<br />
+width: 100px;<br />
+height: 100px;<br />
+position: absolute;<br />
+left: 50%;<br />
+margin-left: -50px;<br />
+top: 50%;<br />
+margin-top: -50px;<br />
+}<br />
+[/code]</p>

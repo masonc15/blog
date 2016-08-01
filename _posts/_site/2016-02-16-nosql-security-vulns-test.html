@@ -1,0 +1,25 @@
+<p>1. Encryption/authetication<br />
+2. NoSQL-injecctions<br />
+https://github.com/tcstool/NoSQLMap<br />
+A. eval, setTimeout</p>
+<h1>A1 - Injection</h1>
+<h2>Server Side JavaScript Injection - SSJI</h2>
+<p>- Server Injection<br />
+eval, setTimeout, setInterval<br />
+setTimeout och setInterval använder båda eval, därför är de dåliga att använda.</p>
+<p>Om man sätter några av dom att tolka user input så ger man i princip total kontroll över ALLT som kan ske på servern. Du kan injecta kod, som du sen kör.<br />
+Lösning:<br />
+Använd JSON.parse() istället. Mycket säkrare. Eval är snabbare, men galet mycket farligare.</p>
+<p>Använd 'use strict'</p>
+<p>Att göra:<br />
+a. Kontrollera så att vi aldrig använder ovan nämna funktioner under dessa omständigheter.<br />
+b. Använd alltid 'use strict'.</p>
+<p>Vidare läsning:<br />
+http://arxiv.org/pdf/1506.04082.pdf</p>
+<p>2. NoSQL-injection<br />
+- MongoDB injection</p>
+<p>Lösning: validera/sanitizea all input.</p>
+<p>Att göra:<br />
+a. Validera/sanitizea all input. </p>
+<h2>A2-Broken Authentication and Session Management</h2>
+<p>http://arxiv.org/pdf/1506.04082.pdf</p>

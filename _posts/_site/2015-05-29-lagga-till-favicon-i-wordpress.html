@@ -1,0 +1,8 @@
+<p>Favicon är den lilla ikonen bredvid titeln på hemsidan. För att lägga till en sådan ikon i Wordpress gör du bara följande.</p>
+<p>Först skapar du en ikon. Om du vill omvandla den till .ico så kan du göra det via den <a href="http://tools.dynamicdrive.com/favicon/">här hemsidan</a>. Sedan laddar du upp ikonen i root-mappen på din wordpressinstallation. Alltså under /wp-content/. Därefter lägger du till följande kod i din header.php.</p>
+<p>[code language="html"]</p>
+<p>&lt;link rel=&quot;icon&quot; href=&quot;&lt;?php bloginfo('siteurl'); ?&gt;/favicon.ico&quot; type=&quot;image/x-icon&quot; /&gt;<br />
+&lt;link rel=&quot;shortcut icon&quot; href=&quot;&lt;?php bloginfo('siteurl'); ?&gt;/favicon.ico&quot; type=&quot;image/x-icon&quot; /&gt;</p>
+<p>&lt;/head&gt; &lt;!--Här slutar din head --&gt;<br />
+[/code]</p>
+<p>Sådär, då var det klart.</p>

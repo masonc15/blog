@@ -1,0 +1,107 @@
+<p>Wow, that was a pretty log title.<br />
+I have been working a bit on setting upp vulnerable servers to play CTF with some friends. So I wanted to have a system where the server emails me every time someone successfully logs in to the server.</p>
+<p>It requires two steps.<br />
+1. Setting up email on the server<br />
+2. Writing script that sends email upon SSH-login</p>
+<h2>Setting up email on the server</h2>
+<p>Email is sent through the <a href="https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol">Simple Mail Transfer Protocol</a>. To make use of this protocal we need the program Simple SMTP(sSMTP).<br />
+In order to send an email directly from the server you need a domain-name. But I don't have time for that, so instead I am going to relay the email through an account at gmail.com. From what I have seen online, this seems to be the most common solution for small projects like this.</p>
+<p>So let's download and install ssmtp.<br />
+[code lang="bash"]<br />
+sudo apt-get update<br />
+sudo apt-get install ssmtp<br />
+[/code]<br />
+After we have installed ssmtp we need to do a bit of configuration.<br />
+[code lang="bash"]<br />
+sudo vim /etc/ssmtp/ssmtp.conf<br />
+[/code]<br />
+[code lang="bash"]<br />
+# Config file for sSMTP sendmail<br />
+#<br />
+# The person who gets all mail for userids &amp;lt; 1000<br />
+# Make this empty to disable rewriting.<br />
+#root=postmaster<br />
+root=myEmailAddress@gmail.com</p>
+<p># The place where the mail goes. The actual machine name is required no<br />
+# MX records are consulted. Commonly mailhosts are named mail.domain.com<br />
+#mailhub=mail<br />
+mailhub=smtp.gmail.com:587</p>
+<p>AuthUser=myEmailAddress@gmail.com<br />
+AuthPass=MyGmailPassword<br />
+UseTLS=YES<br />
+UseSTARTTLS=YES</p>
+<p># Where will the mail seem to come from?<br />
+#rewriteDomain=<br />
+rewriteDomain=gmail.com</p>
+<p># The full hostname<br />
+#hostname=MyMediaServer.home<br />
+hostname=localhost</p>
+<p># Are users allowed to set their own From: address?<br />
+# YES - Allow the user to specify their own From: address<br />
+# NO - Use the system generated From: address<br />
+FromLineOverride=YES<br />
+[/code]</p>
+<p>Wow easy-peasy, now let's send an email.</p>
+<p>[code lang="bash"]<br />
+ssmtp myEmailAddress@gmail.com<br />
+To: blabla@gmail.com<br />
+From: myEmailAddress@gmail.com<br />
+Subject: Test<br />
+#ctr-d to send<br />
+[/code]</p>
+<p>Of course, that didn't work.<br />
+So i checked the log-file: cat /var/log/mail.log<br />
+Where I found this error:<br />
+Mar 31 17:13:25 ctf sSMTP[19275]: Authorization failed (534 5.7.14  https://support.google.com/mail/answer/78754 j8sm4704154qhj.19 - gsmtp)</p>
+<p>So I started googeling it, and <a href="http://serverfault.com/questions/635139/how-to-fix-send-mail-authorization-failed-534-5-7-14">this</a> answer lead me to this <a href="https://support.google.com/accounts/answer/6009563">answer</a> from google. That answer led me to this page: <a href="https://g.co/allowaccess">https://g.co/allowaccess</a>, which lets you allow access from other apps.</p>
+<p>And now it is working.</p>
+<p>Okay. So now any user on the server can read the config file (/etc/ssmtp/ssmtp.conf). Which includes out password, so that it not optimal. So let's set the file permission so that only root can read the file.<br />
+[code lang="bash"]<br />
+chmod 700 /etc/ssmtp/ssmtp.conf<br />
+[/code]<br />
+Now you can check to see if other users can read the file or not.<br />
+[code lang="bash"]<br />
+#Granted that you are root<br />
+su userName<br />
+cat /etc/ssmtp/ssmtp.conf<br />
+#should output: cat: /etc/ssmtp/ssmtp.conf: Permission denied<br />
+[/code]</p>
+<p>There are many other email clients  out there. Mailx, mutt and sendmail are some.</p>
+<h2>Check hos is loggin in</h2>
+<p>So how do we know if someone has logged in through ssh to out server?</p>
+<p>My initial though was to parse the ssh-logfile and then run a cron-job that would check it every 10 minutes or so. But after some googleing I soon discovered that there is a much better way to solve the problem. <a href="http://askubuntu.com/questions/179889/how-do-i-set-up-an-email-alert-when-a-ssh-login-is-successful">This</a> SO-answer provided a great solution. </p>
+<p>First we create the bash-script and put it in /etc/ssh/login-notify.sh. This script is pretty straight-forward. We set the sender and recipient in each variable. And then we have an if-statement that returns true if anything except close_session happens. And then we use mailx to send the email.</p>
+<p>[code lang="bash"]<br />
+#!/bin/sh</p>
+<p># Change these two lines:<br />
+sender=&quot;sender-address@example.com&quot;<br />
+recipient=&quot;notify-address@example.org&quot;</p>
+<p>if [ &quot;$PAM_TYPE&quot; != &quot;close_session&quot; ]; then<br />
+    host=&quot;`hostname`&quot;<br />
+    subject=&quot;SSH Login: $PAM_USER from $PAM_RHOST on $host&quot;<br />
+    # Message to send, e.g. the current environment variables.<br />
+    message=&quot;`env`&quot;<br />
+    echo &quot;$message&quot; | mailx -r &quot;$sender&quot; -s &quot;$subject&quot; &quot;$recipient&quot;<br />
+fi<br />
+[/code]</p>
+<p>Then we need to make it executable:<br />
+[code lang="bash"]<br />
+chmod +x /etc/ssh/login-notify.sh<br />
+[/code]</p>
+<p>You then add the following line the file: /etc/pam.d/sshd<br />
+[code lang="bash"]<br />
+#/etc/pam.d/sshd<br />
+session optional pam_exec.so seteuid /etc/ssh/login-notify.sh<br />
+[/code]</p>
+<p>Notice that is says:<br />
+[code lang="bash"]<br />
+# SELinux needs to be the first session rule.  This ensures that any<br />
+# lingering context has been cleared.  Without this it is possible that a<br />
+# module could execute code in the wrong domain.<br />
+[/code]</p>
+<p>So it is probably a good idead to add the above code after this paragraph.</p>
+<p>So, who the hell is PAM? Well, PAM stands for Pluggable Authentifacion Modules, and is basically the program in charge of stuff that regards authentication. If we check:<br />
+[code lang="bash"]<br />
+ls /etc/pam.d<br />
+[/code]<br />
+These are the config-files for the programs that uses pam. chsh, cron, newuser, passwd, login, sshd, and some others. Here you can really configure these programs down to details. For more about PAM check out <a href="http://www.tuxradar.com/content/how-pam-works">this excellent resource</a>.</p>

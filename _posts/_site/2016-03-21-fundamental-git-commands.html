@@ -1,0 +1,63 @@
+<h2>View changes in a file</h2>
+<p>To view changes in a file in git you just use the command:<br />
+[code]git diff path/to/file.js[/code]</p>
+<p>It happens that whitespace is showed. Which shows almost everything as changed. To solve this, add the -b flag.<br />
+[code]<br />
+git diff -b path/to/file<br />
+[/code]</p>
+<h2>Discard changes in an unstaged file</h2>
+<p>Every now and then Git shows that I have edited a file, but when I run git diff I can see that I have added and removed the same line. I think this happens if I add a line and then remove it. So basically nothing has changed (and I haven't actually edited the file, just opened it). I think it is better to discard the h2&gt;changes to that the commit does not get cluttered with files that we actually haven't modified. So in order to discard the changes from git I use the following command:<br />
+[code]<br />
+git checkout -- app/config/rest.js<br />
+[/code]<br />
+This is the recommended command from git, and it shows when we run git status.</p>
+<h2>Create new branch</h2>
+<p>There are two ways.<br />
+[code lang="bash"]<br />
+#Create a branch<br />
+git branch nameOfBranch<br />
+#Create a branch and switch to it<br />
+git checkout -b nameOfBranch<br />
+[/code]</p>
+<h2>Remove branch</h2>
+<p>If the branch is merged you can use the command:<br />
+[code lang="bash"]<br />
+git branch -d myBranch<br />
+[/code]</p>
+<p>If it is not merged you have to use:<br />
+[code lang="bash"]<br />
+git branch -D myBranch<br />
+[/code]</p>
+<h2>Remove remote branch</h2>
+<p>[code]<br />
+git push origin --delete the_remote_branch<br />
+[/code]</p>
+<h2>Switch branch without committing</h2>
+<p>So if you have made some changes in a branch and then switch branch without committing the changes git will automatically merge those branches. Which might not be what you want. But you might not feel ready to commit the changes.<br />
+<strong>So how do you switch branch without having to merge the branches and without having to commit the changes?</strong><br />
+The answer is: stash.<br />
+So, let's say you have made changes that you haven't committed or added but want to switch branch. You just use the following command:<br />
+[code]<br />
+//Branch: testBranch<br />
+git stash<br />
+git checkout master<br />
+//Make some changes or whatever you wanted to do<br />
+git checkout testBranch<br />
+git stash pop<br />
+[/code]<br />
+And now you are back and can keep working on your branch. </p>
+<p>Check out this for a better understanding of how to use git stash:<br />
+https://git-scm.com/book/en/v2/Git-Tools-Stashing-and-Cleaning</p>
+<h2>Create a new remote branch</h2>
+<p>So let's say that you have a master-branch and you want to create a development-branch.</p>
+<p>First you create your branch locally<br />
+[code lang="bash"]<br />
+git checkout -b development<br />
+[/code]<br />
+Then you push it to your remote repo<br />
+[code lang="bash"]<br />
+git push -u origin development<br />
+[/code]</p>
+<h2>View commit log</h2>
+<p>So let's say you have made some commits. And then you want to see what those commits were. You can't run [code]git diff[/code]. So instead you can run [code]git log -p[/code]<br />
+This will show you the difference in each commit.</p>

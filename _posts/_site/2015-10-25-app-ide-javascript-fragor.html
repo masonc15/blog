@@ -1,0 +1,307 @@
+<p>Prepare for JS-job</p>
+<p>Att göra en app som jag gjorde när jag pluggade inför dippen. Göra ett frågespel med javascript-frågor. Med olika kategorier: typ fundamentals, challenges, olika koncept.</p>
+<p>Sen kan användaren göra frågorna och bli bättre. Om en person inte kan frågan så markeras den med en viss poäng. Frågorna med lägsta poängen kommer upp först. Så att man hela tiden tränar på de frågorna som man är sämst på. Vid varje fråga finns en länk till en sida som förklarar konceptet mer utförligt.</p>
+<p>Type såna här frågor: https://www.codementor.io/javascript/tutorial/top-ten-things-beginners-must-know-javascript</p>
+<p>http://www.skilledup.com/articles/20-must-know-javascript-interview-qa</p>
+<p>&nbsp;</p>
+<h2>Frågor</h2>
+<h3>Closure</h3>
+<p><strong>What is lexical scoping?</strong><br />
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures</p>
+<p><strong>Is an Object mutable or imutable?</strong><br />
+Ett objekt är mutable. Detta innebär att objektets innehåll kan förändras. En primitiv data, så som string eller nummer kan inte ändras. Detta innebär att om du ändrar en variabels innehåll, så ändrar du det egentligen inte. Du lägger bara till det. Men det gamla värdet ligger fortfarande kvar i minnet. Detta gör att det kan vara mer krävnade. Det gamla värdet försvinner först när det är dags för garbage collection.<br />
+Ett object däremot, om du ändrar det så ändras värdet i minnet.</p>
+<p><strong>Is a primitive data mutable or imutable?</strong><br />
+http://stackoverflow.com/questions/3200211/what-does-immutable-mean</p>
+<p><strong>When is Javascript used outside of the browser?</strong><br />
+http://www.programmerinterview.com/index.php/javascript/javascript-outside-the-browser/</p>
+<p><strong>What is ECMA-Script?</strong><br />
+ECMAScript is a standard for a scripting language, and the Javascript language is based on the ECMAScript standard.<br />
+http://www.programmerinterview.com/index.php/javascript/javascript-what-is-ecmascript/</p>
+<p><strong>Which are the five primitve datas in javascript?</strong></p>
+<p><strong>Which are the six primitive data-types in Javascript?</strong><br />
+Boolean<br />
+Null<br />
+Undefined<br />
+Number<br />
+String<br />
+Symbol (new in ECMAScript 6)</p>
+<p><strong>Which data-type is Object data?</strong><br />
+Objects<br />
+Arrays and functions are also Objects.</p>
+<p><strong>What is the difference between undefined and null?</strong><br />
+Undefined is a value that has been declared but not given a value.<br />
+Any variable that has not been given a specific value by default gets the value of undefined.<br />
+Null is a value. The value of nothing.</p>
+<p><strong>What is the difference between “==” and “===”?</strong><br />
+== checks for equality of the value.<br />
+=== checks for the equality of the value and type.<br />
+"3" and 3 == true<br />
+"3" and 3 === false</p>
+<p><strong> Whats the difference between "var a = 1" and "a = 1"?</strong><br />
+<strong>var</strong> defines the variable locally, and it can not be used outside of that context.<br />
+With the <strong>var</strong> the variable is defined globally, and can thus be used outside of that scope. This might be bad practice as it can pollute the global scope.</p>
+<p><strong>What does "1"+2+4 evaluate to?</strong><br />
+Since the first element is a string, the other value are also evaluated as strings.</p>
+<p><strong>What does 1+2+"4" evaluate to?</strong><br />
+Evaluates to 34, because the first two numbers are evaluated arithmiacaly.</p>
+<p><strong>What boolean operator do JavaScript support?</strong><br />
+Or: ||<br />
+And: &amp;&amp;<br />
+Not: !</p>
+<p><strong>What would be the output of the following statements?<br />
+var object1 = { same: 'same' };<br />
+var object2 = { same: 'same' };<br />
+console.log(object1 === object2);</strong></p>
+<p>False.<br />
+Because they are two different objects. They are not equal because they point at different objects.</p>
+<p><strong>What would be the output of the following statements?<br />
+var object1 = { same: 'same' };<br />
+var object2 = object1;<br />
+console.log(object1 === object2);<br />
+</strong></p>
+<p>True. Because they reference the same object.</p>
+<p><strong>What is this?<br />
+var arr = [[[]]];<br />
+</strong></p>
+<p>A three dimensional array.</p>
+<p><strong>What do you get if you do -10 / 0?</strong><br />
+-Inifinity<br />
+Known as negative infinity.</p>
+<p><strong>What is the difference between an undeclared variable and an undefined variable?</strong><br />
+An undeclared variable is a variable that does not exist. An undeclared variable will result in an runtime error.</p>
+<p><strong>What different type of loop do javascript support?</strong><br />
+For<br />
+for...in<br />
+while<br />
+do/while</p>
+<p><strong>Mention the three ways to to convert a string to a number?</strong><br />
+Number();<br />
+parseInt();<br />
+parseFloat();</p>
+<p><strong>What does null mean?</strong><br />
+The NULL value is used to represent no value or no object.  It implies no object or null string, no valid boolean value, no number and no array object.</p>
+<p><strong>What is an anonymous function?</strong><br />
+It is a function that has not been given a name, for example:</p>
+<p>var test = function(){<br />
+console.log("Hello world")}</p>
+<p>This, on the other hand is not a anonymous function:<br />
+test(){<br />
+console.log("Hello world")}</p>
+<p><strong>Is javascript case sensitive?</strong><br />
+Yes.<br />
+These are two different variables:<br />
+var test = 0;<br />
+var TEST = 1;</p>
+<p><strong>Explain what hoisting is?</strong><br />
+Hoisting means that a function that is initialized will always be send to the top of the scope/function, but not with it's value, but just as a declared.<br />
+For example:</p>
+<p>var test = 10;<br />
+function myFunction(){<br />
+console.log(test);<br />
+var test = 20;<br />
+}<br />
+//Consoles undefined</p>
+<p>One would think that this function would console 10. But in fact it consoles undefined. Why is that then?<br />
+Because even though the variable is initliaized after the console.log-statement, is autamaticallys becomes declared in the beginning of the function. </p>
+<p>http://code.tutsplus.com/tutorials/javascript-hoisting-explained--net-15092<br />
+<strong>What is the difference between declared variable and an initialized variable?</strong><br />
+A declared variable is a variable that has been declared with var. it could be:<br />
+var a;<br />
+But an initialized variable is a variable that has been given a value.</p>
+<p><strong>What is the difference between break, continue and return?</strong><br />
+<strong>break</strong> stops the loop and the continues after the loop.<br />
+<strong>continues</strong> stops the loop and then restart from the beginning.<br />
+<strong>return</strong> stops and leaves the function all together.</p>
+<p><strong>Mentiona three different programming paradigms?</strong></p>
+<p><strong>How do you create a default parameter in a function?</strong><br />
+This is a ECMA6-script. So at the moment it can only be used in firefox. But it works like this:</p>
+<p>function test(arg1, optionalArg = 23){<br />
+}<br />
+So if you don't put in any optional arg the default argument will be 23.</p>
+<h3>Built in javascript functions</h3>
+<p><strong>What built in function would you use to find the index of a ascii symbol?</strong><br />
+indexOf()</p>
+<p><strong>What built in function would you use to get the index of a ascii symbol, starting from the end?</strong><br />
+lastIndexOf();</p>
+<p><strong>What function would you use to combine to lines of text?</strong><br />
+text.concat("hej");</p>
+<p><strong>What's the difference between throw err and console.error("msg");</strong></p>
+<p>Skillnaden är att throw err exit current clode block. Stops the execution. Medan console.log bara printar ut meddelandet i konsollen. </p>
+<p><strong>What does IIFE stand for? And what is it for</strong><br />
+Det står för Immediately-invoked Function Expression. </p>
+<p>Det är en funktion som är anonym och som executas direkt efter att den har skrivits. Den behöver alltså inte kallas för att den ska executa.</p>
+<p>Här är en vanlig funktion. Den skulle inte executa eftersom den aldrig har blivit kallad.<br />
+[code lang="js"]<br />
+function testFunk(){<br />
+console.log(&amp;amp;amp;amp;amp;amp;amp;quot;I am called now&amp;amp;amp;amp;amp;amp;amp;quot;)};<br />
+[/code]</p>
+<p>Men om vi istället wrappar funktionen inom en IIFE, så kommer den automatiskt att kallas när den laddas.<br />
+[code lang="js"]<br />
+(function testFunk(){<br />
+console.log(&amp;amp;amp;amp;amp;amp;amp;quot;I am called now&amp;amp;amp;amp;amp;amp;amp;quot;)}());<br />
+[/code]</p>
+<p>För att undvika hoisting så kan det vara bra att använda IIFE.</p>
+<p>Här är ett exempel på hoisting.<br />
+[code lang="js"]<br />
+var v = 1;<br />
+var getValue = function(x){<br />
+	console.log(x);<br />
+}<br />
+v = 2;</p>
+<p>getValue(v);//Printar ut 2<br />
+[/code]</p>
+<p>Om vi här istället vill att funktionen ska printa ut det utsprungliga värdet så måste vi få funktionen att executa direkt när den skapas. Så här ser det ut:<br />
+[code lang="js"]<br />
+var v = 1;<br />
+var getValue = (function(x){<br />
+	return function(){console.log(x)}</p>
+<p>}(v));<br />
+v = 2;</p>
+<p>getValue();//Printar ut 1<br />
+[/code]</p>
+<p>Det är ett design pattern för att undvika variable hoisting.</p>
+<p><strong>What six values are falsey in javascript?</strong></p>
+<p>0 == false<br />
+undefined == false<br />
+null == false<br />
+NaN == false<br />
+"" == false &lt;&lt; Alltså en tom string.<br />
+false == false</p>
+<p>Detta kan vi enkelt testa genom att skriva:<br />
+if (!0){console.log(&quot;False&quot;};<br />
+Denna kod innebär alltså att om 0 inte är true så printa False.</p>
+<p>Eller för att det inte ska vara lika förvirrande kan man skriva:<br />
+[code lang="&quot;js&quot;"]<br />
+if(NaN){console.log(&amp;amp;amp;amp;amp;amp;amp;quot;I am true&amp;amp;amp;amp;amp;amp;amp;quot;)}<br />
+else {console.log(&amp;amp;amp;amp;amp;amp;amp;quot;I am false&amp;amp;amp;amp;amp;amp;amp;quot;)};<br />
+[/code]</p>
+<p>Ett annat sätt att skriva samma sak är:<br />
+[code lang="&quot;js&quot;"]<br />
+!0 &amp;amp;amp;amp;amp;amp;amp;amp;&amp;amp;amp;amp;amp;amp;amp;amp; console.log(&amp;amp;amp;amp;amp;amp;amp;quot;False&amp;amp;amp;amp;amp;amp;amp;quot;);<br />
+!NaN &amp;amp;amp;amp;amp;amp;amp;amp;&amp;amp;amp;amp;amp;amp;amp;amp; console.log(&amp;amp;amp;amp;amp;amp;amp;quot;False&amp;amp;amp;amp;amp;amp;amp;quot;);<br />
+!undefined &amp;amp;amp;amp;amp;amp;amp;amp;&amp;amp;amp;amp;amp;amp;amp;amp; console.log(&amp;amp;amp;amp;amp;amp;amp;quot;False&amp;amp;amp;amp;amp;amp;amp;quot;);<br />
+[/code]</p>
+<p>Allting annat är true.<br />
+Objekt, arrays, funktioner.<br />
+Nummer som är inte är noll.<br />
+All strings som inte är tomma.<br />
+True är true</p>
+<p>För mer om detta läs <a href="http://james.padolsey.com/javascript/truthy-falsey/">här</a> </p>
+<p><strong>What is the difference between function-expression and function declaration?</strong></p>
+<p>Function expression = var functionName = function(){};<br />
+Function declaration = function functionName(){};</p>
+<p><strong>Vad betyder varje siffra i versionen 4.3.0?</strong><br />
+Major.Minor.Patch</p>
+<p>^4.3.0 - Version mellan 4 och 5. För att det inte ska bryta med versionen.</p>
+<p><strong>What is a ternary operations and how does it work?</strong><br />
+Ternary operations are shorthand way to write an if/else statement.</p>
+<p>[code lang="js"]<br />
+if(hello){<br />
+console.log(&amp;amp;amp;amp;amp;amp;quot;It is true&amp;amp;amp;amp;amp;amp;quot;)<br />
+}<br />
+else {<br />
+console.log(&amp;amp;amp;amp;amp;amp;quot;it is false&amp;amp;amp;amp;amp;amp;quot;);<br />
+}</p>
+<p>//This can be written as following:<br />
+console.log(hello ? &amp;amp;amp;amp;amp;amp;quot;It is true&amp;amp;amp;amp;amp;amp;quot; : &amp;amp;amp;amp;amp;amp;quot;It is false&amp;amp;amp;amp;amp;amp;quot;);</p>
+<p>[/code]</p>
+<p>So question-mark means "if", and : means "else";</p>
+<p><strong>Does javascript have blockscope or function scope and what does that mean?</strong><br />
+It has function-scope but not block scope. One would think that it has block-scope since it has that type of syntax, but in fact it only has function-scope.<br />
+This means that a variable that is defined within a </p>
+<p><strong>Which are the ways you can create an Object?</strong><br />
+[code lang="js"]<br />
+//Object literal<br />
+var myObj = {name: &amp;amp;amp;amp;amp;quot;My Object&amp;amp;amp;amp;amp;quot;};<br />
+//Constructor<br />
+var myObj2 = new Object();<br />
+myObj2.name = &amp;amp;amp;amp;amp;quot;My Object 2&amp;amp;amp;amp;amp;quot;;<br />
+[/code]</p>
+<p><strong>What is a potential pitfall with using typeof bar === "object" to determine if bar is an object? How can this pitfall be avoided?</strong><br />
+Problemet är att null också betraktas som ett objekt. Desamma gäller för arrays också.</p>
+<p><strong>What will the code below output to the console and why?</p>
+<p>[code lang="js"](function(){<br />
+  var a = b = 3;<br />
+})();</p>
+<p>console.log(&amp;amp;amp;amp;quot;a defined? &amp;amp;amp;amp;quot; + (typeof a !== 'undefined'));<br />
+console.log(&amp;amp;amp;amp;quot;b defined? &amp;amp;amp;amp;quot; + (typeof b !== 'undefined'));<br />
+[/code]<br />
+</strong></p>
+<p>Här tror man lätt att var a = b =3; är likvärdigt med:<br />
+var a = b;<br />
+var b = 3;<br />
+Men det gör det inte. Egentligen står det:<br />
+var a = b;<br />
+b = 3;<br />
+Vilket gör b till en global variabel. </p>
+<p><strong>What is the significance, and what are the benefits, of including 'use strict' at the beginning of a JavaScript source file?</strong><br />
+use stric introducerades i ECMA5.<br />
+1. Det tvingar scripet till striktare parsing och error handling. Dessa errors skulle annars kanske ignoreras, eller eller failed silently. Nu genererar de istället ett error. So in det är good practice.</p>
+<p>2. Det gör det därmed enklare att debugga. Eftersom man får upp fler errors. </p>
+<p>3. Ett enkelt exempel är om man gör en variabel global när den redan är global.<br />
+minVar = "test";<br />
+Dette generar ett fel när man kör i "use strict" men inte annars.</p>
+<p><strong>What is closure?</strong><br />
+Closure är en inre funktion som har tillgång till de yttre funktionernas variables.</p>
+<p><strong>What is Const?</strong><br />
+en constant variables</p>
+<p><strong>What is a lambda function?</strong><br />
+It is a anonymous function that is saved in a variable.<br />
+Example:</p>
+<p>[code lang="js"]</p>
+<p>var lambda = function(saludos)<br />
+{<br />
+console.log(saludos);<br />
+}</p>
+<p>lambda(&amp;amp;quot;hola&amp;amp;quot;);</p>
+<p>[/code]</p>
+<h2>Node</h2>
+<p><strong>What is the difference between console.log/console.error and throw err?</strong><br />
+The main difference is that throw err breaks the event loop and leaves the function. Console.log(err)/console.error(err) doesn't break the function. It used prints our the error and then moves on.</p>
+<p><strong>What is the event handler in node?</strong></p>
+<p><strong>What's the difference between token-based authentication and cookie-based authentication?</strong><br />
+För att en användare inte ska behöva verifiera sig själv, eller alltså att logga in varje gång en ny sida besökt så använder man cookies eller tokens.<br />
+Så när en användare för första gången loggar in på en sida så svarar servern med att skicka en cookie, som innehåller ett sessions-ID. Det kan vara en lång string med nummer och bokstäver. För varje gång som användaren sedan går till en ny sida så skickas cookien tillbaka till servern och den verifieras. På så sätt behöver inte användare skriva in sina uppgifter varje gång hen besöker en ny sida. Det blir både säkrare mer användarvänligt.</p>
+<p>Så, det finns alltså två huvudsakliga sätt att verifiera en användare. Det ena är med coookies och den andra med tokens. De har både sina för och nackdelar.</p>
+<p><strong>Cookies</strong></p>
+<p><strong>Tokens</strong><br />
+https://auth0.com/blog/2014/01/07/angularjs-authentication-with-cookies-vs-token/</p>
+<h2>Algoritmer</h2>
+<p><strong>Kan du skriva ett program som tar reda på om ett tal är ett prim-tal eller inte?</strong></p>
+<p>[code lang="js"]<br />
+//Check to se if a number is a prime number<br />
+function isPrime(num){<br />
+	var divisor = 2;<br />
+	while (num &amp;amp;amp;gt; divisor){<br />
+		if (num % divisor == 0){<br />
+			return console.log(false);<br />
+		}<br />
+		else {<br />
+			divisor++;<br />
+		}<br />
+	}<br />
+	return console.log(true);<br />
+}<br />
+isPrime(15);<br />
+[/code]</p>
+<p><strong>Kan du skriva ett program som skriver ut fibonacci-sekvensen med x antal?<strong><br />
+[code lang="js"]<br />
+//How to get the nth fibonacci-number<br />
+function fibonacci(n){<br />
+  var fibo = [0, 1];</p>
+<p>  if (n &amp;amp;amp;lt;= 2) return 1;</p>
+<p>  for (var i = 2; i &amp;amp;amp;lt;=n; i++ ){<br />
+   fibo[i] = fibo[i-1]+fibo[i-2];<br />
+   //fibo.push[i];<br />
+  }</p>
+<p> return console.log(fibo);<br />
+} </p>
+<p>fibonacci(12);<br />
+[/code]</p>
+<h2>Data structures | Strures of data</h2>
+<p><strong>Vad är en data-struktur? Vad används de till och ge exempel på några vanliga datastrukturer i javascript?</strong><br />
+Här är en fantastiskt serie om datastrukturer.<br />
+http://code.tutsplus.com/tutorials/data-structures-with-javascript-whats-a-data-structure--cms-23347</p>
+<p>Så en datastruktur är helt enkelt en viss slags struktur av data. Data kan struktureras på många olika sätt. Ett exempel som tas upp i tutorialen som jag länkar till ovan använder sig av exemplet med böcker. Vara bok är en data, och tillsammans är de data (i pluralis). Denna data, alltså dessa böcker, kan organiseras och struktureras på olika sätt. Ett sätt är att ställa alla böckerna i bokstavsordning i en bokhylla. Böckerna kan därefter struktureras efter författarens för ellere efternamn eller efter titel. Fördelen med detta sätt är att vi kan ta ut en bok hur som helst, från vilket position som helst i strukturen.</p>
+<p>Om vi däremot ställer upp böckerna på en hög (stack). Så kan vi inte bara dra ut den bok vi vill ha, för då faller ju hela högen. Så om vi vill ta fram en av böckerna som är längst ner i stacken så måste vi ta bort alla böcker ovan, en i taget.</strong></strong></p>

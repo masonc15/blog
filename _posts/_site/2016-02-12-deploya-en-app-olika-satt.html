@@ -1,0 +1,12 @@
+<p>https://www.digitalocean.com/community/tutorials/how-to-set-up-automatic-deployment-with-git-with-a-vps<br />
+1. Logga in på VPS.<br />
+2. Skapa <strong>git init --bare</strong> i vps.<br />
+3. Gå till hooks, skapa filen post-receive<br />
+4. Lägg till följande<br />
+[code lang="bash"]<br />
+#!/bin/sh<br />
+git --work-tree=/var/www/domain.com --git-dir=/var/repo/site.git checkout -f<br />
+[/code]<br />
+5. chmod +x post-receive<br />
+6. git remote add live ssh://user@mydomain.com/var/repo/site.git<br />
+7. git push live master</p>

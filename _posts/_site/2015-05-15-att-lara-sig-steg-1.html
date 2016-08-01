@@ -1,0 +1,138 @@
+<p>Guide för att bli en front-end web developer. Infon kommer bland annat <a href="https://www.youtube.com/watch?v=pB0WvcxTbCA&amp;l">härifrån</a>.</p>
+<h2>1. Html</h2>
+<ul>
+<li><strong>--X--</strong>Generella strukturen av en hemsida (html, head, body).</li>
+<li><a href="https://narcotize.wordpress.com/2015/05/16/the-document-object-model-dom/"><strong>--X--</strong></a>The Document Object Model (DOM) - Vad det är.</li>
+<li><a href="https://narcotize.wordpress.com/2015/05/13/html-taggar/">--X--</a>Taggar - hur man gör</li>
+</ul>
+<ul>
+<li>Hur man strukturerar innehållet på en hemsida med divs (div-based-markup)</li>
+<li><a href="https://narcotize.wordpress.com/2015/05/13/html-taggar/">--X--</a>Semantisk markup - Hur det ska användas korrekt.
+</li>
+<li>--X--Hur man bäddar in en .css-fil i en hemsida.</li>
+<ul>
+<li>Att bädda in en .css-fil är inte svårt.<br />
+i .html-filen bör refensen skrivas ut såhär:<br />
+[code language="html"]<br />
+&lt;link rel=&quot;stylesheet&quot; href=&quot;css/style.css&quot;&gt;<br />
+[/code]<br />
+href-länkadressen skall riktas till den mapp där .css-filen finns. Ibland kan man även se attributet <strong>type="text/css"</strong>, men det är inte nödvändigt längre. Den fyller ingen funktion.
+</li>
+</ul>
+<li>Hur man gör att sidan stödjer accessibility compliance, för de som behöver screen readers, t.ex.</li>
+<li>Hantera stora bakgrundsbilder</li>
+</ul>
+<h2>2. CSS</h2>
+<ul>
+<li>
+<h3>--X--Grundläggande terminologi:</h3>
+</li>
+<ul>
+<li>Selector - en selector kan vara en tag eller en klass.</li>
+<li>Attribut - attributet är den del av selectorn som förändras. Alltså color, border, font etc. Dokumentationen av alla css-attribut som finns <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference">här.</a></li>
+<li>Value - alltså värdet som attributet får. Om attributet är color så är värdet grön.<br />
+Exempel:<br />
+[code language="css"]<br />
+p {<br />
+color: red;<br />
+}<br />
+[/code]</li>
+</ul>
+<li>Hur man når ett specifikt element på en sida, på olika djup (t.ex a span inom div).</li>
+<li><a href="http://stackoverflow.com/questions/8969381/what-is-the-difference-between-display-inline-and-display-inline-block">--X--</a>Displaying elements - block, inline-block och inline.</li>
+<li>Style attribut som kan avgör colors, fontar, borders.</li>
+<li>--X--Positionering (relative, absolute, fixed) och <a href="https://www.youtube.com/watch?v=xara4Z1b18I">floating elements</a>.</li>
+<li><strong>--X--</strong>The box model, margin/padding, och vad box-sizing: border-box gör.</li>
+<li>Ids (#id) vs classes (.class) och CSS selectors.</li>
+<li>CSS specificity, när vissa styles överride andra styles.</li>
+<li>Responsive design - Vad är det? Vad är media queries och hur använder man dom?</li>
+<li>CSS3: border-radius, box-shadow, text-shadow.</li>
+</ul>
+<h3>SASS, LESS - CSS compilers</h3>
+<h3>CSS Framework / Bootstrap/Foundation</h3>
+<h2>3. jQuery</h2>
+<p>jQuery är ett JavaScript-bibliotek som har skapats av John Resig. </p>
+<p><strong>Saker att lära sig</strong></p>
+<ul>
+<li>$(document).ready(function() { }); </li>
+<li>Vad $(this) representerar (wrapping a DOM element as a jQuery object, which can then be manipulated using jQuery commands)</li>
+<li>Hur man väljer classes and ids. </li>
+<li>God kännedom om api.jquery.com och hur man hitta olika funktioner.</li>
+<li>Hur man använder olika effekter (fade, slide, hide, show, etc.)</li>
+<li>Traversing the DOM tree (children(), parents(), find(), etc.)</li>
+<li>Chaining commands</li>
+<li>How to respond to and trigger events</li>
+<li>Vad betyder det för någonting att vara asynchronous?</li>
+<li>Hur debuggar man jQuery-buggar? Vad är console.log() och `debugger` kommandot? Hur kan man sätta </li>
+<li>breakpoints i JavaScript-filer och step in/over them?</li>
+<li>Vad är JSON och hur ser ett JSON response ut. </li>
+<li>Vad är AJAX?</li>
+<li>Hur man tar emot data från API via AJAX och parsar datan till DOM?</li>
+</ul>
+<h2>4. JavaScript</h2>
+<p>Ett måste att lära sig. När ett javascript eller jQuery inte funkar så måste man kunna JS för att lösa problemet. Det är oundvikligt.</p>
+<h3>Saker att veta</h3>
+<ul>
+<li>Vad man menar med "everything is an object?"</li>
+<p>I JavaScript finns det fem olika primitiva data. Dessa är: string, number, boolean, undefined, null. All annan data är object data. Arrays och Object är object-data.<br />
+En skillnad mellan primitiv data och Object-data är hur datan sparas. I primitiv data så sparas datan direkt i en variabel.<br />
+[code lang="js"]<br />
+var namn = &quot;Philip&quot;;<br />
+[/code]<br />
+I exemplet ovan så sparas alltså stringen "Philip" i variabeln namn. Notera följande exempel:<br />
+[code lang="js"]<br />
+var namn = &quot;Philip&quot;;<br />
+var namn2 = namn;<br />
+namn = &quot;Tor&quot;;<br />
+console.log(namn) //&quot;Tor&quot;;<br />
+console.log(namn2); //&quot;Philip&quot;<br />
+[/code]<br />
+Här ändrar vi alltså innehållet i den ursprungliga variabeln. Men det spelar ingen roll för kopian, för den behåller det gamla värdet.<br />
+[code lang="js"]<br />
+var namnLista = [&quot;Philip&quot;, &quot;Tor&quot;, &quot;Lars&quot;];<br />
+var namnLista2 = namnLista;<br />
+namnLista2[0] = &quot;Johan&quot;;<br />
+console.log(namnLista);//[&quot;Johan&quot;, &quot;Tor&quot;, &quot;Lars&quot;]<br />
+console.log(namnLista2);//[&quot;Johan&quot;, &quot;Tor&quot;, &quot;Lars&quot;]<br />
+[/code]<br />
+Eftersom en array är ett object så hanteras datan på ett annat sätt. Object-data hänvisas till en viss plats i minnet. En variabel innehåller alltså inte någon data, utan endast en referens till en plats i minnet. Och eftersom denna plats är densamma så ändras alltså båda Arraysen i exemplet ovan genom att endast ändra en array.</p>
+<p>Men, det finns en annan viktig poäng här. Det är att även om primtiv data såsom number, string och boolean endast är primitiv data så kan man ändå använda Objects methods på dem. .length till exempel är en property av ett object. Och length kan ju användas på strings, så hur är det då möjligt? Hur är det möjligt att använda en method på en primitiv data? Jo, det är så att JavaScript ovandlar en string till ett object, och använder metoden .length på den. Och sedan ovandlar tillbaka stringen till en primitiv data igen. På så sätt kan man använda sig av methods på primitiv data. </p>
+<p>Så, men andra ord. Allting är inte ett objekt. Primitiv data är primitiv data. Object-data är Object.</p>
+<li>Vad är en callback och varför är det viktigt?</li>
+<li>Global scope, function scopes, vad är the global namespace och varför kan det vara dåligt?</li>
+<li>Namespacing din kod och varför</li>
+<li>Closures</li>
+<li>Object-oriented JavaScript</li>
+<li>(OO JS) Prototypal inheritance</li>
+</ul>
+<h2>Generella saker</h2>
+<h3>Optimering</h3>
+<ul>
+<li><a href="https://narcotize.wordpress.com/2015/07/31/koppla-upp-en-sida-mot-cloudflare/">Cloudflare</a></li>
+<li><strong><a href="https://narcotize.wordpress.com/2015/07/31/cache-och-optimering-av-hemsida/">--X--</a></strong>Optimering av hemsida vid hög trafik</li>
+</ul>
+<h3>Säkerhet</h3>
+<ul>
+<li>Hur fungerar SQL-injections och hur undviker man dom</li>
+<li>Hur man sätter upp SSL/HTTPS för att kryptera information</li>
+</ul>
+<h3>5. Generella saker att kunna</h3>
+<p>Verktyg: <strong>--X--</strong>Hur man inspekterar en hemsida med hjälp av firebug (firefox)</p>
+<h3>Local utvecklingsmiljö</h3>
+<ul>
+<li><strong>--X--</strong>Sätta upp en lokal utvecklingsmiljö. XAMP.</li>
+<li>Hur man sätter upp en E-commerce plattform</li>
+</ul>
+<h3>Versionhantering/GitHub</h3>
+<ul>
+<li><a href="https://narcotize.wordpress.com/2015/05/18/grunderna-i-git/">--X--</a>Git</li>
+</ul>
+<h3>FTP</h3>
+<h3>Basic terminal usage</h3>
+<h3>SSH</h3>
+<h3>Learn how client and server talk to each other</h3>
+<h3>RESTful web services</h3>
+<p>POST GET PUT DELET requests</p>
+<p><strong>Resurser</strong><br />
+<a href="https://www.edx.org/course/introduction-bootstrap-tutorial-microsoft-dev203x">Bootstrap</a> hos edX.<br />
+<a href="https://www.udacity.com/course/front-end-web-developer-nanodegree--nd001">Front-end web developer Udacity</a></p>

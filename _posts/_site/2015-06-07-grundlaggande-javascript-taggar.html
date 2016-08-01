@@ -1,0 +1,155 @@
+<h3>Inbyggda funktioner/methods</h3>
+<p><strong>Manipulera stringar</strong><br />
+.split() - Delar upp en sträng och lägger den i en array.<br />
+<a href="http://www.w3schools.com/jsref/jsref_splice.asp">.splice()</a> - Lägg till eller ta bort element, eller byt ut element i en array.<br />
+.reverse();<br />
+.substr(); //Tar två parametrar. Den första är var beskäringen ska börja. Den andra parametern specificerar hur många karaktärer som ska beskäras. Den andra parametern är valfri.<br />
+.substring(); //Detta är den äldre versionen av substr(); och gör samma sak. Skillnaden är den andra parametern. Substrings andra parameter är positionen efter den sista karaktären som du vill åt. Den andra parametern är valfri.<br />
+.sort();<br />
+.replace();<br />
+.indexOf(); //Används för att söka igenom en string.<br />
+.lastIndexOf(); //Samma som indexOf fast den börjar söka bakifrån.<br />
+.charAt(); //Har en parameter, som tar indexnumret av av en viss karaktär och returerar karaktären.<br />
+[code lang="js"]<br />
+var string = &quot;Har är min string&quot;;<br />
+string.charAt(0);//returerar H<br />
+[/code]<br />
+charCodeAt(); //Samma som charAt, med skillnaden att den returerar ASCII numret på karaktären.<br />
+<a href="http://www.w3schools.com/jsref/jsref_trim_string.asp">trim();</a> //Tar bort överflödigt whitespace i början och slutet av en string.</p>
+<p><strong>Manipulera nummer</strong><br />
+.toFixed(1); - Antalet decimaler ett tal ska ha.<br />
+.parseInt() - Denna funktion gör om stringar till tal. Det är viktigt att komma ihåg att den tar två argument, varav det andra argumentet definerar vilket bas talet ska vara i. För att ovandla talet till base-10 så ska man alltså lägga till 10. Exempel:<br />
+[code lang="js"]<br />
+parseInt(&quot;5&quot;, 10);<br />
+[/code]<br />
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof">typeof</a> //För att se vad för typ av element något är. Om det är boolean, string etc.<br />
+<a href="https://msdn.microsoft.com/library/ff679973(v=vs.94).aspx">filter();</a> Filtrerar bort element från en array.</p>
+<p><strong>Iterative Methods - loopa utan att använda loop</strong><br />
+Dessa methods används för att loopa igenom arrays, utan att använda en loop. Dessa kallas därför för Iterative Methods. Det finns fem Iterative Methods.<br />
+every(); Går igenom en array och avgör om ett visst condition är sant eller falskt. Till exempel.<br />
+[code lang="js"]<br />
+var numbers = [1,2,3,4,5];<br />
+function isLessThan3(value, index, array){<br />
+var returnValue = false;<br />
+if (value &lt; 3){<br />
+returnValue = true;<br />
+ }<br />
+return returnValue;<br />
+}</p>
+<p>var trueOrFalse = numbers.every(isLessThan3);<br />
+console.log(trueOrFalse); //Returns false. </p>
+<p>[/code]<br />
+Eftersom the condition som finns i if-statementet är falskt. value är inte mindre än tre, eftersom värderna 4 och 5 finns där. Och de är inte mindre än tre. every() är alltså en method som avgör om varje del i en array är sann i förhållande till condition-statementet. Om du däremot skapar samma funktion, men använder det för some(); så kommer det att returera true, eftersom några av values är mindre än tre, vilket gör påståendet till sant.<br />
+some();</p>
+<p>every() och some() är nyttiga, men du kan inte få ut någonting mer från dom än true och false. Det är därför som filter är så bra.</p>
+<p><strong>filter(); <strong><br />
+Filter gör precis som every() och some() och iterate genom en array. Men varje gång som påståendet är sant så läggs det värdet till i en ny array.</p>
+<p>map(); är en väldigt användbar funktion. Den används för att söka igenom en array och göra någonting.<br />
+[code lang="js"]<br />
+var array = [1,2,3,4,5];<br />
+//Om jag nu vill lägga till 1 på varje element inom arrayen så kan jag göra det med map, såhär:<br />
+var array = array.map(function(val){<br />
+  return val+1;<br />
+});<br />
+console.log(array); //[2,3,4,5,6]<br />
+[/code]<br />
+reduce() - lägger ihop samtliga tal i en array till ett tal.<br />
+[code lang="js"]<br />
+var array = [4,5,6,7,8];<br />
+var singleVal = 0;</p>
+<p>var singleVal = array.reduce(function(previousVal, currentVal){<br />
+  return previousVal+currentVal; //returns 30<br />
+});<br />
+[/code]</p>
+<p>filter() - filter filtrerar bort alla delar i en array. Vad som ska filtereras bort defineras i funktionen. Exempel:</p>
+<p>[code lang="js"]<br />
+var array = [1,2,3,4,5,6,7,8,9,10];<br />
+array = array.filter(function(val){<br />
+  return val &lt;= 5; //filtrerar bort alla tal som över över 5<br />
+});</p>
+<p>[/code]<br />
+concat(); används för att slå ihop två arrayer.</p>
+<p>[code lang="js"]<br />
+var array = [1,2,3];<br />
+var concatMe = [4,5,6];<br />
+array = array.concat(concatMe);</p>
+<p>[/code]<br />
+&nbsp;<br />
+<strong>Matematik-methods</strong><br />
+Det finns många methods rörande matematik.<br />
+Math.PI; Get PI<br />
+Math.Ceil(2.45); Rundar upp<br />
+Math.floor(2.45); Rundar ner<br />
+Math.round(2.45); Rundar av mot närmsta heltal</p>
+<p>&nbsp;</p>
+<h3>Object</h3>
+<p>Object i Javascript är som en dictionary i Python. Ordet Dictionary beskriver bättre vad det handlar om. Ett object består av en key och en value.<br />
+var person = {<br />
+namn: "Philip",<br />
+age: "34"<br />
+}</p>
+<p>&nbsp;</p>
+<h3>Listor/arrays</h3>
+<p>Såhär skapar man en lista.</p>
+<p><code><br />
+//Skapa en lista<br />
+var lista = ["namn", "djur", "nummer", 9, 8, 10000]</code></p>
+<p>//Sortera en lista<br />
+lista.sort();</p>
+<p>//Detta behövs för att listan skall sortera nummer som nummer och inte som strängar.<br />
+list.sort(function(a,b) {<br />
+return (+a) - (+b);<br />
+});</p>
+<p>//Vänd listan bakochfram<br />
+lista.reverse()</p>
+<p>//Ta ut delar av en lista och gör om den till en egen lista.<br />
+sliced = list.slice(0, 2) //Den första parametern är var slicen börjar, och den andra parametern (2) är hur många objekt ur lista du vill ta ut.</p>
+<p>//För att ta reda på om en ett visst objekt finns i en array, gör såhär.<br />
+list.indexOf("namn"); //Svaret blir positionen i listan, i detta fall 0</p>
+<p>//Push och pop.<br />
+//För att lägga till i en array:<br />
+myArray.push(["detta laggs till langs bak i listan"]);</p>
+<p>//För att ta bort det sista elementet i en array<br />
+myArray.pop();</p>
+<p>//Shift och unshift<br />
+//För att ta bort det första elementet i en array<br />
+myArray.shift();<br />
+//För att lägga till det första elementet i en array<br />
+myArray.unshift();</p>
+<p>&nbsp;</p>
+<h3>Kopiera</h3>
+<p>Gör följande för att kopiera en lista.</p>
+<p>[code language="js"]<br />
+var lista = [&quot;Hej&quot;, &quot;apa&quot;, 6, 7];</p>
+<p>kopiaAvLista = lista.concat();<br />
+[/code]</p>
+<p>Nu är kopiaAvLista en kopia av listan. Helt separat.</p>
+<p>Om du däremot gör såhär:</p>
+<p>[code language="js"]<br />
+var lista = [&quot;Hej&quot;, &quot;apa&quot;, 6, 7];</p>
+<p>länkTillLista = lista<br />
+[/code]</p>
+<p>Då skapar du i princip bara en länk till listan.<br />
+<strong>console.log</strong></p>
+<p>Används för att printa ut något, det motsvarar pythons <strong>print</strong></p>
+<p>[code language="js"]<br />
+console.log(&quot;Vad som ska skrivas&quot;);<br />
+[/code]</p>
+<p><strong>var</strong></p>
+<p>var används för att skapa en variabel.</p>
+<p>[code language="js"]<br />
+var = firstName = &quot;James&quot;;<br />
+var age = 20;<br />
+console.log(firstname, age);<br />
+[/code]</p>
+<p><strong>if</strong></p>
+<p>[code language="js"]</p>
+<p>if ( &quot;johan&quot;.length &gt; 10 )<br />
+{<br />
+    console.log(&quot;Let's go down the first road!&quot;);<br />
+}<br />
+else<br />
+{<br />
+    console.log(&quot;Du har ett kort namn&quot;);// What should we do if the condition is false? Fill in here:</p>
+<p>} </p>
+<p>[/code]</strong></strong></p>

@@ -1,0 +1,70 @@
+<p>Det krävs en del knep å knåpande för att få en statisk html-sida att fungera i Wordpress.</p>
+<h2>1. Skapa tema-mapp</h2>
+<p>Skapa en mapp i wp-content/themes/Saft. Jag har valt att kalla vårt låtsastema för Saft i den här övningen.</p>
+<h2>2. Skapa style.css</h2>
+<p>I mappen saft måste du lägga till filen style.css. Det smidigaste är att du tar din .css-fil som du har använt och helt enkelt byter namn på den till style.css. Därefter kopierar du in följande kod längst upp i style.css. Fast men din egen info såklart.</p>
+<p>[code language="css"]<br />
+/*<br />
+Theme Name: Saft<br />
+Theme URI: http://www.saft.com<br />
+Author: Ditt namn<br />
+Author URI: https://www.saft.com<br />
+Description: Single page website.<br />
+Version: 1.0<br />
+License: GNU General Public License v2 or later<br />
+License URI: http://www.gnu.org/licenses/gpl-2.0.html<br />
+Tags: images, scroll<br />
+This theme is licensed under the GPL.<br />
+Use it to make something cool, have fun, and share what you've learned with others.<br />
+*/<br />
+[/code]</p>
+<p>De flesta av de här uppgifterna tror jag är frivilliga. Det enda som är absolut nödvändigt är att ha Theme name.</p>
+<h2>3. Dela upp index.html-filen.<br />
+Wordpress är konstruerat så att header och footer är desamma på alla sidor. Om du klickar på en bloggpost så kommer header och footer antagligen se likadana ut som på första sidan. Det är för att index-filen är uppdelad.</p>
+<ul>
+<li> Eftersom vi kommer använda oss av programmeringsspråket php så behöver du ändra namn på dina filer. byt namn på index.html till index.php.</li>
+<li> Klipper du ut alla rader i index.php som ingår i headern. Vanligtvis från html-taggen ner till efter menyn och din header. Klipp ut det och klistra in det i filen header.php. Filen måste heta exakt så för att wordpress ska förstå den.</li>
+<li> Gör samma sak med footer-koden. Lägg all kod som hör till footern i footer.php</li>
+<li>Om du har en sidebar så gör samma sak med den koden. Klipp ut den och lägg den i sidebar.php</li>
+</ul>
+<h2>4. Lägg upp det på din server.</h2>
+<p>Om du behöver hjälp med ftp-kommandon se här. Filerna ska ligga i mappen /wp-content/themes/Saft.</p>
+<h2>5. Aktivera temat </h2>
+<p>Sådär, nu kan du logga in på sidan via wordpress-loginen som vanligtvis är saft.com/wp-admin.</p>
+<h2>6. Knyt ihop. </h2>
+<p>Så, om du nu går in på din hemsida så ser du att din header och footer inte visas. För att visa den måste du redigera index.php-filen.</p>
+<p>Precis i början av filen lägger du därför till.<br />
+[code language="php"]<br />
+&lt;?php get_header(); ?&gt;<br />
+[/code]</p>
+<p>I slutet av index.php lägger du till </p>
+<p>[code language="php"]<br />
+&lt;?php get_sidebar(); ?&gt;<br />
+[/code]</p>
+<p>[code language="php"]<br />
+&lt;?php get_footer(); ?&gt;<br />
+[/code]</p>
+<p>Man kan säga att dessa små koder är som länkar som binder samman filerna. Om du sprarar index.php å går till din hemsida kan du nu se header och footer.</p>
+<h2>7. Css </h2>
+<p>Sådär, nu är sidans innehåll på plats. Men sidan har ingen CSS. För att koppla in css måste du gå in i header.php och lägga till följande kod.</p>
+<p>[code language="html"]<br />
+&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; media=&quot;all&quot; href=&quot;&lt;?php bloginfo( 'stylesheet_url' ); ?&gt;&quot; /&gt;<br />
+[/code]</p>
+<p>Såhär, om du nu går in på hemsidan så ska sidan ha fått sin css. I alla fall style.css. Men för att koppla ihop bootstrap-css måste du lägga till följande kod.<br />
+[code language="html"]</p>
+<p>&lt;link rel=&quot;stylesheet&quot; href=&quot;&lt;?php bloginfo('stylesheet_directory'); ?&gt;/css/bootstrap.min.css&quot; type=&quot;text/css&quot; media=&quot;screen&quot; /&gt;<br />
+[/code]</p>
+<h2>Bilder</h2>
+<p>Dina bilder har nu en ny plats på servern. Därför måste du ändra bildadresserna i din html-kod.</p>
+<p>Om du har lagt till bilderna direkt i html-koden måste du ändra till följande adress:<br />
+wp-content/themes/saft/img/bild.jpg eller den korrekta adressen. Men bildens adress skall börja från wp-content.</p>
+<p>Exempel:<br />
+[code language="html"]<br />
+&lt;img src=&quot;wp-content/themes/butikboot/img/web.png&quot; class&quot;img-responsive&quot; alt=&quot;Cinque Terre&quot;&gt;<br />
+[/code]</p>
+<p>Om du däremot har lagt till bilderna från ditt stylesheet så blir adressen relativ i förhållande till ditt style.css-dokument. Därför ska adressen börja vara img/bild.jpg.<br />
+Det skall exempelvis se ut såhär:</p>
+<p>[code language="css"]<br />
+background:url(img/28H.jpg) no-repeat center center fixed;<br />
+[/code]</p>
+<p>Om du skriver in adressen korrekt men det ändå inte händer något. Bilderna inte laddas, så kan det vara ett problem med att gamla css har cachats på servern. För att lösa det problemet, kolla min bloggpost om det <a href="https://narcotize.wordpress.com/2015/04/14/langsam-uppdatering-av-css/">här</a>.</h2>

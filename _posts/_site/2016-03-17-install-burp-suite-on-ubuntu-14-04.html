@@ -1,0 +1,43 @@
+<p>Burp Suite is a program that contains many features related to web security. It contains a proxy server that let's the user intercept and manipulate communication between the client/browser and the server. It lets the user manipulate data before it is sent to the server. It also contains a lot of other features.</p>
+<p>In order to get Burp Suite up and running on Ubuntu 14.04 (and probably other Ubuntu-versions as well) we first need to make sure we have Java-installed. You can check that by running the following command in the terminal:<br />
+[code]java -version[/code]<br />
+Your terminal should respond with the version, for example:<br />
+java version "1.7.0_95"<br />
+If you don't have java installed make sure to install it. <a href="https://www.digitalocean.com/community/tutorials/how-to-install-java-on-ubuntu-with-apt-get">Here is a guide</a>.<br />
+Okay, now go ahead and download Burp SUite from the <a href="https://portswigger.net/burp/download.html">Portswiggers website</a>.<br />
+Once it is downloaded you just move it to wherever you want to have it.<br />
+I had to change the file permission in order to execute it as a normal user.<br />
+[code]<br />
+chmod +x burpsuite_free_v1.6.32.jar<br />
+./burpsuite_free_v1.6.32.jar<br />
+[/code]</p>
+<h2>Configure with Chrome</h2>
+<p>In order to get burp suite to act as a proxy you need to configure your web browser, to pass all traffic through burp. In Firefox I think this is done through some settings in the browser, but Chrome picks up the settings from the computer itself. If you, in Chrome, go to Preferences/Advanced Settings/Network/Change Proxy Settings you will receive this note:</p>
+<p>"When running Google Chrome under a supported desktop environment, the system proxy settings will be used. However, either your system is not supported or there was a problem launching your system configuration.</p>
+<p>But you can still configure via the command line. Please see man google-chrome-stable for more information on flags and environment variables."</p>
+<p>So, in order to get the proxy set up correctly we have to open up System Settings, it can be done through the Unity Dash or with the command:<br />
+[code]unity-control-center[/code]<br />
+In System Settings we open up Network, then we choose manual and add for HTTP Proxy 127.0.0.1, with port 8080.</p>
+<p>Now you can go ahead and launch Burp Suite. Then click on Proxy and make sure that Intercept is on. Now you can visit any http-website. You will notice that the page will not load. That means that burp suite is working as it should, and that it has intercepted the http-request. Now we can change whatever parameters in the http-header that we want to change. And when you are done you just click Forward. If you don't want to intercept the traffic any more you just turn intercept off.</p>
+<p>This is far from a perfect solution, but it works. But in order to use your browser without Burp Suite you have to turn off the Proxy in the System Settings/network. </p>
+<h2>Configure with HTTPS</h2>
+<p>At the moment you are only able to intercept http-traffic. But these days less and less websites run without ssl. So let's configure Burp Suite to be able to intercept https traffic.<br />
+First go to System Settings/Network/Network Proxy/Manual there you add: 127.0.0.1 with port 8080 at the HTTPS-Proxy field.<br />
+Now open Burp Suite and go to Proxy and turn intercept on. Now go visit https://portswigger.net. You will now get an error message saying that the traffic is not secure. That is because Chrome knows that Burp is intercepting the traffic and it gives you a warning. For us it is no big deal because we know what is provoking it, but if you get that while you are surfing at a café or on some other open network you should assume that someone is monitoring your traffic.<br />
+Anyways, click on the little lock next to the cross-over HTTPS. Click on Certificate information, and then export the certificate so some place on your computer.<br />
+Now open up Preferences in Chrome and then scroll down to advanced settings, there you will find HTTPS/SSL Manage Exceptions. Click on it and the click on Authorities, then import. Then you just import the certificate and you are done.<br />
+Now Burp Suite should work on HTTPS-web pages.</p>
+<h2>Running it on localhost</h2>
+<p>So, you want to try out Burp on a project that you are working on on your local computer. Burp does not initially work on localhost (your Internal IP-address). But that is easy to fix.<br />
+You just have to add it to your hosts file.<br />
+On ubuntu that means you have to do the following:</p>
+<p>[code lang="bash"]<br />
+#Get your internal ip-address:<br />
+ifconfig<br />
+#Edit your hosts-file<br />
+sudo vim /etc/hosts<br />
+#Now you add your internal ip and give it a name.<br />
+192.168.1.123    myprojekt.dev<br />
+[/code]<br />
+You can name it whatever you like. Remember that you have to have a tab between the ip and name. It cannot be spaces.<br />
+Now you just go to myprojekt.dev in your browser. If you are running it on a specific port just add the port in the browser, not in the hosts-file (because that won't work). So just go to: myprojekt.dev:8080 (or whatever port you use).</p>

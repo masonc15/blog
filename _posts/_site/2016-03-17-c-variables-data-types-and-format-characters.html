@@ -1,0 +1,83 @@
+<p>Okay, so let's talk a bit about data-types in C. Coming from JavaScript this might be a bit confusing. In JavaScript you have few data-types (in comparison with C), six primitiv data-types: Null, Undefined, String, Number, Booleon, Symbol, and the data-type Object. JavaScript is a loosely-typed or dynamic language. This means that you don't have to define what type of data a variable will be. </p>
+<p>For example, all of these data-types are different, but we just define them as variables, without specifying which types.<br />
+[code lang="js"]<br />
+var text = &quot;I am a string&quot;;<br />
+var digit = 42;<br />
+var float = 4.2;<br />
+[/code]</p>
+<p>But in C that does not work.</p>
+<p>So why do we need to define what type of variable/data-type we are going to use? Because that specifies the amount of space used in the storage, and how the bit-pattern is interpreted. So different data-types occupy different amount of storage. The minimum amount of memory we can manage in C is 1 byte.</p>
+<p>Here are the different fundamental data-types and the space they take up (taken from <a href="http://www.tutorialspoint.com/cprogramming/c_data_types.htm">here</a>):</p>
+<p><strong>Character types</strong><br />
+char - 1 byte - -128 to 127 or 0 to 255<br />
+unsigned char - 1 byte - 0 to 255<br />
+signed char - 1 byte - -128 to 127</p>
+<p><strong>Integer types</strong><br />
+int - 2 or 4 bytes - -32,768 to 32,767 or -2,147,483,648 to 2,147,483,647<br />
+unsigned int - 2 or 4 bytes - 0 to 65,535 or 0 to 4,294,967,295<br />
+short - 2 bytes - -32,768 to 32,767<br />
+unsigned short - 2 bytes - 0 to 65,535<br />
+long - 4 bytes - -2,147,483,648 to 2,147,483,647<br />
+unsigned long - 4 bytes - 0 to 4,294,967,295</p>
+<p><strong>Float types</strong><br />
+float - 4 byte - 1.2E-38 to 3.4E+38 - 6 decimal places<br />
+double - 8 byte - 2.3E-308 to 1.7E+308 - 15 decimal places<br />
+Because doubles take up double the space, 8 byte we can fit in more decimals in it.<br />
+long double - 10 byte - 3.4E-4932 to 1.1E+4932 - 19 decimal places</p>
+<p>Well, that is a bit complicated. A better way to understand it to understand the following as basic variables:<br />
+int - integer.<br />
+float - decimal number.<br />
+double - more precise decimal number.<br />
+char - a single character.<br />
+void - valueless special purpose type.</p>
+<p>These basic variables can be defined more precisely using <strong>size qualifiers</strong>, <strong>sign qualifiers</strong> or <strong>const qualifier</strong>. </p>
+<p>The <strong>size qualifier</strong> alters the size of the variable by using the keywords <strong>long</strong> and <strong>short</strong>. The int variable is 2-4 bytes, but if long is used with it the size becomes 4-8 bytes.<br />
+int == 2-4 bytes<br />
+short int == 2 bytes<br />
+long int == 4-8 bytes</p>
+<p><strong>Sign qualifiers</strong> define if a variable can hold positive or negative values.<br />
+unsigned int;<br />
+Can only hold 0 or positive values.<br />
+A variable is by default signed. So that is not needed to add.</p>
+<p><strong>Const qualifier</strong><br />
+A const keywords makes a variable constant, so that it can not be changed.</p>
+<p>It's interesting to note here that C does not have the concept of strings. Just characters. A string in C is just an array of characters.<br />
+But in order to find out the size of a data-type or a variable you can use the built-in sizeof-function. Here is an example:</p>
+<p>[code lang="c"]<br />
+#include &lt;stdio.h&gt;<br />
+#include &lt;limits.h&gt;</p>
+<p>int main(){<br />
+  int test = 8;<br />
+  printf(&quot;Storage-size of a an int: %zu \n&quot;, sizeof(test));<br />
+  return 0;<br />
+}</p>
+<p>[/code]</p>
+<p>So, the format to create variables in C is the following:<br />
+type name = value;</p>
+<p>[code lang="c"]<br />
+#include &lt;stdio.h&gt;</p>
+<p>int main(){<br />
+  // This is an integer<br />
+  // Format character: %d as in digit<br />
+  int age = 10;<br />
+  printf(&quot;This is the integer: %d\n&quot;, age);</p>
+<p>  // This is a floating point<br />
+  // Format character: %f as in float<br />
+  float floating_point = 10.33;<br />
+  printf(&quot;This is the decimal_number %f\n&quot;, floating_point);</p>
+<p>  // This is also a floating point, but much bigger.<br />
+  // Format character: also %f as in float<br />
+  double kinda_big_number = 44444.333233;<br />
+  printf(&quot;This is a big floating point: %f\n&quot;, kinda_big_number);</p>
+<p>  // This is a character<br />
+  // Format character: %c as in character<br />
+  // Notice that a single character is written with only single-quotation-marks<br />
+  char one_character = 'H';<br />
+  printf(&quot;This is one character: %c\n&quot;, one_character);</p>
+<p>  // This is a string<br />
+  // Format character: %s as in string<br />
+  char several_characters[] = &quot;hello world&quot;;<br />
+  printf(&quot;This is a string: %s\n&quot;, several_characters);<br />
+  return 0;<br />
+}</p>
+<p>[/code]</p>

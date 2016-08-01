@@ -1,0 +1,65 @@
+<p>This is a list of MySQL Commands that I don't feel like googeling again.</p>
+<p>MySQL-commands are not case sensitive, so you can write it in lowercase if you like. But the commands are usually written in uppercase and  and tables, databases, usernames are written in lowercase.</p>
+<p>All commands have to end in a semicolon. ;;;;;;;;;;;<br />
+<strong>Create database</strong><br />
+[code]<br />
+CREATE DATABASE nameofdatabase;<br />
+[/code]</p>
+<p><strong>Show database</strong><br />
+[code]<br />
+SHOW DATABASES;<br />
+[/code]</p>
+<p><strong>Delete database</strong><br />
+[code]<br />
+DROP DATABASE nameofdatabase;<br />
+[/code]</p>
+<p><strong>Open a database</strong><br />
+[code]<br />
+USE nameofdatabase;<br />
+[/code]</p>
+<p><strong>Show tables of a database</strong><br />
+[code]<br />
+SHOW tables;<br />
+[/code]</p>
+<p><strong>Create a table</strong><br />
+So when you create a table you have to give it at least one column, and that column need to have the data type specified. Here is a <a href="http://www.tutorialspoint.com/mysql/mysql-data-types.htm">list of common data types.</a><br />
+[code]<br />
+CREATE TABLE nameoftable (nameOfColumn TYPE, nameOfColumn TYPE);<br />
+[code]<br />
+For example:<br />
+[code]<br />
+CREATE TABLE users (username VARCHAR);<br />
+[/code]</p>
+<p><strong>Show a list of tables</strong><br />
+[code]<br />
+SHOW TABLES;<br />
+[/code]</p>
+<p><strong>Show a description of the table</strong><br />
+[code]<br />
+DESCRIPTION nameoftable;<br />
+[/code]</p>
+<p><strong>Insert data into table</strong><br />
+[code]<br />
+INSERT INTO `nameoftable` (`name`) VALUES (&amp;quot;Pelle&amp;quot;);<br />
+[/code]</p>
+<p><strong>Look at the data in the table</strong><br />
+[code]<br />
+SELECT * FROM nameoftable;<br />
+[/code]</p>
+<p><strong>Update a field in the table</strong><br />
+[code]<br />
+UPDATE `users` SET `name` = 'Johan' WHERE `users`.`name` ='Pelle';<br />
+[/code]</p>
+<p><strong>Add column to a table</strong><br />
+[code]<br />
+ALTER TABLE users ADD email VARCHAR(40);<br />
+[/code]</p>
+<p><strong>Remove column from table</strong><br />
+[code]<br />
+ALTER TABLE users DROP email;<br />
+[/code]</p>
+<p><strong>Remove row from table</strong><br />
+Let's say we want to remove a user from our table<br />
+[code]<br />
+DELETE from users where name=Johan;<br />
+[/code]</p>

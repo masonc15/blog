@@ -1,0 +1,23 @@
+<h1>Tmux</h1>
+<p>För att kunna kunna idla på irc 24/7 behöver man en server som jämnt är online, irssi och tmux.</p>
+<p>Logga in på serverns med ssh.<br />
+Ladda ner irssi och tmux.<br />
+sudo apt-get install irssi tmux<br />
+Starta en ny session med tmux genom kommandot:<br />
+tmux<br />
+Öppna irc med kommandot:<br />
+irssi<br />
+joina en server och en kanal.<br />
+/connect irc.freenode.net<br />
+/join #namnpåkanal</p>
+<p>För att sedan kunna gå ur å komma in igen å läsa all historik så kör kommandot:<br />
+ctrl a<br />
+ctrl d<br />
+crt-b D</p>
+<p>För att sedan gå ut ur alla tmux-sessioner så kör du.<br />
+ctrl-d<br />
+För att sedan hoppa in på en ny session igen så kör du<br />
+tmux list-sessions<br />
+tmux attach -t 0 (eller vad sessionen nu heter)<br />
+ctr-b p - för att gå över till nästa panel<br />
+ctr-b , - för att renamea ett fönster</p>

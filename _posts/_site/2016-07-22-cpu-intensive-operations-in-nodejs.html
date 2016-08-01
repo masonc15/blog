@@ -1,0 +1,48 @@
+<p>Lately I have been learning about CPU-intensive operations and I/O-intensive operations. The problem I have run into has been: how do I handle long-running tasks in the routes/endpoints. Let's say that you have a million items you want to show the user, so and you have to iterate over all the items and edit them in some way. Wait, that a crappy example, let's instead say that you have a ton of statistics and you want to give the user a real-time analysis of that statistics. That is going to take a lot of time. If that happens right in the endpoint that request is going to block the node-server until the process is finished. That's because of the single-threadedness of node (<a href="https://www.youtube.com/watch?v=8aGhZQkoFbQ">Yada yada this presentation is still the best thing on the internet to explain nodes event-loop.</a>). This means that all other users have to wait for that request to finish.</p>
+<p>While I read about this I came across a few concepts that are useful to know.</p>
+<h2>CPU-bound</h2>
+<p>This can sometimes be called: long running CPU tasks, CPU intensive tasks or<br />
+CPU-bound tasks.</p>
+<p>A program/application/process that is CPU-bound is something that requires a lot of CPU-power. CPU-power is usually needed when doing a lot of calculations.</p>
+<h2>I/O-bound</h2>
+<p>An application that is I/O-bound is mostly wait for network or database. This is something that Nodejs does really good. Since it can process several requests while it is waiting for a response from the database. That's why node can be so fast in servering many requests.</p>
+<h2>Different Server</h2>
+<p>So there are conceptually some different servers. One being a web-server.<br />
+A web-server is basically a I/O-bound server. The main focus is to server requests as fast as possible. That mean that if you have an operation that is CPU-bound is does not belong in the Web-server. That process probably belongs better in a worker-server.</p>
+<h2>Possible solutions for CPU-bound operations in a NodeJs-server</h2>
+<p>Okay, so how to we solve the problem of doing CPU-bound operations on a NodeJS application?</p>
+<p>Here are some of the alternatives I have run into while researching this. This list is not exhaustive, and it might not even be correct (I have just been googeling around a bit, I'm no expert).</p>
+<ul>
+<li>
+1. "Offline"-server dedicated to processing data<br />
+You can have a server that process the data offline, in the sense that it is not in real-time.<br />
+A. Cron-job<br />
+Having a cron-job that calculates on a schedule. For example every half hour or something like that. This is of course very resource consuming. What if nothing has happened and the server process the data again? That would be very unnecessary.</p>
+<p>B. Only calculate when an update in the database is done. This could be achieved by having a message sent every time the database gets updated.</p>
+<p>C. Do part of the calculation when an update to the database is done. But only process the data since the last process. If this is possible.</p>
+<p>There is a pretty good answer on <a href="http://programmers.stackexchange.com/questions/158781/cpu-heavy-web-server">SO about this.</a>
+</li>
+<li>
+2. Separate server do the CPU-crunching.<br />
+Have a separte server do the number crunching. And then just connect the web-server to that endpoint. Since the request is async, other requests will work meanwhile. Since node can work while waiting for a callback.</p>
+<p>Here is a <a href="http://davidherron.com/blog/2014-07-03/easily-offload-your-cpu-intensive-nodejs-code-simple-express-based-rest-server">blog-post discussing this.</a>
+</li>
+<li>
+3. Using Nodes ClusterModule -- Clusters - LoadBalancer with separate processes</p>
+<p>https://www.sitepoint.com/how-to-create-a-node-js-cluster-for-speeding-up-your-apps/</p>
+</li>
+<li>
+4. Rabbit queue message</p>
+</li>
+<li>
+5. process.NextTick/setImmediate<br />
+If you know what you are doing and you really want the operation to happen on your web-server. This can be a way.<br />
+This trick can make synchronous operations asynchronous. So that the server can attend other easier tasks meanwhile. This is <a href="http://neilk.net/blog/2013/04/30/why-you-should-use-nodejs-for-CPU-bound-tasks/">blog </a>exemplified it pretty well. </p>
+<p>http://bytearcher.com/articles/io-vs-cpu-bound/?utm_source=hashnode.com<br />
+http://stackoverflow.com/questions/3491811/node-js-and-cpu-intensive-requests?rq=1<br />
+http://stackoverflow.com/questions/16974557/why-is-node-js-not-suitable-for-heavy-cpu-apps?noredirect=1&amp;lq=1<br />
+http://programmers.stackexchange.com/questions/158781/cpu-heavy-web-server<br />
+https://www.toptal.com/nodejs/top-10-common-nodejs-developer-mistakes<br />
+http://neilk.net/blog/2013/04/30/why-you-should-use-nodejs-for-CPU-bound-tasks/
+</li>
+</ul>

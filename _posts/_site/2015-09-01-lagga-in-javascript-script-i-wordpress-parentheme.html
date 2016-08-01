@@ -1,0 +1,18 @@
+<p>Leta efter sektionen i functions.php där script läggs till. Det kan se ut såhär.</p>
+<p>[code lang="php"]<br />
+function resonate_scripts() {<br />
+	wp_enqueue_style( 'resonate-style', get_stylesheet_uri() );</p>
+<p>	wp_enqueue_script( 'resonate-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20120206', true );</p>
+<p>	wp_enqueue_script( 'resonate-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20130115', true );</p>
+<p>/* Här är mitt eget script so jag har lagt till. Det är baserat på jQuery det är därför som jquery finns i arrayen */<br />
+	wp_enqueue_script(<br />
+		'animations',<br />
+		get_stylesheet_directory_uri() . '/js/script.js',<br />
+		array( 'jquery' )<br />
+	);</p>
+<p>	if ( is_singular() &amp;&amp; comments_open() &amp;&amp; get_option( 'thread_comments' ) ) {<br />
+		wp_enqueue_script( 'comment-reply' );<br />
+	}<br />
+}<br />
+add_action( 'wp_enqueue_scripts', 'resonate_scripts' );</p>
+<p>[/code]</p>

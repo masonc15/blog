@@ -1,0 +1,23 @@
+<p>Bootstrap är det mest populära web-utvecklingsframverket. Bootstrap 3 är ett mobile-first-ramverk.</p>
+<p>En effekt av att det är mobile-first är dess gridsystem. I gridsystemet så räknar man från minsta device. Se följande exempel:</p>
+<p>[code language="html"]<br />
+&lt;div class=&quot;row&quot;&gt;<br />
+&lt;div class=&quot;col-xs-12&quot;&gt;<br />
+&lt;p&gt;Här är en kolumn per rad&lt;/p&gt;<br />
+&lt;/div&gt;<br />
+&lt;div class=&quot;col-xs-12&quot;&gt;<br />
+&lt;p&gt;Här är en till rad&lt;/p&gt;<br />
+&lt;/div&gt;<br />
+[/code]<br />
+I detta exempel så defineras row med att ha ett block med 12 kolumner. xs (mobil) sm (mobil/padda) md (laptop) xs (stor skärm). Det vill säga, regeln för den minsta devicen bestämmer avgör reglerna för större divices. Om vi till exempel vill att textblocken i exemplet ovan skall ligga bredvid varandra när vi besöker hemsidan från en laptop så ändrar man till följande kod.<br />
+[code language="html"]<br />
+&lt;div class=&quot;row&quot;&gt;<br />
+&lt;div class=&quot;col-xs-12 col-md-6&quot;&gt;<br />
+&lt;p&gt;Här är en kolumn per rad&lt;/p&gt;<br />
+&lt;/div&gt;<br />
+&lt;div class=&quot;col-xs-12 col-md-6&quot;&gt;<br />
+&lt;p&gt;Här är en till rad&lt;/p&gt;<br />
+[/code]</p>
+<h2>Normalize Bootstrap</h2>
+<p>Eftersom olika browsers är byggda på olika sätt, men egna unika default-inställning kan sidor se olika ut på olika sidor. Därför är det vanligt att ha med en normalize.css-fil bland css-filerna. Dessa tar bort browserna specialinställningar.</p>
+<p>Detta är dock inte nödvändigt om du använder bootstrap eftersom bootstrap har normalize.css inbyggt in sin css-fil.</p>

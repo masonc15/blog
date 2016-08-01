@@ -1,0 +1,105 @@
+<h2>CSS - Cascading Stylesheet</h2>
+<p>Det finns en anledning till att det heter cascading. Det är för att det går uppifrån och ner. Dokumentet läses alltså uppifrån och ner.<br />
+Klasser överskriver taggar. Och ID överskriver klasser. Och Inline-styling överskriver ID.<br />
+Klasser överskrider varandra om de ligger längre ner i dokumentet. Det är alltså klasserna längre ner som överskriver övriga klasser. Men ID kan ligga var som helst i dokumentet och det överskriver ändå klasser.<br />
+Något som överskrider alla andra taggar, klasser, ID, Inline-style är !important.</p>
+<p>Så kom ihåg. klasser längre ner i dokumentet överskrider klasser längre upp.</p>
+<p><strong>Taggar. p, h1, header</strong><br />
+<strong>Klasser - skriver över taggar</strong><br />
+<strong>ID - skriver över klasser</strong><br />
+<strong>Inline-style style="" - skriver över ID</strong><br />
+<strong>!important - skriver över inline-style</strong></p>
+<p>Lista och förklaring på de viktigaste CSS-attributen.</p>
+<h2>Manipulera text</h2>
+<p>Det finns många sätt att manipulera text.</p>
+<p>[code lang="css"]<br />
+text-transformation: uppercase; /*Gör om bokstäverna till stora bokstäver.*/</p>
+<p>[/code]</p>
+<h2>Position</h2>
+<p>Här är en <a href="http://alistapart.com/article/css-positioning-101">fenomenal artikel</a> som förklarar de fyra olika modellerna.<br />
+Attributet position har fyra olika alternativ.<br />
+<code><br />
+position: static; //Default inställningen. Den mest grundläggande.<br />
+position: relative;<br />
+position: fixed; //Fixerad på viewporten.<br />
+position: absolute; //Absolut i förhållande till sidan.<br />
+</code></p>
+<p><strong>position: static; </strong><br />
+Den mest grundläggande positionen. Den kan bara lägga block på varandra. Ställa divvar ovanpå varandra.Du kan inte använda några top, bottom, left, right-attribut här inte.</p>
+<p><strong>position: relative; </strong><br />
+Den fungerar lika bra som static med att bara stapla boxarna. Men, den har speciellt krafter. Det kan även kombineras med left, right, top, bottom.<br />
+Exempel:<br />
+<code><br />
+position: relative;<br />
+left: 200px;<br />
+</code><br />
+I detta exempel så kommer boxen att röra sig 200px från vänster. Det betyder alltså 200px från vänsterkanten mot högerkanten. Om du skulle lägga till left: 200px; i en statisk så skulle ingenting hända.</p>
+<p><strong>position: absolute; </strong></p>
+<p><strong>position: fixed; </strong></p>
+<p><strong>Boxmodellen</strong><br />
+<a href="http://www.w3schools.com/css/css_boxmodel.asp">Boxmodellen</a> bör alla känna till. Varje DIV består av en margin, border, padding, content.<br />
+Margin är området utanför border.<br />
+Border är linjen som går runt objektet.<br />
+Padding är området mellan content och border.<br />
+Content är själva innehållet, t.ex. en text eller en bild.</p>
+<p>Här är ett exempel</p>
+<p>[code language="css"]<br />
+div {<br />
+margin: 0px;<br />
+border: 5px solid black; /*5px tjock, solid och färgen svart */<br />
+padding: 20px 10px 100px 50px; /*EN för varje sida */<br />
+}<br />
+[/code]</p>
+<p>Om du lägger til fyran värden till attributed padding så definerar du varje sida.</p>
+<p><strong>Box-sizing</strong><br />
+Ett väldigt bra attribut att känna till är box-sizing. Det kan vara väldigt förvirrande att arbeta med boxar. Även om man sätter 100% så innebär det inte alltid 100%, och 100px är oftast inte 100px, utan extra beroende på border, och padding. Men om man skapar box-sixing attributet så betyder height och width precis det som man skriver. Height är alltså 100px och varken mer eller mindre. Kom ihåg dock att margin inte räknas in! Men kom ihåg att attributet är relativt nytt och inte fullt implementerat, så glöm inte browserspecifika attributen.</p>
+<p>[code language="css"]<br />
+* {<br />
+-webkit-box-sizing: border-size;<br />
+-moz-box-sizing: border-size;<br />
+-ms-box-sizing: border-size;</p>
+<p>box-sizing: border-size;<br />
+}<br />
+[/code]</p>
+<p><strong>Browserspecifika attribut</strong><br />
+Browserspecifika attribut är attribut som är specifika för vissa browsers. För attribut som inte är fullt implementerade, där det inte råder någon exakt definition av hur attributet ska implementeras i browser används dessa browserspecifika attribut. Det är ett sätt att säga: Så här vill FireFox implementera det, så här vill Chrome implementera det.<br />
+<strong>-webkit</strong> - Safari och Chrome<br />
+<strong>-moz</strong> - <strong>Moz</strong>illa Firefox<br />
+<strong>-ms</strong> - Internet Explorer<br />
+<strong>-o</strong> - Opera</p>
+<p>För att veta om det är säkert att använda ett visst attribut kolla <a href="http://caniuse.com">Can I Use</a>. Ett exempel är attributet box-sizing: border-box;</p>
+<p><strong>Definera alla element i css</strong><br />
+Något som kan vara effektivt ibland är att tillfoga alla element ett visst attribut. Till exempel om man håller på å bygger upp en struktur och vill att alla element ska ha en border-attribut då kan man göra det såhär.</p>
+<p>[code language="css"]<br />
+* {<br />
+    border: 1px solid red;<br />
+}<br />
+[/code]</p>
+<p>Stjärnan i början indikerar att alla element på sidan får det attributet. En annan användbar situation är följande.</p>
+<p>[code language="css"]<br />
+* {<br />
+    box-sizing: border-box;<br />
+}<br />
+[/code]</p>
+<p>Om du vill att alla boxar ska ha box-sixing attributet, som jag skrev om ovan, så kan stjärnan också vara användbar. Glöm inte de browserspecifika attributen.</p>
+<p><strong>Media Quieres</strong><br />
+Ett av de viktigaste attributen för att göra en hemsida responsiv är med hjälp av media quieres. Det ser ut såhär:</p>
+<p><strong>@media</strong></p>
+<p>[code language="css"]<br />
+@media only screen and (max-width: 300px) {<br />
+    p {<br />
+        background-color: blue;<br />
+    }<br />
+}<br />
+[/code]</p>
+<p>Här ser vi ett exempel på en media querie. ordet <strong>only</strong> hjälper oss med äldre webbläsare. ordet <strong>screen</strong> betyder att media querien gäller alla slags skärmar, paddor, telefoner eller laptops. Du kan även använda ordet <strong>print</strong> för att göra om hemsidan till utskriftsformat. <strong>and</strong> är nödvändig för att binda ihop kommandona.<br />
+<strong>(max-width: 300px)</strong> betyder att reglerna kommer endast gälla för skärmar som är mindre än 300px.</p>
+<p>&nbsp;</p>
+<h2>Width: 100%</h2>
+<p>Om man sätter width 100%, och sedan sätter padding eller margin så kommer boxen att vara större än 100% vilket ju är störande. Så för att lösa det kan man lägga till css attributet:</p>
+<p>[code lang="css"]<br />
+div {<br />
+box-sizing: content-box; /*Detta gör att margin och padding räknas in i 100%*/<br />
+box-sizing: border-box; /*Detta gör att margin och padding inte räknas in*/<br />
+}<br />
+[/code]</p>
