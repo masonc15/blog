@@ -6,8 +6,8 @@ highlighter:      rouge
 
 # Setup
 title:            Hyde
-tagline:          'A Jekyll theme'
-description:      ' testing Two-column <a href="http://jekyllrb.com" target="_blank">Jekyll</a> theme that pairs a prominent sidebar with uncomplicated content. Made by <a href="https://twitter.com/mdo" target="_blank">@mdo</a>.'
+tagline:          "Stuff I don't want to google again"
+description:      'A blog where I put stuff that I don't want to google again. '
 url:              https://xapax.github.io
 baseurl:          /blog/
 
