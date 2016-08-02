@@ -11,7 +11,7 @@ baseurl:          /blog/
 posturl:          /blog
 
 author:
-  name:           'Mark Otto'
+  name:           'Philip Linghammar'
   url:            https://twitter.com/mdo
 
 paginate:         5
@@ -20,4 +20,4 @@ paginate:         5
 version:          2.1.0
 
 github:
-  repo:           https://github.com/poole/hyde
+  repo:           https://github.com/xapax
