@@ -4,7 +4,7 @@ highlighter:      rouge
 
 # Setup
 title:            Hyde
-tagline:          'A Jekyll theme'
+tagline:          "A Jekyll don't theme"
 description:      'A blog where I put stuff that I dont want to google again. '
 url:              https://xapax.github.io
 baseurl:          /blog/
