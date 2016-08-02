@@ -8,6 +8,7 @@ tagline:          "Stuff I don't want to google again"
 description:      "A blog where I put stuff that I don't want to google again. "
 url:              https://xapax.github.io
 baseurl:          /blog/
+posturl:          /blog
 
 author:
   name:           'Mark Otto'
