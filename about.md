@@ -8,4 +8,5 @@ I usually work with NodeJS, Angular, MongoDB. But I really like experimenting.
 
 Here is my really outdated website. I made it when I was learning to code, don't judge me too hard.  [xapax.github.io](https://xapax.github.io)
 
-Theme developed by: [poole](https://github.com/poole).
+Theme name: **Hyde**
+Developed by: [mdo](https://github.com/mdo).

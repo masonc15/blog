@@ -43,5 +43,7 @@ Find() however will continue the search throughout the whole collection, since t
 ## Details about MongoDB
 
 Max-size for a document: 16 mb.
+
 Max nested depth: 100 levels
+
 Database names are *case incensitive*
