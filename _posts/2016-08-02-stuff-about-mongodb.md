@@ -2,14 +2,8 @@
 layout: post
 title: A few notes on MongoDB
 ---
-// jshin ignore:start
 
-## Creating indices in MongoDB
-I have been experimenting with optimizing speed of MongoDB by creating indices.
-
-
-
-Before we get started I just want to mention how we can find out more about the queries we do in mongo. I usually use MongoChef and write these queries in the IntelliShell. But you can write it directly in the mongo-shell as well.
+I just want to mention how we can find out more about the queries we do in mongo. I usually use MongoChef and write these queries in the IntelliShell. But you can write it directly in the mongo-shell as well.
 
 ```javascript
 db.user.find({active: true}).explain();
@@ -38,8 +32,8 @@ The response may look something like this
 }
 ```
 
-## Know when to use indices
-Indices are not adequate at all occasions. For collections that change often it might not be optimal. Because the index needs to be rewritten every time.
+## Know when to use indexes
+Indexes are not adequate at all occasions. For collections that change often it might not be optimal. Because the index needs to be rewritten every time.
 
 ## Difference between find() and findOne()
 This is probably pretty obvious but still good to know. If you are looking for one element you use findOne() because after mongo finds that one element it will stop the search.
