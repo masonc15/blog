@@ -14,7 +14,7 @@ author:
   name:           'Philip Linghammar'
   url:            https://xapax.github.io
 
-paginate:         5
+paginate:         20
 
 # Custom vars
 version:          2.1.0
