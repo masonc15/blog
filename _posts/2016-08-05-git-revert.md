@@ -35,6 +35,7 @@ git log
 ```
 
 Outputs
+
 ```
 commit 11f43361ef9c6cafc55ed0a43822b08beb1ccc23
 Date:   Fri Aug 5 16:07:08 2016
