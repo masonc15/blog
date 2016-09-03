@@ -148,4 +148,4 @@ So I opened it and tried to compile it. And it failed. But in the exploit code I
 * http://paulsec.github.io/blog/2014/04/14/updating-openfuck-exploit/
 ```
 
-So I followed the instructions and updated the script. And ran it. But the script kept dying. It said it managed to spawn a shell.
+So I followed the instructions and updated the script. And ran it. But the script kept dying. It said it managed to spawn a shell, but I was unable to interact. It turns out the second exploit it was downloading failed, even though I had updated the address. Anyways, I just removed the wget command, and got a shell as a apache user.
