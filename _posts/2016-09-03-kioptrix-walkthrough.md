@@ -5,6 +5,7 @@ title: Kioptrix 1 - Walkthrough
 
 I have been slow on updating the blog. Not because I haven't been hacking VMs and doing other stuff. I just got lost in other stuff.
 
+
 ## Scanning
 
 So as usual I started out scanning the machine. I have been learning more about metasploit and metasploit database so I tried to use that a bit more. So I scanned with db_nmap
@@ -149,3 +150,31 @@ So I opened it and tried to compile it. And it failed. But in the exploit code I
 ```
 
 So I followed the instructions and updated the script. And ran it. But the script kept dying. It said it managed to spawn a shell, but I was unable to interact. It turns out the second exploit it was downloading failed, even though I had updated the address. Anyways, I just removed the wget command, and got a shell as a apache user.
+
+Then I started the hunt for local exploits. Which I figured would be easy since the kernel is so old.
+First I tried 33824.c. But I didn't compile.
+
+Then I tried 3.c. And it compiled and gave me root.
+
+```
+bash-2.05$ gcc 3.c -o exp
+gcc 3.c -o exp
+bash-2.05$ ./exp
+./exp
+[+] Attached to 29558
+[+] Waiting for signal
+[+] Signal caught
+[+] Shellcode placed at 0x4001189d
+[+] Now wait for suid shell...
+whoami
+root
+```
+
+## Tools used
+- Nmap
+- enum4linux
+- Metasploit (to search for exploits)
+
+## Conclusion
+
+Although very old it was still useful and fun. Great with VMs that focus on exploits and not only on riddles.
