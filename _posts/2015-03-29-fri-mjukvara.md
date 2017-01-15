@@ -25,4 +25,4 @@ GPL, BSD, Copyleft, Kopimi, CC, CC-NC, Floss, Foss, Open Source, PPL. Flanker, s
 
 Peer Production License är kanske det mest intressanta av alla dessa. PPL är designat och föreslagit av Kleiner.
 
-Den [här](https://vimeo.com/18504379) föreläsningen av [Obeng](http://adamobeng.com/me.html">Adam [](https://twitter.com/Adam_Obeng) kan vara givande.
+Den [här](https://vimeo.com/18504379) föreläsningen av [Obeng](http://adamobeng.com/me.html)Adam [](https://twitter.com/Adam_Obeng) kan vara givande.

