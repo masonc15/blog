@@ -1,0 +1,24 @@
+---
+layout: post
+title: 'Ord: Samfällighet'
+date: 2015-04-23 01:52:19.000000000 -03:00
+type: post
+published: true
+status: publish
+categories: []
+tags: []
+meta:
+  _publicize_pending: '1'
+  sharing_disabled: '1'
+  _rest_api_published: '1'
+  _rest_api_client_id: "-1"
+  original_post_id: '123'
+  _wp_old_slug: '123'
+author:
+  login: tidlost
+  email: philip.linghammar@protonmail.com
+  display_name: tidlost
+  first_name: ''
+  last_name: ''
+---
+Ordet samfällighet kommer nog att plockas upp av vänstern nån gång. Gemenskaper, common, och snart samfällighet.

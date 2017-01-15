@@ -1,0 +1,36 @@
+---
+layout: post
+title: Lägga till bootstrap i wordpress
+date: 2015-08-27 18:18:23.000000000 -03:00
+type: post
+published: true
+status: publish
+categories:
+- bootstrap
+- wordpress
+tags: []
+meta:
+  _publicize_pending: '1'
+  sharing_disabled: '1'
+  _rest_api_published: '1'
+  _rest_api_client_id: "-1"
+  _publicize_job_id: '14159325376'
+  original_post_id: '450'
+  _wp_old_slug: '450'
+author:
+  login: tidlost
+  email: philip.linghammar@protonmail.com
+  display_name: tidlost
+  first_name: ''
+  last_name: ''
+---
+Detta är för att lägga till bootstrap i ett parent-theme i Wordpress.
+```php
+function my_scripts_enqueue() {
+    wp_register_script( 'bootstrap-js', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js', array('jquery'), NULL, true );
+    wp_register_style( 'bootstrap-css', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css', false, NULL, 'all' );
+    wp_enqueue_script( 'bootstrap-js' );
+    wp_enqueue_style( 'bootstrap-css' );
+}
+add_action( 'wp_enqueue_scripts', 'my_scripts_enqueue' );
+```

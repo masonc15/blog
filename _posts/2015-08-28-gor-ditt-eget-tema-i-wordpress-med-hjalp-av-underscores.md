@@ -1,0 +1,33 @@
+---
+layout: post
+title: Gör ditt eget tema i Wordpress med hjälp av underscores
+date: 2015-08-28 16:03:24.000000000 -03:00
+type: post
+published: true
+status: publish
+categories:
+- wordpress
+tags: []
+meta:
+  _publicize_pending: '1'
+  sharing_disabled: '1'
+  _rest_api_published: '1'
+  _rest_api_client_id: "-1"
+  _publicize_job_id: '14189770848'
+  original_post_id: '452'
+  _wp_old_slug: '452'
+author:
+  login: tidlost
+  email: philip.linghammar@protonmail.com
+  display_name: tidlost
+  first_name: ''
+  last_name: ''
+---
+
+Så du vill göra ditt eget tema. Komma ifrån alla förgjorda skitteman som är jättesvåra att anpassa. Då har du kommit rätt. Jag ska visa hur man går till väga för att skapa sitt eget tema.
+1. Ladda ner DesktopServer och installera det. Det behövs för att du ska kunna utveckla ditt tema lokalt på din dator. Utan tillgång till internet, en server eller databas. DesktopServer emulerar server och databas på din lokala dator. Smidigt.
+2. Gå till underscores och ladda ner deras template. Det innehåller alla grundläggande wordpress-filer. Och alla grundläggande wordpress-hooks.
+
+## Statisk förstasida
+
+Om du vill göra en statisk förstasida kan du göra det enkelt. Du kopierar bara index.php och döper om filen till `static-page.php`. Nu kommer `static-page.php` att laddas innan `index.php` laddas. Läs mer om detta vilka filer som laddas när i wordpress guide till template hierarchy.

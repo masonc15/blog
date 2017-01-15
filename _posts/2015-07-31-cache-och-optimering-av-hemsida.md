@@ -1,0 +1,44 @@
+---
+layout: post
+title: Optimering av hemsida för högre trafik och snabbhet
+date: 2015-07-31 16:07:50.000000000 -03:00
+type: post
+published: true
+status: publish
+categories:
+- optimering
+tags: []
+meta:
+  _publicize_pending: '1'
+  sharing_disabled: '1'
+  _rest_api_published: '1'
+  _rest_api_client_id: "-1"
+  _publicize_job_id: '13276807459'
+  original_post_id: '394'
+  _wp_old_slug: '394'
+  _oembed_d5c4b7281a0490240bf38875cbff5e1c: "{{unknown}}"
+  _oembed_f6bbb3864e6a1241dcefe9ff03b1dc4f: "{{unknown}}"
+author:
+  login: tidlost
+  email: philip.linghammar@protonmail.com
+  display_name: tidlost
+  first_name: ''
+  last_name: ''
+---
+Wordpress är ett verktyg som dynamiskt återskapar hemsidor. PHP-koden kontaktar databasen och informationen hämtas upp. Det är en resurskrävande process som inte är helt nödvändig. För att hemsidan ska gå snabbare krävs en viss grad av optimering.
+En snabbare sida ger högre resultat hos Google. Så en optimiserad sida ger bättre SEO.
+1. Diagnos
+Använd pluginen YSlow till Chrome för att ta reda på vad det är som segar ner en sida.
+2. Plugin W3 Total Cache
+Ladda ner och aktivera pluginen. Sen kan du följa dessa instruktioner för att göra korrekta inställningar. [Här](http://www.wpbeginner.com/plugins/how-to-install-and-setup-w3-total-cache-for-beginners/).
+3. Optimera foton. Dels så att foton är korrekt storlek från början. Om fotot minskas ned med hjälp av CSS så betyder det är fotot tar mer plats än vad som egentligen är nödvändigt. Här är en populär bildoptimeringsplugin [Smush](https://wordpress.org/plugins/wp-smushit/).
+4. Cloudflare
+Cloudflare hostar inte din sida. Men om du använder Cloudflare så kommer din sida att fungera snabbare och säkrare. Det cloudflare gör är att det skapar en cachad sida av din hemsida. Så när någon ska besöka din hemsida så ser de den cachade sidan. Å eftersom Cloudflare har 24 datacenter runt om i världen så kommer besökarna automatiskt att kopplas upp mot ett datacenter som är nära dem, det gör att hastigheten blir bättre för din sida. Cloudflare kan alltså säkra att din sida visas för besökarna även om din server har packat ihop totalt, eftersom den visar en chachad version.
+4. Använd en CDN-tjänst eller annan bildtjänst till bilder. Ett exempel skulle kunna vara [Amazon s3](https://aws.amazon.com/s3/).
+5. [Google webfont optimizer](https://wordpress.org/plugins/google-webfont-optimizer/). Ej test.
+Samlar ihop alla google font-requests till en request, vilket gör sidan snabbare och får bättre SEO.
+6. Undersöka om Varnish kan implementeras. En annan caching-tjänst.
+7. Använd pluginen: Remove Query Strings From Static Resources
+8. Den här sidan kan fungera för att testa hög trafik mot en site, hur den står sig.
+https://www.blitz.io/
+Här finns en bra genomgång av optimering: https://premium.wpmudev.org/blog/why-trying-to-get-95-on-google-pagespeed-insights-will-drive-you-mad/

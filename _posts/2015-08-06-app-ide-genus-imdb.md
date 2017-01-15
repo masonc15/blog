@@ -1,0 +1,26 @@
+---
+layout: post
+title: App-idé genus-imdb
+date: 2015-08-06 17:40:59.000000000 -03:00
+type: post
+published: true
+status: publish
+categories:
+- appidé
+tags: []
+meta:
+  _publicize_pending: '1'
+  sharing_disabled: '1'
+  _rest_api_published: '1'
+  _rest_api_client_id: "-1"
+  _publicize_job_id: '13469150406'
+  original_post_id: '422'
+  _wp_old_slug: '422'
+author:
+  login: tidlost
+  email: philip.linghammar@protonmail.com
+  display_name: tidlost
+  first_name: ''
+  last_name: ''
+---
+En app där man kan lägga till sina filmer. Eller koppla dom till imdb-konto. Å sedan får man statistik på hur många av ens favoritfilmer är av kvinnliga och manliga regissörer/skådespelare etc.
