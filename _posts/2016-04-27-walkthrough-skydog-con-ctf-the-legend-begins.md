@@ -165,12 +165,17 @@ PASSWORD FOUND!!!!: pw == yourmother
 ```
 
 Yeah I was stuck here and though that there was something wrong with the program or something. So I cheated a bit and learned the correct way to use fcrackzip.
-I got the flag: flag{1871a3c1da602bf471d3d76cc60cdb9b}% and a clue for the next flag:
-"Time to break out those binoculars and start doing some OSINT% "
+
+I got the flag: **flag{1871a3c1da602bf471d3d76cc60cdb9b}** and a clue for the next flag:
+> "Time to break out those binoculars and start doing some OSINT"
+
 So I started googeling about OSINT.
 Osint stand for Open Source Intelligence. Something I didn't know of before reading about it. After reading about it on wikipedia I gather that it doesn't concern what programmers know of open source. It means more like public. Like public information gathering. It comes from the intelligence community.
+
 Here I got really stuck again. And so I cheated. Again. Sorry.
+
 I read in another walkthrough that he had taken out words from the movie sneakers imdb and ran it through dirbuster.
+
 So I did that as well.
 I took the movie script and downloaded it. Then I wrote the following bash-script:
 

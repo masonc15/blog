@@ -18,15 +18,17 @@ author:
   first_name: ''
   last_name: ''
 ---
-<p>
-To create a cronjob on a linux-machine you just run </p>
-<p>[code]<br />
-#The -e flag stands for edit<br />
-crontab -e</p>
-<p>#The -l flag lists the cronjobs<br />
-crontab -l<br />
-[/code]</p>
-<p>So I added my cronjob like this and program it to run every minute:</p>
-<p>[code]<br />
-* * * * * /home/user/cron/script.sh<br />
-[/code]</p>
+
+To create a cronjob on a linux-machine you just run
+```
+#The -e flag stands for edit
+crontab -e
+#The -l flag lists the cronjobs
+crontab -l
+```
+
+So I added my cronjob like this and program it to run every minute:
+
+```
+* * * * * /home/user/cron/script.sh
+```
