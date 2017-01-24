@@ -27,15 +27,16 @@ Here we can clearly see that bob has logged in and used the `STOR` command. `STO
 
 The `ssc.key`-data was not being transferred on the standard ftp port 21, but instead the FTP-server momentarily opens up port 20 and transfers the data on that port. That is why wireshark defines the protocol for the data-transfer as `FTP-data` and not just `FTP`. 
 
-![FTP-Data]({{ site.url }}/assets/insomni-hack-ctf/ftp-data.png)
+![FTP-Data]({{ site.url }}{{ site.posturl }}/assets/insomni-hack-ctf/ftp-data.png)
 
 So I followed the TCP-stream for that packet and got a private key. I continued to look around the pcap to see what else I could find. I followed the TCP-stream for the packets that were sent using SMTP. 
 
-![SMTP-mail]({{ site.url }}/assets/insomni-hack-ctf/smtp-mail.png)
+![SMTP-mail]({{ site.url }}{{ site.posturl }}/assets/insomni-hack-ctf/smtp-mail.png)
  
 I visited https://ssc.teaser.insomnihack.ch and looked around, trying to figure out where the ssc.key would go. Although the ssc.teaser.insomnihack.ch looked promising, since it creates a public and private key that gets stored in the browsers Local storage, it did not seem like the key would fit.
 
 Instead I studied up on how to use a key to decrypt encrypted traffic. It was a lot easier than some tutorials out there made it out to be.
+
 
 First I saved the key in a file called `cert.pem`. Then I went to Edit/Preferences/Protocol/SSL. Clicked on `RSA Keys List - Edit`. Added the following configurations:
 
