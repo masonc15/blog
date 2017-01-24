@@ -28,7 +28,7 @@ meta:
   _oembed_9758b7b43199a713d00c6d77b311eac9: "{{unknown}}"
 author:
   login: tidlost
-  email: philip.linghammar@gmail.com
+  email: tl.dr.mfw@gmail.com
   display_name: tidlost
   first_name: ''
   last_name: ''
