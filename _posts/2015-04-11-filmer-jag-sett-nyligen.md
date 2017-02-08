@@ -24,68 +24,75 @@ author:
   first_name: ''
   last_name: ''
 ---
-**Nightcrawler** - man - fantastisk. om den ekonomiska mannen. homo economicus.
-
-**Love and other drugs** - man - rätt kass romkom.
-
-**Love, Rosie** - man - rätt kass romkom.
-
-**Hooligans** - man - om våld. helt okej.
-
-**Spectre**  - man - precis så infantil löjlig och dålig som bond alltid är.
-
-**The Big Short**  - man - galet bra.
-
-**The Diary of a Teenage girl**  - kvinna - riktigt bra. **Irrational man**  - man - Fan precis sett Woody Allens senaste. Dom är ju enkla å underhållande. Men alltså dialogen är ju verkligen under all kritik. Namedroppping av filosofer känns bara pinsam..
-
-**Inside out**  - man - riktigt fin å underhållande.
-
-**The Pirate of Silicon Valley**  - man - semiunderhållande.
-
-**Carol** - man - sisådär.
-
-**The Zero Theorem** - man - galet dålig.
-
-**Night falls** - Kvinna - Riktigt bra. SNygg å spännande
 
 
-**Train-wreck** - man - riktigt underhållande.
+**Demolition** - man - Snygg man med existentiell kris som odlar skägg för att hantera sorg.
 
-**Top five** - Man - Hyffsat underhållande
+**400 days** - man - Dåliga skådisar. Dåliga kulisser. Oförlåtligt slut. Spoiler-alert: slutet är medvetet otydligt.
 
-**Dear White People ** man - riktigt bra.
+**Nightcrawler** - man - Fantastisk. Om den ekonomiska mannen. Homo economicus.
 
-**Thirteen floor** - Man - Lite som Matrix. Dålig.
+**Love and other drugs** - man - Rätt kass romkom.
 
-**Freedom Downtime** - Man - Galet dålig. Som en youtube dokumentär gjord av en rättshaverist.
+**Love, Rosie** - man - Rätt kass romkom.
 
-**23** - Man - Som så ofta. Puckade karaktärer. I övrigt underhållande.
+**Hooligans** - man - Om våld. Helt okej.
 
-**Sneakers** - Man - Rätt kass.
+**Spectre**  - man - Precis så infantil löjlig och dålig som Bond alltid är.
 
-**She's funny that way** - Man - Galet dålig
+**The Big Short**  - man - Galet bra.
 
-**Who Am I - No system is safe** - Man - Underhållande
+**The Diary of a Teenage girl**  - kvinna - Riktigt bra.
 
-**Open window** - Man - Riktigt dålig.
+**Irrational man**  - man - Fan precis sett Woody Allens senaste. Dom är ju enkla å underhållande. Men alltså dialogen är ju verkligen under all kritik. Namedroppping av filosofer känns bara pinsam.
 
-**Stockholm** - Man - Riktigt bra.
+**Inside out**  - man - Riktigt fin å underhållande.
 
-**Tron** - Man - Galet bra.
+**The Pirate of Silicon Valley**  - man - Semiunderhållande.
 
-**We live in public** - Kvinna - Riktigt kass.
+**Carol** - man - Sisådär.
+
+**The Zero Theorem** - man - Galet dålig.
+
+**Night falls** - kvinna - Riktigt bra. Snygg å spännande
+
+**Train-wreck** - man - Riktigt underhållande.
+
+**Top five** - man - Hyffsat underhållande
+
+**Dear White People ** man - Riktigt bra.
+
+**Thirteen floor** - man - Lite som Matrix. Dålig.
+
+**Freedom Downtime** - man - Galet dålig. Som en youtube-dokumentär gjord av en rättshaverist.
+
+**23** - man - Som så ofta. Puckade karaktärer. I övrigt underhållande.
+
+**Sneakers** - man - Rätt kass.
+
+**She's funny that way** - man - Galet dålig
+
+**Who Am I - No system is safe** - man - Underhållande
+
+**Open window** - man - Riktigt dålig.
+
+**Stockholm** - man - Riktigt bra.
+
+**Tron** - man - Galet bra.
+
+**We live in public** - kvinna - Riktigt kass.
 
 **Deep web** - Man - Riktigt kass. Handlade bara om Silk Road å inget om deep web.
 
-**How steve jobs changed the world** - Man - Fick mig att hata mac mer än någonsin. Riktigt dålig.
+**How steve jobs changed the world** - man - Fick mig att hata mac mer än någonsin. Riktigt dålig.
 
-**Black mirror - white christmas** - Man - Otrolig. Det läskigaste jag någonsin sett på tv.
+**Black mirror - white christmas** - man - Otrolig. Det läskigaste jag någonsin sett på tv.
 
 **Shes funny that way** - Man - Fruktansvärd. Spolade igen. Korkad fars.
 
 **Infinitely polar bear** - Kvinna - Feelgood. Mysig.
 
-**Parallells** - Man - Idiotiska karaktärer. men lite spännande ändå.
+**Parallells** - Man - Idiotiska karaktärer, men lite spännande ändå.
 
 **Jalla jalla** - Man - Ja, ingen höjdare direkt. Men lite mysig.
 
@@ -99,7 +106,7 @@ author:
 
 **Dope** - Man - Episkt bra.
 
-**Allende mi abuelo allende ** - kvinna - som att gå på abba-museet samtidigt som man
+**Allende mi abuelo allende ** - kvinna - Som att gå på abba-museet samtidigt som man
 tvingas gå igenom timmar av nån jobbig farbrors semesterbilder. Så plågsamt.
 
 **Watchmen** - Man - Så värdelös att man fan storknar. Utmärkande ofattbart dålig.
