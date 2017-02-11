@@ -25,8 +25,11 @@ author:
   last_name: ''
 ---
 
-**Kill your friends** - man - Alla generationer behöver sin egen knark-supa-grisig-musikindustri-film. Hur kan huvudrollen ha så bra kropp när han lever så ohälsosamt? Fattar inte. Rätt risig rulle.
+**Arrival** - man - Rimliga vetenskapare vs korkade militärer. Riktigt bra.
 
+**Regression** - man - David Dencik är bäst. Filmen är som en blandning mellan knutby och Säter.
+
+**Kill your friends** - man - Alla generationer behöver sin egen knark-supa-grisig-musikindustri-film. Hur kan huvudrollen ha så bra kropp när han lever så ohälsosamt? Fattar inte. Rätt risig rulle.
 
 **Terminus** - man - Stundtals helt obegriplig. Som så många filmer. Varför har ingen mobiltelefoner? Trevligt slut. Nästa en okej film.
 
