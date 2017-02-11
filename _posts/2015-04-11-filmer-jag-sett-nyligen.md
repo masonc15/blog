@@ -25,6 +25,12 @@ author:
   last_name: ''
 ---
 
+**Kill your friends** - man - Alla generationer behöver sin egen knark-supa-grisig-musikindustri-film. Hur kan huvudrollen ha så bra kropp när han lever så ohälsosamt? Fattar inte. Rätt risig rulle.
+
+
+**Terminus** - man - Stundtals helt obegriplig. Som så många filmer. Varför har ingen mobiltelefoner? Trevligt slut. Nästa en okej film.
+
+**Alone in Berlin** - man - Trög. Hade varit bättre om den var på tyska. Intressant, men samtidigt inte superrolig.
 
 **Demolition** - man - Snygg man med existentiell kris som odlar skägg för att hantera sorg.
 
