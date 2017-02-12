@@ -25,6 +25,10 @@ author:
   last_name: ''
 ---
 
+**The Swedish Theory of Love** - man - Sämsta dokumentären sen Freedome downtime. Genom anekdotisk bevisföring driven Gandini samma tes som hippies och konservativa gjort sen Dwight Eisenhower. Lyckas göra en hel film om hur olyckliga svenskar som bor ensamma är, utan att prata med en enda. Filmen man får om man ber den amerikanska evangeliska högern, latinamerikanska anti-europa-vänstern, och hippies att filma svenska miljonprogram under hösten och de tråkigaste sjukhuskontoren landet har att erbjuda. Å varför i helvete kunde Gandini inte bara fixa Lars Trägårdhs presentation i hög (eller normal) upplösning?! Hela filmen bygger ju på hans "teori", men ändå tvingas vi titta på youtube-klipp med tre pixlar. Å vad var poängen med att den danska läkaren fick babbla på om hur dålig sjukvården var i Etiopien?! Det eeenda beviset om att man typ är mindre ensam i Etiopien kommer ifrån en dansk läkare som jobbar där! Å slutsatsen blir: fattiga men lyckliga. Jag har fan sett youtube-konspirationsfilmer om aliens med mer på fötterna än det här.
+
+**iBoy** - man - Som spindelmannen fast med teknologi. Basic trevlig.
+
 **Arrival** - man - Rimliga vetenskapare vs korkade militärer. Riktigt bra.
 
 **Regression** - man - David Dencik är bäst. Filmen är som en blandning mellan knutby och Säter.
@@ -69,7 +73,7 @@ author:
 
 **Top five** - man - Hyffsat underhållande
 
-**Dear White People ** man - Riktigt bra.
+**Dear White People** man - Riktigt bra. Mysig romkom.
 
 **Thirteen floor** - man - Lite som Matrix. Dålig.
 
@@ -115,7 +119,7 @@ author:
 
 **Dope** - Man - Episkt bra.
 
-**Allende mi abuelo allende ** - kvinna - Som att gå på abba-museet samtidigt som man
+**Allende mi abuelo allende** - kvinna - Som att gå på abba-museet samtidigt som man
 tvingas gå igenom timmar av nån jobbig farbrors semesterbilder. Så plågsamt.
 
 **Watchmen** - Man - Så värdelös att man fan storknar. Utmärkande ofattbart dålig.
@@ -148,15 +152,15 @@ tvingas gå igenom timmar av nån jobbig farbrors semesterbilder. Så plågsamt.
 
 **Rosewater** - Man - Mja.
 
-**Como agua para chocolate ** - jättedålig.
+**Como agua para chocolate** - jättedålig.
 
-**God Bless America ** - Man - Rätt kass. Händer inget direkt.
+**God Bless America** - Man - Rätt kass. Händer inget direkt.
 
-**The English Teacher ** - Man - Urusel. Dåliga värderingar, kass på alla sätt å vis.
+**The English Teacher** - Man - Urusel. Dåliga värderingar, kass på alla sätt å vis.
 
 **Maps to the Starts** - Man - Helt sjuk. Galna dialoger. Obehaglig. Riktigt bra.
 
-**Ginger and Rosa ** - Kvinna - Långsam, sorglig, djup, snygg. Riktigt bra.
+**Ginger and Rosa** - Kvinna - Långsam, sorglig, djup, snygg. Riktigt bra.
 
 **The Internship** - Man - Episkt dålig reklamfilm för google.
 
@@ -226,8 +230,10 @@ Det hade såklart varit ännu bättre om kärlekshistorian hade varit mellan tv�
 **Listen up Philip** - Vad får man om man blandar wes anderson med woody allen och tar bort all humor och värme? amerikanska universitet, tweedkavajer, författare, stora hus med böcker på väggarna. den är inte jättebra. men en del fina bilder. blanding mellan wes anderson och woody allen, utan humor. kanske inte så jättelockande iof. den påminner mig om författarna Philip Roth och William Faulkner. jag har inte läst endera men Faulker är för mig den mest amerikanskt-universitet-och-upstate-new-york-författaren.
 
 **Hector and the search for happiness** - hands down sämsta filmen jag sett sedan jag såg Siete Años de Matrimonio, som antagligen är den sämsta filmen jag någonsin sett.
-Den andalusiska hunden - Luis Bunuel - äcklig scen med ögat. otippat bra. id vs. ego.
-Un cuento chino - riktigt dålig. temat: tragisk man hittar tillbaka till livet.
+
+**Den andalusiska hunden** - Luis Bunuel - äcklig scen med ögat. otippat bra. id vs. ego.
+
+**Un cuento chino** - riktigt dålig. temat: tragisk man hittar tillbaka till livet.
 
 **Mannen på taket** - Poliskritisk, det trodde jag inte. bra.
 
