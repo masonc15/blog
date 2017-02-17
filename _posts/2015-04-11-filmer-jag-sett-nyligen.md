@@ -25,6 +25,14 @@ author:
   last_name: ''
 ---
 
+**Everybody Wants Some!!!** - man - Machokultur bland manliga universitets-studenter i Texas på 80 talet. Enkel å trevlig. 
+
+
+**Kill Command** - man - Rimlig programmerare vs korkade militärer. Dom har skapat fantastisk AI, men AI kan inte sikta. En stabil 4 av 10. Snygga robotar.
+
+
+**The Fifth Wave** - man - Apokalyptisk-katastrof-alien-film. Många bra ingridienser. Enkel å underhållande.
+
 **The Swedish Theory of Love** - man - Sämsta dokumentären sen Freedome downtime. Genom anekdotisk bevisföring driven Gandini samma tes som hippies och konservativa gjort sen Dwight Eisenhower. Lyckas göra en hel film om hur olyckliga svenskar som bor ensamma är, utan att prata med en enda. Filmen man får om man ber den amerikanska evangeliska högern, latinamerikanska anti-europa-vänstern, och hippies att filma svenska miljonprogram under hösten och de tråkigaste sjukhuskontoren landet har att erbjuda. Å varför i helvete kunde Gandini inte bara fixa Lars Trägårdhs presentation i hög (eller normal) upplösning?! Hela filmen bygger ju på hans "teori", men ändå tvingas vi titta på youtube-klipp med tre pixlar. Å vad var poängen med att den danska läkaren fick babbla på om hur dålig sjukvården var i Etiopien?! Det eeenda beviset om att man typ är mindre ensam i Etiopien kommer ifrån en dansk läkare som jobbar där! Å slutsatsen blir: fattiga men lyckliga. Jag har fan sett youtube-konspirationsfilmer om aliens med mer på fötterna än det här.
 
 **iBoy** - man - Som spindelmannen fast med teknologi. Basic trevlig.
