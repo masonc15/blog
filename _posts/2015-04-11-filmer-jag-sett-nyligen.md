@@ -25,6 +25,8 @@ author:
   last_name: ''
 ---
 
+**The Accountant** - man - Oj oj oj. Rainman möter Bourne. Fantastiskt.
+
 **Everybody Wants Some!!!** - man - Machokultur bland manliga universitets-studenter i Texas på 80 talet. Enkel å trevlig.
 
 
