@@ -91,7 +91,7 @@ Here is the image that we were given:
 
 Interstellar is another steganography-challenge. Which for some reason is put in the forensics section. It can easily be solved with stegsolve.jar using the xor-filter, or using some other filters that work.
 
-But I wanted to dig a little bit deeper into how this works. We can start by looking at what type of file it is `file transmission.png`
+But I wanted to dig a little bit deeper into how this works. So I started by looking at what type of file it is `file transmission.png`
 
 ```
 transmission.png: PNG image data, 1920 x 1080, 8-bit/color RGBA, non-interlaced
@@ -101,7 +101,7 @@ So this image has an 8-bit color depth. With the colors red, green, blue and the
 
 When we open up the image in Gimp we see that a large part of the image has a checkered background. That means that the opacity level is very high at that area, or the alpha-level is very low. So what we can do is simple remove the opacity/alpha level of the image. I did this in Gimp like this `Colors > Levels > Channel > Alpha > Output Levels 255 - 255`.
 
-This can also be done programatically. We simply convert the file from a RGBA to a RGB. 
+This can also be done programatically. We can simply convert the file from a RGBA to a RGB. Thereby just removing the alpha-channel.
 
 ```python
 from PIL import Image
@@ -169,14 +169,14 @@ main.exe
 
 
 
-So I started by just looking at what type of file it was.
+I started by looking at what type of file it was.
 
 ```
 file main.exe
 main.exe: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=4b9b47b7eac612e0c367f0e3a9878eb1f09b841d, not stripped
 ```
 
-By just running strings we could figure this one out pretty fast:
+Just running `strings` is probably enough to get the first part.
 
 ```
 
