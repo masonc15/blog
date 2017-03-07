@@ -7,6 +7,8 @@ Did a few challenges on the PragYan CTF this weekend. Most of the challenges wer
 
 ## Look Harder
 
+> There are rumours that in the Great Sahara Desert, a great treasure has been buried deep inside the ground, but the map for the exact location of the treasure over the years, has not been preserved properly. You have got hold of the map, but it looks nothing more than a plain white sheet of paper. Can you make sense out of it ??
+
 We are given an image that is completely white.
 
 
@@ -15,7 +17,7 @@ We are given an image that is completely white.
 
 The easy way to solve this is to just open it up in stegsolve.jar and then click through the different filters. Gray bits will show a QR-code. I solved this in just a few minutes. But I didn't really understand how it actually worked. How can a completely white image be hiding a QR-code? So I set out to investigate a little bit.
 
-What is interesting about this image is that it is very small in size. It is only 449 bytes, this is pretty small.
+What is interesting about this image is that it is very small in size. It is only 449 bytes.
 
 We can verify this using stat `stat treasure_map.png` or `ls -lash treasure_map.png`. So why is it so small? 
 
@@ -64,7 +66,7 @@ Okay, so now we know that there is something hiding in the image. But why is it 
 
 If we look at the color palette that the image use we can see that it only uses two colors, which make sense since it is a 1 bit colormap. But those two colors are both white. So all we really have to do is create a new palette that includes black and then set the colormap to that palette.
 
-So using Gimp we can create a new Palette with the colors black and white. And then we go to `Colors > Map > Set Colormap > Palette > BlackAndWhite`.
+So using Gimp we can create a new palette with the colors black and white. And then we go to `Colors > Map > Set Colormap > Palette > BlackAndWhite`.
 
 And now we can see the result:
 
@@ -79,7 +81,7 @@ The flag: {stay_pragyaned}
 
 ## Interstellar
 
-> Dr. Cooper, on another one of his endless journeys encounter a mysterious planet . However when he tried to land on it, the ship gave way and he was left stranded on the planet . Desperate for help, he relays a message to the mothership containing the details of the people with him . Their HyperPhotonic transmission is 10 times the speed of light, so there is no delay in the message . However, a few photons and magnetic particles interefered with the transmission, causing it to become as shown in the picture . Can you help the scientists on the mothership get back the original image?
+> Dr. Cooper, on another one of his endless journeys encounter a mysterious planet. However when he tried to land on it, the ship gave way and he was left stranded on the planet. Desperate for help, he relays a message to the mothership containing the details of the people with him. Their HyperPhotonic transmission is 10 times the speed of light, so there is no delay in the message. However, a few photons and magnetic particles interefered with the transmission, causing it to become as shown in the picture. Can you help the scientists on the mothership get back the original image?
 
 Here is the image that we were given: 
 
@@ -87,18 +89,17 @@ Here is the image that we were given:
 ![Transmission]({{ site.url }}{{ site.posturl }}/assets/pragyanctf/transmission.png)
 
 
-Interstellar is another steganography-challenge, that is for some reason put in the forensics-section. It can easily be solved using stegsolve.jar and use the XOR-filter, or using some other other filters that work.
+Interstellar is another steganography-challenge. Which for some reason is put in the forensics section. It can easily be solved with stegsolve.jar using the xor-filter, or using some other filters that work.
 
-But we can also dig a bit deeper into how this works.
-We can start by looking at what type of file it is `file transmission.png`
+But I wanted to dig a little bit deeper into how this works. We can start by looking at what type of file it is `file transmission.png`
 
 ```
 transmission.png: PNG image data, 1920 x 1080, 8-bit/color RGBA, non-interlaced
 ```
 
-So this image is a 8 bit color depth, with the colors red, green, blue and alpha. This means that each pixel needs to have the value of these colors defined. 
+So this image has an 8-bit color depth. With the colors red, green, blue and the alpha channel. This means that each pixel needs be defined with these colors. 
 
-When we open up the image we see that a large part of the image has a checkered background. That means that the opacity level is very high at that area, or the alpha-level is very low. So what we can do is simple remove the opacity/alpha level of the image. I did this in Gimp like this `Colors > Levels > Channel > Alpha > Output Levels 255 - 255`.
+When we open up the image in Gimp we see that a large part of the image has a checkered background. That means that the opacity level is very high at that area, or the alpha-level is very low. So what we can do is simple remove the opacity/alpha level of the image. I did this in Gimp like this `Colors > Levels > Channel > Alpha > Output Levels 255 - 255`.
 
 This can also be done programatically. We simply convert the file from a RGBA to a RGB. 
 
@@ -124,7 +125,10 @@ With this output:
 ```
 # python remove_alpha.py
 
+# Red, Green, Blue, Alpha
 (125, 133, 136, 0)
+
+# Red, green, blue
 (125, 133, 136)
 ```
 
@@ -158,6 +162,12 @@ The flag is: {Cooper_Brand}
 ## Answer to everything
 
 
+> Shal has got a binary. It contains the name of a wise man and his flag. He is unable to solve it.
+
+> Submit the flag to unlock the secrets of the universe.
+main.exe
+
+
 
 So I started by just looking at what type of file it was.
 
@@ -166,7 +176,7 @@ file main.exe
 main.exe: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=4b9b47b7eac612e0c367f0e3a9878eb1f09b841d, not stripped
 ```
 
-By just running strings we could figure this out pretty fast:
+By just running strings we could figure this one out pretty fast:
 
 ```
 
@@ -182,8 +192,13 @@ Gimme:
 
 ```
 
+The `#kdudpeh` looks pretty suspicious.
 
-But let's have a look at the code instead and see what we can find. First we just follow the execution into the function `not_the_flag`. There we can see that it makes a comparison between `0x2a` and whatever is on the stack at that point (`rbp-0x4`). And `0x2a` is `42` in decimal. Which seems correct, since it seems to fit with the reference to The Hitchhikers Guide to the Galaxy in the title of the challenge.
+But let's have a look at the code instead and see what we can find. 
+
+![Code]({{ site.url }}{{ site.posturl }}/assets/pragyanctf/not_flag.png)
+
+First we just follow the execution into the function `not_the_flag`. There we can see that it makes a comparison between `0x2a` and whatever is on the stack at that point (`rbp-0x4`). `0x2a` is `42` in decimal. Which seems correct, since it seems to fit with the reference to The Hitchhikers Guide to the Galaxy in the title of the challenge.
 
 So when we rerun the binary and input 42 we get this back:
 
@@ -192,9 +207,9 @@ Submit without any tags
 #kdudpeh
 ```
 
-So I checked [here](https://kt.pe/tools.html#conv/%23kdudpeh) if it could be a a rot-something, and it was a rot23 for #harambe.
+So I checked [here](https://kt.pe/tools.html#conv/%23kdudpeh) if it could be a a rot-something, and it was a rot23 for `#harambe`.
 
-Then I felt like I should write my own little rot-program. For fun. It only outputs the result in lower-case though. So that is a bit of a limit. Here is the code:
+Then I felt like I should write my own little rot-program. So I did that. It only outputs the result in lower-case though. So that is a bit of a limit. Here is the code:
 
 ```python
 import sys
@@ -243,12 +258,12 @@ validation: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically lin
 So it looks like it is an ELF 64-bit executable. 
 
 
-I ran `objdump -d validation -M intel` to get a feel for the binary. What is contains. From it I could see that it contained a function called `verify_your_name`, `main` and functions named `f1` up to `f9`.
+First I ran `objdump -d validation -M intel` to get a feel for it. From it I could see that it contains a function called `verify_your_name`, `main` and functions named `f1` up to `f9`.
 
 
 So I went through the code in gdb to see what is happening.
 
-First we get redirected to `verify_your_name`. That function then calls the printf and scanf that asks for the users name and age. After that the f1 function is called. 
+First we get redirected to `verify_your_name`. That function then calls the printf and scanf that asks for the users name and age. After that the f1 function is called. And in that function, and in all the other f-functions we see code similar to this:
 
 ```
 => 0x40075b <f6+1>: mov    r9,0x1a
@@ -256,7 +271,7 @@ First we get redirected to `verify_your_name`. That function then calls the prin
    0x400769 <f6+15>:  xor    rax,r9
 ```
 
-So what this does is that it move 0x1a to r9. Then move 0x68 to rax. And then does an xor between the two.
+What this does is that it move the immediate value `0x1a` to register `r9`. Then move `0x68` to register `rax`. It then does an `xor` between the two.
 
 `0x1a` in binary is: `11010`
 
@@ -279,7 +294,7 @@ With the help of pcalc we can easily translate between hex, decimal and binary.
 114               0x72                0y1110010
 ```
 
-And by looking at the ascii table (with `man ascii`) we see that 0x72 is equal to "r". Then I just kept following the flow and looking at the following values that were created in a similar way using XOR. Combining them all resulted in this flag: 
+And by looking at the ascii table (with `man ascii`) we see that 0x72 is equal to "r". So from there on I just kept following the flow and looking at the valuein `rax` after the `xor`. Combining them all resulted in this flag: 
 
 ```
 r01l+th3m_411-up/@nd~4w@y
