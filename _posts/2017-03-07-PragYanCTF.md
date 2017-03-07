@@ -1,9 +1,9 @@
 ---
 layout: post
-title: PragYan CTF - Writeup
+title: Pragyan CTF - Writeup
 ---
 
-Did a few challenges on the PragYan CTF this weekend. Most of the challenges were with steganography and crypto. Even challenges found in other categories. 
+Did a few challenges on the Pragyan CTF this weekend. Most of the challenges were with steganography and crypto. Even challenges found in other categories. 
 
 ## Look Harder
 
