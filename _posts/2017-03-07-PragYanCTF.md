@@ -198,7 +198,7 @@ But let's have a look at the code instead and see what we can find.
 
 ![Code]({{ site.url }}{{ site.posturl }}/assets/pragyanctf/not_flag.png)
 
-First we just follow the execution into the function `not_the_flag`. There we can see that it makes a comparison between `0x2a` and whatever is on the stack at that point (`rbp-0x4`). `0x2a` is `42` in decimal. Which seems correct, since it seems to fit with the reference to The Hitchhikers Guide to the Galaxy in the title of the challenge.
+I start by following the execution into the function `not_the_flag`. There we can see that it makes a comparison between `0x2a` and whatever is on the stack at that point (`rbp-0x4`). `0x2a` is `42` in decimal. Which seems correct, since it seems to fit with the reference to The Hitchhikers Guide to the Galaxy in the title of the challenge.
 
 So when we rerun the binary and input 42 we get this back:
 
@@ -255,15 +255,14 @@ file validation
 validation: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.24, BuildID[sha1]=f18f0acc149e2330b7549976f9e25c1b4e97e4f8, not stripped
 ```
 
-So it looks like it is an ELF 64-bit executable. 
-
+It is an ELF 64-bit executable. 
 
 First I ran `objdump -d validation -M intel` to get a feel for it. From it I could see that it contains a function called `verify_your_name`, `main` and functions named `f1` up to `f9`.
 
 
-So I went through the code in gdb to see what is happening.
+I went through the code in gdb to see what happens during execution.
 
-First we get redirected to `verify_your_name`. That function then calls the printf and scanf that asks for the users name and age. After that the f1 function is called. And in that function, and in all the other f-functions we see code similar to this:
+First we get redirected to `verify_your_name`. That function then calls the printf and scanf that asks for the user's name and age. After that the `f1` function is called. And in that function, and in all the other f-functions we see code similar to this:
 
 ```
 => 0x40075b <f6+1>: mov    r9,0x1a
@@ -294,7 +293,7 @@ With the help of pcalc we can easily translate between hex, decimal and binary.
 114               0x72                0y1110010
 ```
 
-And by looking at the ascii table (with `man ascii`) we see that 0x72 is equal to "r". So from there on I just kept following the flow and looking at the valuein `rax` after the `xor`. Combining them all resulted in this flag: 
+And by looking at the ascii table (with `man ascii`) we see that 0x72 is equal to "r". So from there on I just kept following the flow and looking at the value in `rax` after the `xor`. Combining them all resulted in this flag: 
 
 ```
 r01l+th3m_411-up/@nd~4w@y
